@@ -38,6 +38,9 @@ class NetworkApisRouts {
   final String _getPropertyImages = 'api/get_image_for_property_by_id/';
   final String _setPropertySold = 'api/markAsSold/';
   final String _propertyNewStudy = 'api/createRequest/';
+  final String _getSuccessStatistics =
+      'api/successful_Requests_Percentage_ByMonth_in_year';
+  final String _getStatisticsOfUsers = 'api/user_counts_by_role';
 
   String getBaseUrl() => _server;
   String getLoginApi() => _server + _loginApi;
@@ -78,4 +81,6 @@ class NetworkApisRouts {
   String getPropertyImagesApi() => _server + _getPropertyImages;
   String setPropertySoldApi() => _server + _setPropertySold;
   String propertyNewStudyApi() => _server + _propertyNewStudy;
+  String getSuccessStatisticsApi() => _server + _getSuccessStatistics;
+  String getStatisticsOfUsersApi() => _server + _getStatisticsOfUsers;
 }
