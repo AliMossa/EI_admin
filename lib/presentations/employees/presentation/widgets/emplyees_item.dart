@@ -1,5 +1,4 @@
-import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee_button_widget.dart';
-import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee_items.dart';
+import 'package:admin_dashboard/presentations/employees/presentation/logic/bloc/view_employees/employees_bloc.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/employees_members_widget.dart';
 import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
 import 'package:flutter/widgets.dart';
@@ -10,30 +9,33 @@ class EmplyeesItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final moreInfo = MediaQuery.sizeOf(context);
-    return BlocBuilder<ChangePageBloc, ChangePageState>(
-      builder: (context, state) {
-        return Stack(
-          children: [
-            AnimatedOpacity(
-              opacity: state is MoveToEmployeesPageState ? 1 : 0,
-              duration: const Duration(milliseconds: 400),
-              child:
-                  state is MoveToEmployeesPageState
-                      ? EmployeesMembersWidget()
-                      : SizedBox(),
-            ),
-            AnimatedOpacity(
-              opacity: state is MoveToAddEmployeesPageState ? 1 : 0,
-              duration: const Duration(milliseconds: 400),
-              child:
-                  state is MoveToAddEmployeesPageState
-                      ? AddEmployeeItems(size: moreInfo)
-                      : SizedBox(),
-            ),
-          ],
-        );
-      },
+    return BlocListener<EmployeesBloc, EmployeesState>(
+      listener:
+          (context, state) => context
+              .read<EmployeesBloc>()
+              .employeesMiddleware
+              .showGetEmployeesFailedMessage(context, state),
+      child: BlocBuilder<ChangePageBloc, ChangePageState>(
+        builder: (context, state) {
+          return AnimatedOpacity(
+            opacity: state is MoveToEmployeesPageState ? 1 : 0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInBack,
+
+            child:
+                state is MoveToEmployeesPageState
+                    ? EmployeesMembersWidget(
+                      list:
+                          context
+                              .watch<EmployeesBloc>()
+                              .employeesMiddleware
+                              .getTotalEmployeesEntity()
+                              .employees,
+                    )
+                    : SizedBox(),
+          );
+        },
+      ),
     );
   }
 }

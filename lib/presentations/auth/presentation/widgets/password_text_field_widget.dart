@@ -1,5 +1,6 @@
-import 'package:admin_dashboard/presentations/auth/presentation/logic/bloc/login_bloc.dart';
 import 'package:admin_dashboard/presentations/auth/presentation/logic/cubit/password_cubit.dart';
+import 'package:admin_dashboard/presentations/auth/presentation/logic/login/login_bloc.dart';
+import 'package:admin_dashboard/util/font/font_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,14 +21,26 @@ class PasswordTextFieldWidget extends StatelessWidget {
           return Container(
             padding: EdgeInsets.only(left: 10, right: 10),
             margin: EdgeInsets.all(10),
-            height: 50,
-            width: size.width * .25,
+
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(color: textFieldBorder),
               borderRadius: BorderRadius.circular(15),
             ),
             child: TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'please insert password';
+                } else if (value.length <= 5) {
+                  return 'please insert more than 5 characters';
+                }
+                return null;
+              },
+              onChanged:
+                  (value) => context
+                      .read<LoginBloc>()
+                      .authMiddleware
+                      .setPassword(value),
               focusNode:
                   context
                       .read<LoginBloc>()
@@ -37,7 +50,8 @@ class PasswordTextFieldWidget extends StatelessWidget {
               obscureText: state is ShowPasswordState ? false : true,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
-                hintText: 'password',
+                label: Text('password', style: variableTitleStyle),
+
                 maintainHintHeight: true,
                 hintStyle: TextStyle(fontWeight: FontWeight.bold),
                 border: InputBorder.none,

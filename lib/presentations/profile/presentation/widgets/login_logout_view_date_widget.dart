@@ -5,7 +5,11 @@ class LoginLogoutViewDateWidget extends StatelessWidget {
   String title;
   String date;
   Color color;
+  Size size;
+  double textWidth;
   LoginLogoutViewDateWidget({
+    required this.textWidth,
+    required this.size,
     required this.title,
     required this.date,
     required this.color,
@@ -14,15 +18,24 @@ class LoginLogoutViewDateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          title,
-          style: TextStyle(color: color, fontWeight: FontWeight.bold),
+    return SizedBox(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: Row(
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                color: color,
+                fontWeight: FontWeight.bold,
+                fontSize: textWidth,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Text(date, style: getprofileLogginDateStyle(size)),
+          ],
         ),
-        const SizedBox(width: 10),
-        Text(date, style: profileLogginDateStyle),
-      ],
+      ),
     );
   }
 }

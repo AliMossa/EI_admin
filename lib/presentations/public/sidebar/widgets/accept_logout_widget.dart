@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class AcceptLogoutWidget extends StatelessWidget {
   String title;
   final onPressed;
@@ -11,8 +11,8 @@ class AcceptLogoutWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
-      child: Text(title, style: const TextStyle(color: Colors.amber)),
+      style: ElevatedButton.styleFrom(backgroundColor: textFieldBorder),
+      child: Text(title, style: const TextStyle(color: Colors.white)),
     );
   }
 }

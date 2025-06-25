@@ -6,17 +6,20 @@ import 'package:flutter/widgets.dart';
 class ProfileTitleWidget extends StatelessWidget {
   String name;
   String joinDate;
-  ProfileTitleWidget({required this.joinDate, required this.name, super.key});
+  Size size;
+  ProfileTitleWidget({
+    required this.joinDate,
+    required this.name,
+    required this.size,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(name, style: profileNameStyle),
-        Text(
-          joinDate,
-          style: TextStyle(color: black30, fontWeight: FontWeight.bold),
-        ),
+        Text(name, style: getProfileNameStyle(size)),
+        Text('joined in $joinDate', style: getProfileSubNameStyle(size)),
       ],
     );
   }

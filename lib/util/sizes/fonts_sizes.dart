@@ -1,4 +1,6 @@
 final double normalSize = 16;
+final double semiBiglSize = 18;
+
 final double smallSize = 14;
 final double verysmallSize = 12;
 

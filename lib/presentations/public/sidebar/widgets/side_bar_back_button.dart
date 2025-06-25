@@ -12,7 +12,7 @@ class SideBarBackButton extends StatelessWidget {
     return InkWell(
       onTap: function,
       child: Container(
-        margin: const EdgeInsets.only(top: 20),
+        margin: const EdgeInsets.only(top: 10, bottom: 10),
         child:
             state is ShrinkSidebarState
                 ? const Icon(

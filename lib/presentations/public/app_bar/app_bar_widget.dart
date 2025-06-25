@@ -1,4 +1,5 @@
 import 'package:admin_dashboard/presentations/public/app_bar/widgets/search_bar_widget.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/devider_widget.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      width: size.width * .8,
+      width: size.width * .83,
       child: Column(
         children: [
           Row(
@@ -28,15 +29,7 @@ class AppBarWidget extends StatelessWidget {
               SearchBarWidget(size: size),
             ],
           ),
-          SizedBox(
-            width: size.width * .8,
-            child: Divider(
-              color: selecteSideBarItem2,
-              thickness: 3,
-              endIndent: 10,
-              indent: 10,
-            ),
-          ),
+          SizedBox(width: size.width * .83, child: DeviderWidget()),
         ],
       ),
     );

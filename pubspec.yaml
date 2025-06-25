@@ -47,6 +47,13 @@ dependencies:
   photo_view: ^0.15.0
   desktop_window: ^0.4.2
   intl: ^0.20.2
+  marquee: ^2.3.0
+  dartz: ^0.10.1
+  encrypt: ^5.0.3
+  path_provider: ^2.1.5
+  shared_preferences: ^2.5.3
+  flutter_screenutil: ^5.9.3
+  fl_chart: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -75,7 +82,11 @@ flutter:
   assets:
     - assets/images/login_image.jpeg
     - assets/images/user.svg
+    - assets/images/image.svg
+    - assets/images/error.svg
+    - assets/images/empty.svg
     - assets/logo/logo.png
+
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

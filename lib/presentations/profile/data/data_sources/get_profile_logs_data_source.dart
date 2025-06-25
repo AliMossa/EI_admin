@@ -1,0 +1,56 @@
+import 'package:admin_dashboard/presentations/profile/domain/entities/logs_request_entity.dart';
+import 'package:admin_dashboard/presentations/profile/domain/entities/profile_logs_entity.dart';
+import 'package:admin_dashboard/presentations/profile/domain/entities/total_profile_logs_entity.dart';
+import 'package:admin_dashboard/util/apis/apis.dart';
+import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
+import 'package:admin_dashboard/util/errors/admin_error.dart';
+
+abstract class GetProfileLogsDataSource {
+  Future<TotalProfileLogsEntity> getProfileLogs(
+    LogsRequestEntity logsRequestEntity,
+  );
+}
+
+class GetProfileLogsDataSourceWithDio extends GetProfileLogsDataSource {
+  GetProfileLogsDataSourceWithDio? _getProfileLogsDataSourceWithDio;
+  GetProfileLogsDataSourceWithDio get() =>
+      _getProfileLogsDataSourceWithDio ??
+      (_getProfileLogsDataSourceWithDio = GetProfileLogsDataSourceWithDio());
+
+  @override
+  Future<TotalProfileLogsEntity> getProfileLogs(
+    LogsRequestEntity logsRequestEntity,
+  ) async {
+    String message = '';
+    TotalProfileLogsEntity result = TotalProfileLogsEntity.init();
+
+    try {
+      final response = await Apis().get(
+        '${NetworkApisRouts().getUserLogsApi()}${logsRequestEntity.id}',
+        {},
+        logsRequestEntity.token,
+      );
+      if (response['errors'] == null) {
+        message = response['message'];
+      } else {
+        message = response['message'] ?? response['errors'];
+        throw Exception();
+      }
+      print(response);
+      for (Map<String, dynamic> item in response['data']['logs']) {
+        result.list.add(
+          ProfileLogsEntity(
+            level: item['level'],
+            message: item['message'],
+            time: item['record_datetime'],
+          ),
+        );
+      }
+      result.nextPage = response['data']['pagination']['next_page_url'] ?? '';
+      return result;
+    } catch (error) {
+      print("******${error}");
+      throw ServerAdminError(message: message);
+    }
+  }
+}

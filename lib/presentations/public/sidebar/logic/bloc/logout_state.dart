@@ -11,6 +11,10 @@ final class LogoutInitial extends LogoutState {}
 
 class LaodingSendLogoutState extends LogoutState {}
 
-class FailedSendLogoutState extends LogoutState {}
+// ignore: must_be_immutable
+class FailedSendLogoutState extends LogoutState {
+  String message;
+  FailedSendLogoutState({required this.message});
+}
 
 class SuccessSendLogoutState extends LogoutState {}

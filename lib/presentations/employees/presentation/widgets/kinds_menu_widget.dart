@@ -1,11 +1,25 @@
 import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit/kinds_cubit.dart';
+import 'package:admin_dashboard/presentations/employees/presentation/models/drop_down_model.dart';
+import 'package:admin_dashboard/util/colors/colors.dart';
+import 'package:admin_dashboard/util/font/font_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class KindsMenuWidget extends StatelessWidget {
-  List<String> kinds;
-  KindsMenuWidget({required this.kinds, super.key});
+  int currntValue;
+  final onPressed;
+  Widget underline;
+  List<DropDownModel> kinds;
+  Size size;
+  KindsMenuWidget({
+    this.underline = const SizedBox(),
+    required this.kinds,
+    required this.currntValue,
+    required this.onPressed,
+    required this.size,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +28,24 @@ class KindsMenuWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: DropdownButton(
-            value:
-                state is ChangeKindsState && state.kind.isNotEmpty
-                    ? state.kind
-                    : kinds.first,
+            borderRadius: BorderRadius.circular(20),
+            underline: underline,
+            iconEnabledColor: selecteSideBarItem2,
+            enableFeedback: true,
+            value: currntValue,
             items:
                 kinds
                     .map(
-                      (item) =>
-                          DropdownMenuItem(value: item, child: Text(item)),
+                      (item) => DropdownMenuItem(
+                        value: item.id,
+                        child: Text(
+                          item.name,
+                          style: getProfileTitleLogginDateStyle(size),
+                        ),
+                      ),
                     )
                     .toList(),
-            onChanged: (value) => context.read<KindsCubit>().changeKind(value!),
+            onChanged: (value) => onPressed(value),
           ),
         );
       },

@@ -1,3 +1,6 @@
+import 'package:admin_dashboard/presentations/profile/data/repositories_sources/profile_repository_imp_source.dart';
+import 'package:admin_dashboard/presentations/profile/domain/use_cases/get_profile_use_case.dart';
+import 'package:admin_dashboard/presentations/profile/domain/use_cases/update_profile_use_case.dart';
 import 'package:admin_dashboard/presentations/profile/presentation/logic/bloc/profile_bloc.dart';
 import 'package:admin_dashboard/presentations/profile/presentation/logic/cubit/change_email_cubit.dart';
 import 'package:admin_dashboard/presentations/profile/presentation/logic/cubit/change_number_cubit.dart';
@@ -17,7 +20,15 @@ class ProfilePage extends StatelessWidget {
       providers: [
         BlocProvider<ProfileBloc>(
           create:
-              (context) => ProfileBloc(profileMiddleware: ProfileMiddleware()),
+              (context) => ProfileBloc(
+                updateProfileUseCase: UpdateProfileUseCase(
+                  profileRespository: ProfileRepositoryImpSource(),
+                ),
+                profileMiddleware: ProfileMiddleware().get(),
+                getProfileUseCase: GetProfileUseCase(
+                  profileRespository: ProfileRepositoryImpSource(),
+                ),
+              )..add(GetProfileInfoEvent()),
         ),
         BlocProvider<ChangeEmailCubit>(create: (context) => ChangeEmailCubit()),
         BlocProvider<ChangeNumberCubit>(

@@ -12,11 +12,23 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     on<MoveToLoggingProfilePageEvent>(moveToLoggingProfilePage);
     on<MoveToAddEmployeesPageEvent>(moveToAddEmployeesPage);
     on<MoveToEmployeesPageEvent>(moveToEmployeesPage);
+    on<MoveToViewEmployeePageEvent>(moveToViewEmployeesPage);
     on<MoveToUsersPageEvent>(moveToUsersPage);
+    on<MoveToViewUserPageEvent>(moveToViewUsersPage);
+    on<MoveToAddUserPageEvent>(moveToAddUsersPage);
     on<MoveToRequestsPageEvent>(moveToRequestsPage);
+    on<MoveToViewRequestsPageEvent>(moveToViewRequestsPage);
     on<MoveToPropertiesPageEvent>(moveToPropertiesPage);
     on<MoveToQuestionsPageEvent>(moveToQuestionsPage);
     on<MoveToSettingsPageEvent>(moveToSettingsPage);
+    on<MoveToHistoryPageEvent>(moveToHistoryPage);
+    on<MoveToSearchPageEvent>(moveToSearchPage);
+    on<MoveToViewCommonQuestionPageEvent>(moveToViewCommonQuestoin);
+    on<MoveToAddAdminCommonQuestionPageEvent>(moveToAddAdminCommonQuestoin);
+    on<MoveToRewardsPageEvent>(moveToRewards);
+    on<MoveToAddRewardPageEvent>(moveToAddReward);
+    on<MoveToViewUpdateRewardPageEvent>(moveToUpdateReward);
+    on<MoveToViewPropertyPageEvent>(moveToViewProperty);
   }
 
   void moveToHomePage(
@@ -44,15 +56,35 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     Emitter<ChangePageState> emit,
   ) => emit(MoveToAddEmployeesPageState(title: event.title));
 
+  void moveToViewEmployeesPage(
+    MoveToViewEmployeePageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToViewEmployeePageState(id: event.id, title: event.title));
+
   void moveToUsersPage(
     MoveToUsersPageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToUsersPageState(title: event.title));
 
+  void moveToAddUsersPage(
+    MoveToAddUserPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToAddUserPageState(title: event.title));
+
+  void moveToViewUsersPage(
+    MoveToViewUserPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToViewUserPageState(title: event.title, id: event.id));
+
   void moveToRequestsPage(
     MoveToRequestsPageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToRequestsPageState(title: event.title));
+
+  void moveToViewRequestsPage(
+    MoveToViewRequestsPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToViewRequestsPageState(id: event.id, title: event.title));
 
   void moveToPropertiesPage(
     MoveToPropertiesPageEvent event,
@@ -68,4 +100,46 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     MoveToSettingsPageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToSettingsPageState(title: event.title));
+
+  void moveToHistoryPage(
+    MoveToHistoryPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(
+    MoveToHistoryPageState(
+      id: event.id,
+      backWordFunction: event.backWordFunction,
+      title: event.title,
+    ),
+  );
+  void moveToSearchPage(
+    MoveToSearchPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToSearchPageState(title: event.title));
+  void moveToViewCommonQuestoin(
+    MoveToViewCommonQuestionPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToViewCommonQuestionPageState(title: event.title));
+  void moveToAddAdminCommonQuestoin(
+    MoveToAddAdminCommonQuestionPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToAddAdminCommonQuestionPageState(title: event.title));
+
+  void moveToRewards(
+    MoveToRewardsPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToRewardsPageState(title: event.title));
+
+  void moveToAddReward(
+    MoveToAddRewardPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToAddRewardPageState(title: event.title));
+  void moveToUpdateReward(
+    MoveToViewUpdateRewardPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToViewUpdateRewardPageState(title: event.title, id: event.id));
+
+  void moveToViewProperty(
+    MoveToViewPropertyPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToViewPropertyPageState(title: event.title, id: event.id));
 }

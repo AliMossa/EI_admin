@@ -13,7 +13,7 @@ class CancleLogoutWidget extends StatelessWidget {
       ),
       child: TextButton(
         onPressed: () => context.pop(),
-        child: Text("", style: const TextStyle(color: Colors.red)),
+        child: Text("cancle", style: const TextStyle(color: Colors.red)),
       ),
     );
   }

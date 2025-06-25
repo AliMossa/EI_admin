@@ -35,13 +35,36 @@ class MoveToAddEmployeesPageEvent extends ChangePageEvent {
 }
 
 // ignore: must_be_immutable
+class MoveToViewEmployeePageEvent extends ChangePageEvent {
+  int id;
+  MoveToViewEmployeePageEvent({required this.id, required super.title});
+}
+
+// ignore: must_be_immutable
 class MoveToUsersPageEvent extends ChangePageEvent {
   MoveToUsersPageEvent({required super.title});
 }
 
 // ignore: must_be_immutable
+class MoveToAddUserPageEvent extends ChangePageEvent {
+  MoveToAddUserPageEvent({required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToViewUserPageEvent extends ChangePageEvent {
+  int id;
+  MoveToViewUserPageEvent({required this.id, required super.title});
+}
+
+// ignore: must_be_immutable
 class MoveToRequestsPageEvent extends ChangePageEvent {
   MoveToRequestsPageEvent({required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToViewRequestsPageEvent extends ChangePageEvent {
+  int id;
+  MoveToViewRequestsPageEvent({required this.id, required super.title});
 }
 
 // ignore: must_be_immutable
@@ -57,4 +80,52 @@ class MoveToQuestionsPageEvent extends ChangePageEvent {
 // ignore: must_be_immutable
 class MoveToSettingsPageEvent extends ChangePageEvent {
   MoveToSettingsPageEvent({required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToHistoryPageEvent extends ChangePageEvent {
+  int id;
+  ChangePageEvent backWordFunction;
+  MoveToHistoryPageEvent({
+    required this.id,
+    required this.backWordFunction,
+    required super.title,
+  });
+}
+
+// ignore: must_be_immutable
+class MoveToSearchPageEvent extends ChangePageEvent {
+  MoveToSearchPageEvent({required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToViewCommonQuestionPageEvent extends ChangePageEvent {
+  MoveToViewCommonQuestionPageEvent({required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToAddAdminCommonQuestionPageEvent extends ChangePageEvent {
+  MoveToAddAdminCommonQuestionPageEvent({required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToRewardsPageEvent extends ChangePageEvent {
+  MoveToRewardsPageEvent({required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToAddRewardPageEvent extends ChangePageEvent {
+  MoveToAddRewardPageEvent({required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToViewUpdateRewardPageEvent extends ChangePageEvent {
+  int id;
+  MoveToViewUpdateRewardPageEvent({required this.id, required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToViewPropertyPageEvent extends ChangePageEvent {
+  int id;
+  MoveToViewPropertyPageEvent({required this.id, required super.title});
 }

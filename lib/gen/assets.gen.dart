@@ -12,6 +12,15 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/empty.svg
+  String get empty => 'assets/images/empty.svg';
+
+  /// File path: assets/images/error.svg
+  String get error => 'assets/images/error.svg';
+
+  /// File path: assets/images/image.svg
+  String get image => 'assets/images/image.svg';
+
   /// File path: assets/images/login_image.jpeg
   AssetGenImage get loginImage =>
       const AssetGenImage('assets/images/login_image.jpeg');
@@ -20,7 +29,7 @@ class $AssetsImagesGen {
   String get user => 'assets/images/user.svg';
 
   /// List of all assets
-  List<dynamic> get values => [loginImage, user];
+  List<dynamic> get values => [empty, error, image, loginImage, user];
 }
 
 class $AssetsLogoGen {

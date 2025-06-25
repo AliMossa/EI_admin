@@ -1,25 +1,31 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+// import 'package:bloc/bloc.dart';
+// import 'package:equatable/equatable.dart';
 
-part 'login_pages_state.dart';
+// part 'login_pages_state.dart';
 
-class LoginPagesCubit extends Cubit<LoginPagesState> {
-  LoginPagesCubit() : super(LoginPagesInitial());
+// class LoginPagesCubit extends Cubit<LoginPagesState> {
+//   LoginPagesCubit() : super(LoginPagesInitial());
 
-  void moveToCheckCode() {
-    emit(LoadingMoveToCheckCodePageState());
-    emit(MoveToCheckCodePageState());
-  }
+//   void moveToCheckCode() {
+//     emit(LoadingMoveToCheckCodePageState());
+//     emit(MoveToCheckCodePageState());
+//   }
 
-  void moveToResetPassword() {
-    emit(LoadingMoveToResetPasswordPageState());
+//   void moveToResetPassword() {
+//     emit(LoadingMoveToResetPasswordPageState());
 
-    emit(MoveToResetPasswordPageState());
-  }
+//     emit(MoveToResetPasswordPageState());
+//   }
 
-  void moveToLogin() {
-    emit(LoadingMoveToLoginPageState());
+//   void moveToLogin() {
+//     emit(LoadingMoveToLoginPageState());
 
-    emit(MoveToLoginPageState());
-  }
-}
+//     emit(MoveToLoginPageState());
+//   }
+
+//   void moveToSetEmailCheckCode() {
+//     emit(LoadingMoveToSetEmailCheckCodePageState());
+
+//     emit(MoveToSetEmailCheckCodePageState());
+//   }
+// }

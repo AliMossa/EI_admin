@@ -8,7 +8,8 @@ class KindsCubit extends Cubit<KindsState> {
   EmployeesMiddleware employeesMiddleware;
   KindsCubit({required this.employeesMiddleware}) : super(KindsInitial());
 
-  void changeKind(String newChangedKind) {
-    emit(ChangeKindsState(kind: newChangedKind));
+  void changeKind() {
+    emit(LoadingChangeKindsState());
+    emit(ChangeKindsState());
   }
 }

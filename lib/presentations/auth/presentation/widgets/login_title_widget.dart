@@ -1,10 +1,12 @@
 import 'package:admin_dashboard/util/colors/colors.dart';
+import 'package:admin_dashboard/util/font/font_styles.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../util/sizes/fonts_sizes.dart';
 
 class LoginTitleWidget extends StatelessWidget {
-  const LoginTitleWidget({super.key});
+  Size size;
+  LoginTitleWidget({required this.size, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +20,7 @@ class LoginTitleWidget extends StatelessWidget {
           textWidthBasis: TextWidthBasis.parent,
           overflow: TextOverflow.ellipsis,
 
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-
-            fontSize: slangNamMiniSize,
-            color: Colors.black,
-            decoration: TextDecoration.none,
-          ),
+          style: getWelcomStyle(size),
         ),
         const SizedBox(width: 20),
         Text(
@@ -33,16 +29,7 @@ class LoginTitleWidget extends StatelessWidget {
           softWrap: true,
           textWidthBasis: TextWidthBasis.parent,
 
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            decoration: TextDecoration.none,
-            fontSize: slangNamSize,
-            foreground:
-                Paint()
-                  ..shader = mainGradient.createShader(
-                    Rect.fromLTRB(0, 0, 200, 70),
-                  ),
-          ),
+          style: getSlangNameStyle(size),
         ),
       ],
     );

@@ -1,7 +1,6 @@
-import 'package:admin_dashboard/presentations/auth/presentation/logic/bloc/login_bloc.dart';
-import 'package:admin_dashboard/presentations/auth/presentation/logic/cubit/login_pages_cubit.dart';
-import 'package:admin_dashboard/presentations/auth/presentation/login_page.dart';
-import 'package:admin_dashboard/presentations/auth/presentation/middleware/auth_middleware.dart';
+import 'package:admin_dashboard/presentations/public/auth/auth_page.dart';
+import 'package:admin_dashboard/presentations/public/auth/logic/bloc/auth_bloc.dart';
+import 'package:admin_dashboard/presentations/public/auth/middleware/auth_widget_middleware.dart';
 import 'package:admin_dashboard/presentations/public/main_page/main_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -10,22 +9,43 @@ class Routes {
   GoRouter router = GoRouter(
     routes: [
       GoRoute(
-        path: '/home',
+        path: '/',
         builder:
             (context, state) => MultiBlocProvider(
               providers: [
+                // BlocProvider(
+                //   create:
+                //       (context) => LoginBloc(
+                //         resetPasswordUseCase: ResetPasswordUseCase(
+                //           authRepository: AuthRempositoryImpSource(),
+                //         ),
+                //         verifyCodeUseCase: VerifyCodeUseCase(
+                //           authRepository: AuthRempositoryImpSource(),
+                //         ),
+                //         sendVerifiicationCodeUseCase:
+                //             SendVerifiicationCodeUseCase(
+                //               authRepository: AuthRempositoryImpSource(),
+                //             ),
+                //         authMiddleware: AuthMiddleware().getAuthMiddleware(),
+                //         loginUseCase: LoginUseCase(
+                //           authRepository: AuthRempositoryImpSource(),
+                //         ),
+                //       )..add(CheckLoggingEvent()),
+                // ),
+                // BlocProvider<LoginPagesCubit>(
+                //   create: (context) => LoginPagesCubit()..moveToLogin(),
+                // ),
                 BlocProvider(
                   create:
-                      (context) => LoginBloc(authMiddleware: AuthMiddleware()),
-                ),
-                BlocProvider<LoginPagesCubit>(
-                  create: (context) => LoginPagesCubit()..moveToLogin(),
+                      (context) =>
+                          AuthBloc(authWidgetMiddleware: AuthWidgetMiddleware())
+                            ..add(MoveToLoginPageEvent()),
                 ),
               ],
-              child: LoginPage(),
+              child: AuthPage(),
             ),
       ),
-      GoRoute(path: '/', builder: (context, state) => MainPage()),
+      GoRoute(path: '/home', builder: (context, state) => MainPage()),
     ],
   );
 }

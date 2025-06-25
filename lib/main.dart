@@ -1,7 +1,7 @@
 import 'package:admin_dashboard/util/routes/routes.dart';
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,13 +25,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: '',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return ScreenUtilInit(
+      designSize: const Size(1440, 1024), // Adjust to your design spec
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: '',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
+        routerConfig: Routes().router,
       ),
-      routerConfig: Routes().router,
     );
   }
 }

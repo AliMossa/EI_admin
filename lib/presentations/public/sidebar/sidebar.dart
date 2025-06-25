@@ -1,4 +1,7 @@
+import 'package:admin_dashboard/presentations/auth/data/repositories_sources/auth_rempository_imp_source.dart';
+import 'package:admin_dashboard/presentations/auth/domain/use_cases/logout_use_case.dart';
 import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
+import 'package:admin_dashboard/presentations/public/sidebar/logic/bloc/logout_bloc.dart';
 import 'package:admin_dashboard/presentations/public/sidebar/logic/change_selected_color_item/cubit/change_selected_color_cubit.dart';
 import 'package:admin_dashboard/presentations/public/sidebar/logic/cubit/sidebar_cubit.dart';
 import 'package:admin_dashboard/presentations/public/sidebar/middleware/sidebar_middleware.dart';
@@ -7,6 +10,7 @@ import 'package:admin_dashboard/presentations/public/sidebar/widgets/sidebar_ite
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../gen/assets.gen.dart';
 import 'widgets/side_bar_back_button.dart';
 
@@ -22,13 +26,19 @@ class Sidebar extends StatelessWidget {
           BlocProvider<SidebarCubit>(create: (context) => SidebarCubit()),
           BlocProvider(
             create:
-                (context) =>
-                    ChangeSelectedColorCubit()..ChangeColorSelectedItem(0),
+                (context) => ChangeSelectedColorCubit(
+                  sidebarMiddleware: SidebarMiddleware(),
+                )..ChangeColorSelectedItem(0),
           ),
-          // BlocProvider<LogoutBloc>(
-          //     create: (context) => LogoutBloc(
-          //         logoutUsecase:
-          //             LogoutUsecase(loginRepository: LoginRepositoryImp())))
+          BlocProvider<LogoutBloc>(
+            create:
+                (context) => LogoutBloc(
+                  logoutUsecase: LogoutUseCase(
+                    authRepository: AuthRempositoryImpSource(),
+                  ),
+                  sidebarMiddleware: SidebarMiddleware().get(),
+                ),
+          ),
         ],
         child: BlocBuilder<SidebarCubit, SidebarState>(
           builder: (context, state) {
@@ -131,11 +141,24 @@ class Sidebar extends StatelessWidget {
                       ),
                       SidebarItem(
                         index: 5,
-                        icon: Icons.home_work_rounded,
+                        icon: Icons.redeem_rounded,
                         onClicked: () {
                           context
                               .read<ChangeSelectedColorCubit>()
                               .ChangeColorSelectedItem(5);
+                          context.read<ChangePageBloc>().add(
+                            MoveToRewardsPageEvent(title: 'Rewards'),
+                          );
+                        },
+                        title: 'Rewards',
+                      ),
+                      SidebarItem(
+                        index: 6,
+                        icon: Icons.home_work_rounded,
+                        onClicked: () {
+                          context
+                              .read<ChangeSelectedColorCubit>()
+                              .ChangeColorSelectedItem(6);
                           context.read<ChangePageBloc>().add(
                             MoveToPropertiesPageEvent(title: 'Properties'),
                           );
@@ -143,12 +166,12 @@ class Sidebar extends StatelessWidget {
                         title: 'Properties',
                       ),
                       SidebarItem(
-                        index: 6,
+                        index: 7,
                         icon: Icons.help_rounded,
                         onClicked: () {
                           context
                               .read<ChangeSelectedColorCubit>()
-                              .ChangeColorSelectedItem(6);
+                              .ChangeColorSelectedItem(7);
                           context.read<ChangePageBloc>().add(
                             MoveToQuestionsPageEvent(title: 'Questions'),
                           );
@@ -158,23 +181,44 @@ class Sidebar extends StatelessWidget {
 
                       SideBarDividerWidget(color: Colors.white, thickness: 3),
                       SidebarItem(
-                        index: 7,
+                        index: 8,
                         icon: Icons.settings,
                         onClicked: () {
                           context
                               .read<ChangeSelectedColorCubit>()
-                              .ChangeColorSelectedItem(7);
+                              .ChangeColorSelectedItem(8);
                           context.read<ChangePageBloc>().add(
                             MoveToSettingsPageEvent(title: 'Settings'),
                           );
                         },
                         title: 'Settings',
                       ),
-                      SidebarItem(
-                        index: 9,
-                        icon: Icons.logout,
-                        onClicked: () {},
-                        title: 'Logout',
+                      BlocConsumer<LogoutBloc, LogoutState>(
+                        builder: (context, state) {
+                          return SidebarItem(
+                            index: 9,
+                            icon: Icons.logout,
+                            onClicked:
+                                () => context
+                                    .read<LogoutBloc>()
+                                    .sidebarMiddleware
+                                    .showNotice(
+                                      context,
+                                      moreInfo,
+                                      context.read<LogoutBloc>(),
+                                      'Logging out',
+                                      'are you sure?',
+                                    ),
+                            title: 'Logout',
+                          );
+                        },
+                        listener: (BuildContext context, LogoutState state) {
+                          if (state is SuccessSendLogoutState) {
+                            context.push('/');
+                          } else {
+                            context.pop();
+                          }
+                        },
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,

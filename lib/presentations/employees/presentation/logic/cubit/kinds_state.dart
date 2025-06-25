@@ -10,7 +10,6 @@ sealed class KindsState extends Equatable {
 final class KindsInitial extends KindsState {}
 
 // ignore: must_be_immutable
-class ChangeKindsState extends KindsState {
-  String kind;
-  ChangeKindsState({required this.kind});
-}
+class ChangeKindsState extends KindsState {}
+
+class LoadingChangeKindsState extends KindsState {}
