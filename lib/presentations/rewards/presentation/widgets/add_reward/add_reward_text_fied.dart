@@ -1,9 +1,7 @@
-import 'package:admin_dashboard/presentations/rewards/presentation/logic/add_reward/add_reward_bloc.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:admin_dashboard/util/font/font_styles.dart';
 import 'package:admin_dashboard/util/sizes/fonts_sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class AddRewardTextFied extends StatelessWidget {

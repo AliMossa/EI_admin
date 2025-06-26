@@ -1,11 +1,11 @@
 import 'package:admin_dashboard/presentations/home/domain/entities/request_statistics_of_users_entity.dart';
-import 'package:admin_dashboard/presentations/home/domain/entities/statistics_of_uses_entity.dart';
+import 'package:admin_dashboard/presentations/home/domain/entities/statistics_of_users_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
 
 abstract class GetStatisticsOfUsersDataSource {
-  Future<StatisticsOfUsesEntity> getStatisticsOfUsers(
+  Future<StatisticsOfUsersEntity> getStatisticsOfUsers(
     RequestStatisticsOfUsersEntity requestStatisticsOfUsersEntity,
   );
 }
@@ -19,7 +19,7 @@ class GetStatisticsOfUsersDataSourceWithDio
           GetStatisticsOfUsersDataSourceWithDio());
 
   @override
-  Future<StatisticsOfUsesEntity> getStatisticsOfUsers(
+  Future<StatisticsOfUsersEntity> getStatisticsOfUsers(
     RequestStatisticsOfUsersEntity requestStatisticsOfUsersEntity,
   ) async {
     String message = '';
@@ -30,7 +30,8 @@ class GetStatisticsOfUsersDataSourceWithDio
         requestStatisticsOfUsersEntity.token,
       );
       final item = response['data'];
-      return StatisticsOfUsesEntity(
+      print(item);
+      return StatisticsOfUsersEntity(
         admins: item['admin'],
         investors: item['investor'],
         economicTeams: item['economic team'],

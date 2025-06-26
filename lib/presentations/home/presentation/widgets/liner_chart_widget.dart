@@ -1,5 +1,5 @@
 import 'package:admin_dashboard/presentations/home/domain/entities/list_success_statistics_entity.dart';
-import 'package:admin_dashboard/presentations/home/presentation/logic/bloc/success_statistics_bloc.dart';
+import 'package:admin_dashboard/presentations/home/presentation/logic/success_statistics/success_statistics_bloc.dart';
 import 'package:admin_dashboard/presentations/home/presentation/models/list_months_model.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -27,7 +27,7 @@ class LinerChartWidget extends StatelessWidget {
         return context
             .read<SuccessStatisticsBloc>()
             .homeMiddleware
-            .getCorrectWidgetForLinerChart(context, state)
+            .getCorrectWidgetForLinerChart(context, state, size)
             .fold(
               (_) => Container(
                 padding: EdgeInsets.only(
@@ -41,7 +41,7 @@ class LinerChartWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
 
-                width: size.width * .6,
+                width: size.width * .5,
                 height: size.height * .5,
                 child: LineChart(
                   duration: const Duration(milliseconds: 500),

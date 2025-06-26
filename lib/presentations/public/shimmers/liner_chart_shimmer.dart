@@ -1,42 +1,77 @@
+import 'package:admin_dashboard/util/colors/colors.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
+// ignore: must_be_immutable
 class LinerChartShimmer extends StatelessWidget {
-  const LinerChartShimmer({super.key});
+  Size size;
+  LinerChartShimmer({required this.size, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey.shade300,
-      highlightColor: Colors.grey.shade100,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: List.generate(6, (i) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6.0),
-            child: Row(
-              children: [
-                Container(width: 40, height: 12, color: Colors.white),
-                SizedBox(width: 8),
-                Expanded(
-                  child: Row(
-                    children: List.generate(6, (j) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Container(
-                          width: 16,
-                          height: (10 + j * 6).toDouble(),
-                          color: Colors.white,
-                        ),
-                      );
-                    }),
+    return SizedBox(
+      height: size.height * .5,
+      width: size.width * .5,
+
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Shimmer.fromColors(
+          baseColor: Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: LineChart(
+            LineChartData(
+              maxX: 5.5,
+              maxY: 3,
+              lineTouchData: LineTouchData(enabled: false),
+
+              borderData: FlBorderData(
+                show: true,
+                border: Border(
+                  left: BorderSide(color: textFieldBorder),
+                  bottom: BorderSide(color: textFieldBorder),
+                  right: BorderSide.none,
+                  top: BorderSide.none,
+                ),
+              ),
+              gridData: FlGridData(
+                drawHorizontalLine: true,
+                drawVerticalLine: false,
+              ),
+              titlesData: FlTitlesData(
+                rightTitles: AxisTitles(),
+                topTitles: AxisTitles(),
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: false,
+                    getTitlesWidget: (value, _) => Text('Day ${value.toInt()}'),
                   ),
+                ),
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+              ),
+
+              lineBarsData: [
+                LineChartBarData(
+                  dotData: FlDotData(show: false),
+                  preventCurveOverShooting: true,
+                  isCurved: true,
+                  color: Colors.blue,
+                  barWidth: 4,
+
+                  spots: [
+                    FlSpot(1, 2),
+                    FlSpot(2, 2.5),
+                    FlSpot(3, 1.5),
+                    FlSpot(4, 2.5),
+                    FlSpot(5, 2),
+                  ],
                 ),
               ],
             ),
-          );
-        }),
+          ),
+        ),
       ),
     );
   }

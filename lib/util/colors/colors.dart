@@ -76,7 +76,14 @@ final black50 = Colors.black45;
 
 final textFieldIcons = Color.fromRGBO(35, 35, 35, .5);
 final textFieldBorder = const Color.fromRGBO(131, 107, 253, 1);
-const textFieldColor = Color.fromARGB(255, 218, 214, 226);
+const Color mint = Color.fromRGBO(80, 227, 194, 1); // Fresh mint
+const Color coral = Color.fromRGBO(250, 114, 104, 1); // Gentle coral
+const Color graphite = Color.fromRGBO(52, 58, 64, 1); // Charcoal gray
+const Color blush = Color.fromRGBO(255, 192, 203, 1); // Pale blush pink
+const Color sand = Color.fromRGBO(245, 222, 179, 1); // Vivid gold
+const Color sky = Color.fromRGBO(96, 175, 255, 1);
+
+const textFieldColor = Color.fromARGB(255, 169, 127, 255);
 final searchBarInside = const Color.fromARGB(255, 170, 156, 241);
 final textFieldInside = const Color.fromRGBO(151, 138, 236, .3);
 

@@ -50,7 +50,8 @@ class ViewUpdateRewardItemList extends StatelessWidget {
         return Stack(
           children: [
             Container(
-              width: size.width * .55,
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              width: size.width * .6,
               decoration: BoxDecoration(
                 color: background,
                 border: Border.all(color: textFieldBorder),
@@ -86,12 +87,15 @@ class ViewUpdateRewardItemList extends StatelessWidget {
                           title: 'amountThreshold',
                           widthSizeFactor: .3,
                           validation: (value) => percentValidation(value),
+                          suffix: Icon(
+                            Icons.attach_money_rounded,
+                            color: textFieldBorder,
+                          ),
 
                           initialInfo: rewardEntity.amountThreshold.toString(),
                         ),
                         AddRewardTextFied(
                           multiline: 1,
-
                           autofocus: false,
                           focusNode: percentFocusNode,
                           nextFocusNode: FocusNode(),
@@ -103,6 +107,7 @@ class ViewUpdateRewardItemList extends StatelessWidget {
                           suffix: Icon(Icons.percent, color: textFieldBorder),
                           validation: (value) => percentValidation(value),
                         ),
+
                         AddRewardTextFied(
                           multiline: 1,
                           autofocus: false,
@@ -113,7 +118,6 @@ class ViewUpdateRewardItemList extends StatelessWidget {
                           title: 'times',
                           widthSizeFactor: .1,
                           initialInfo: rewardEntity.times.toString(),
-
                           validation: (value) => percentValidation(value),
                         ),
                       ],

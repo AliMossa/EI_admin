@@ -3,7 +3,7 @@ import 'package:admin_dashboard/presentations/home/data/data_sources/get_success
 import 'package:admin_dashboard/presentations/home/domain/entities/list_success_statistics_entity.dart';
 import 'package:admin_dashboard/presentations/home/domain/entities/request_statistics_of_users_entity.dart';
 import 'package:admin_dashboard/presentations/home/domain/entities/request_success_statistics_entity.dart';
-import 'package:admin_dashboard/presentations/home/domain/entities/statistics_of_uses_entity.dart';
+import 'package:admin_dashboard/presentations/home/domain/entities/statistics_of_users_entity.dart';
 import 'package:admin_dashboard/presentations/home/domain/repositories/home_repository.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
 import 'package:admin_dashboard/util/errors/admin_exceptions.dart';
@@ -27,7 +27,7 @@ class HomeRepositoryImpSource implements HomeRepository {
   }
 
   @override
-  Future<Either<ServerAdminException, StatisticsOfUsesEntity>>
+  Future<Either<ServerAdminException, StatisticsOfUsersEntity>>
   getStatisticsOfUsers(
     RequestStatisticsOfUsersEntity requestStatisticsOfUsersEntity,
   ) async {

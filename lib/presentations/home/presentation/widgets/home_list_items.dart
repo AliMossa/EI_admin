@@ -1,4 +1,5 @@
-import 'package:admin_dashboard/presentations/home/presentation/logic/bloc/success_statistics_bloc.dart';
+import 'package:admin_dashboard/presentations/home/presentation/logic/bloc/statistics_of_users_bloc.dart';
+import 'package:admin_dashboard/presentations/home/presentation/logic/success_statistics/success_statistics_bloc.dart';
 import 'package:admin_dashboard/presentations/home/presentation/widgets/liner_chart_widget.dart';
 import 'package:admin_dashboard/presentations/home/presentation/widgets/pie_chart_widget.dart';
 import 'package:flutter/widgets.dart';
@@ -11,21 +12,38 @@ class HomeListItems extends StatelessWidget {
   Widget build(BuildContext context) {
     final moreInfo = MediaQuery.sizeOf(context);
     return SizedBox(
-      width: moreInfo.width * .8,
+      width: moreInfo.width * .81,
       height: moreInfo.height * .8,
       child: ListView(
         children: [
-          LinerChartWidget(
-            list:
-                context
-                    .watch<SuccessStatisticsBloc>()
-                    .homeMiddleware
-                    .getSuccessStatisticsEntity(),
-            maxValue: 100,
-            minValue: 0,
-            size: moreInfo,
+          Row(
+            children: [
+              LinerChartWidget(
+                list:
+                    context
+                        .watch<SuccessStatisticsBloc>()
+                        .homeMiddleware
+                        .getSuccessStatisticsEntity(),
+                maxValue: 100,
+                minValue: 0,
+                size: moreInfo,
+              ),
+              SizedBox(width: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  PieChartWidget(
+                    size: moreInfo,
+                    totalStatisticsOfUsesEntity:
+                        context
+                            .watch<StatisticsOfUsersBloc>()
+                            .homeMiddleware
+                            .getTotalStatisticsOfUsesEntity(),
+                  ),
+                ],
+              ),
+            ],
           ),
-          Center(child: PieChartWidget(size: moreInfo)),
         ],
       ),
     );

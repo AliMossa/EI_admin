@@ -78,7 +78,7 @@ class AddRewardListItemsWidget extends StatelessWidget {
                       widthSizeFactor: .3,
                       validation: (value) => percentValidation(value),
                       suffix: Icon(
-                        Icons.monetization_on_rounded,
+                        Icons.attach_money_rounded,
                         color: textFieldBorder,
                       ),
                       initialInfo: '',
