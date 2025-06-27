@@ -42,6 +42,8 @@ class GetProfileInfoDataSourceWithDio extends GetProfileInfoDataSource {
         ).format(DateTime.parse(response['data']['created_at'])),
         pesonalPhoto: response['data']['personal_photo'] ?? '',
       );
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
       throw ServerAdminError(message: message);

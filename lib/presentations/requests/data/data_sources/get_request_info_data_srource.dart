@@ -80,6 +80,8 @@ class GetRequestInfoDataSrourceWithDio extends GetRequestInfoDataSrource {
         ),
         requestStatus: item['status'],
       );
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
       throw ServerAdminError(message: message);

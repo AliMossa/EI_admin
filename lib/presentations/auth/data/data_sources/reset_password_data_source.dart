@@ -36,6 +36,8 @@ class ResetPasswordDataSourceWithDio extends ResetPasswordDataSource {
       }
 
       return message;
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
       throw ServerAdminError(message: message);

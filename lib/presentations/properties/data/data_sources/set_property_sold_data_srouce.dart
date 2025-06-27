@@ -36,6 +36,8 @@ class SetPropertySoldDataSrouceWithDio extends SetPropertySoldDataSrouce {
       print(message);
 
       return message;
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
 

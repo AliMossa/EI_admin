@@ -48,6 +48,8 @@ class GetProfileLogsDataSourceWithDio extends GetProfileLogsDataSource {
       }
       result.nextPage = response['data']['pagination']['next_page_url'] ?? '';
       return result;
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print("******${error}");
       throw ServerAdminError(message: message);

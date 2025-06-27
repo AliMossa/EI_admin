@@ -57,6 +57,8 @@ class SearchDataSourceWithDio extends SearchDataSource {
         );
       }
       return SearchTotalEntity(link: '', list: list);
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

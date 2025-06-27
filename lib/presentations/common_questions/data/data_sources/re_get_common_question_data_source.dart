@@ -44,6 +44,8 @@ class ReGetCommonQuestionDataSourceWithDio
         );
       }
       return TotalCommonQuestionsEntity(list: list, nextPage: '');
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

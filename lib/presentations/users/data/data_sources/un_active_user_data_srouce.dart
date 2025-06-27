@@ -31,6 +31,8 @@ class UnActiveUserDataSrouceWithDio extends UnActiveUserDataSrouce {
         throw Exception();
       }
       return message;
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

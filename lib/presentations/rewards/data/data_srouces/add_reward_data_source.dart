@@ -35,6 +35,8 @@ class AddRewardDataSourceWithDio extends AddRewardDataSource {
         throw Exception();
       }
       return message;
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(message);
       print(error);

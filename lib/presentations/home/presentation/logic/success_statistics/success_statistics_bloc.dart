@@ -24,23 +24,23 @@ class SuccessStatisticsBloc
     Emitter<SuccessStatisticsState> emit,
   ) async {
     emit(LoadingGetSuccessStatisticsState());
-    // try {
-    //   final token = await SafeStorage.read('token');
-    //   final response = await getSuccessStatisticsUseCase(
-    //     RequestSuccessStatisticsEntity(token: token!, year: event.year),
-    //   );
-    //   response.fold(
-    //     (failed) =>
-    //         emit(FailedGetSuccessStatisticsState(message: failed.message)),
-    //     (success) {
-    //       homeMiddleware.setSuccessStatisticsEntity(success);
-    //       emit(SuccessGetSuccessStatisticsState());
-    //     },
-    //   );
-    // } on ServerAdminException catch (error) {
-    //   emit(FailedGetSuccessStatisticsState(message: error.message));
-    // } catch (error) {
-    //   emit(FailedGetSuccessStatisticsState(message: 'error'));
-    // }
+    try {
+      final token = await SafeStorage.read('token');
+      final response = await getSuccessStatisticsUseCase(
+        RequestSuccessStatisticsEntity(token: token!, year: event.year),
+      );
+      response.fold(
+        (failed) =>
+            emit(FailedGetSuccessStatisticsState(message: failed.message)),
+        (success) {
+          homeMiddleware.setSuccessStatisticsEntity(success);
+          emit(SuccessGetSuccessStatisticsState());
+        },
+      );
+    } on ServerAdminException catch (error) {
+      emit(FailedGetSuccessStatisticsState(message: error.message));
+    } catch (error) {
+      emit(FailedGetSuccessStatisticsState(message: 'error'));
+    }
   }
 }

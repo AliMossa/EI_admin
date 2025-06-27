@@ -49,6 +49,8 @@ class ViewEmployeeDataSourceWithDio extends ViewEmployeeDataSource {
         frontIdImage: item['front_id_image'],
         backIdImage: item['back_id_image'],
       );
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
       throw ServerAdminError(message: message);

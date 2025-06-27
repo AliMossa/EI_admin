@@ -41,6 +41,8 @@ class UpdateProfileInfoDataSourceWithDio extends UpdateProfileInfoDataSource {
       }
 
       return message;
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print("error in data source$error");
       throw ServerAdminError(message: message);

@@ -5,6 +5,7 @@ import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:math';
 
 // ignore: must_be_immutable
 class LinerChartWidget extends StatelessWidget {
@@ -42,7 +43,7 @@ class LinerChartWidget extends StatelessWidget {
                 ),
 
                 width: size.width * .5,
-                height: size.height * .5,
+                height: size.height * .6,
                 child: LineChart(
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.bounceIn,

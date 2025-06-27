@@ -69,6 +69,8 @@ class UpdateEmployeeDataSourceWithDio extends UpdateEmployeeDataSource {
         throw ServerAdminError(message: message);
       }
       return message;
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

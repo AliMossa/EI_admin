@@ -1,4 +1,8 @@
+import 'package:admin_dashboard/presentations/public/error_widget/snack_bar_widget.dart';
+import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class Apis {
   final Dio _dio = Dio();
@@ -18,6 +22,11 @@ class Apis {
         },
       ),
     );
+    if (response.statusCode! >= 400 && response.statusCode! < 500) {
+      throw ClientAdminError(message: ShowNotices.usersError);
+    } else if (response.statusCode! >= 500 && response.statusCode! < 600) {
+      throw ClientAdminError(message: ShowNotices.serverError);
+    }
 
     return response.data;
   }
@@ -38,6 +47,11 @@ class Apis {
         },
       ),
     );
+    if (response.statusCode! >= 400 && response.statusCode! < 500) {
+      throw ClientAdminError(message: ShowNotices.usersError);
+    } else if (response.statusCode! >= 500 && response.statusCode! < 600) {
+      throw ClientAdminError(message: ShowNotices.serverError);
+    }
 
     return response.data;
   }
@@ -59,6 +73,11 @@ class Apis {
         },
       ),
     );
+    if (response.statusCode! >= 400 && response.statusCode! < 500) {
+      throw ClientAdminError(message: ShowNotices.usersError);
+    } else if (response.statusCode! >= 500 && response.statusCode! < 600) {
+      throw ClientAdminError(message: ShowNotices.serverError);
+    }
 
     return response.data;
   }

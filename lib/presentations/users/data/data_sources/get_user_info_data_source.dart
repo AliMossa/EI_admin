@@ -37,6 +37,8 @@ class GetUserInfoDataSourceWithDio extends GetUserInfoDataSource {
         loggedIn: '',
         isActive: item['active'] == 1 ? true : false,
       );
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
       throw ServerAdminError(message: 'message');

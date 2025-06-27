@@ -35,6 +35,8 @@ class LoginDataSourceWithDio extends LoginDataSource {
         throw Exception(message);
       }
       return ResponseAuthEntity(message: message, token: response['token']);
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
       throw ServerAdminError(message: message);

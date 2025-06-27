@@ -39,6 +39,8 @@ class ReGetRewardDataSourceWithDio extends ReGetRewardDataSource {
         );
       }
       return TotalRewardEntity(nextPage: '', rewards: list);
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

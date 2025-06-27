@@ -41,6 +41,8 @@ class NetworkApisRouts {
   final String _getSuccessStatistics =
       'api/successful_Requests_Percentage_ByMonth_in_year';
   final String _getStatisticsOfUsers = 'api/user_counts_by_role';
+  final String _getRequestsStatistics = 'api/get_Request_Statistics';
+  final String _getMoneiesRates = 'https://open.er-api.com/v6/latest/USD';
 
   String getBaseUrl() => _server;
   String getLoginApi() => _server + _loginApi;
@@ -83,4 +85,6 @@ class NetworkApisRouts {
   String propertyNewStudyApi() => _server + _propertyNewStudy;
   String getSuccessStatisticsApi() => _server + _getSuccessStatistics;
   String getStatisticsOfUsersApi() => _server + _getStatisticsOfUsers;
+  String getRequestsStatisticsApi() => _server + _getRequestsStatistics;
+  String getMoniesRatesApi() => _getMoneiesRates;
 }

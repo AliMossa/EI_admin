@@ -41,6 +41,8 @@ class GetPropertiesDataSrouceWithDio extends GetPropertiesDataSrouce {
         );
       }
       return PropertyListEntity(list: list, nextPage: '');
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
       throw ServerAdminError(message: message);

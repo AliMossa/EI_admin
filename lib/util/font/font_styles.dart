@@ -104,6 +104,15 @@ TextStyle getProfileTitleLogginDateStyle(Size size) {
   );
 }
 
+TextStyle getMoneytTextStyle(Size size) {
+  return TextStyle(
+    color: Colors.green,
+    fontWeight: FontWeight.bold,
+    fontSize: FlexibleMethod.getCorrectListTileTextWidth(size).width,
+    overflow: TextOverflow.ellipsis,
+  );
+}
+
 final profileTitleLogginDateStyle1 = TextStyle(
   color: black75,
   fontWeight: FontWeight.bold,

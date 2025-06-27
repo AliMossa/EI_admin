@@ -1,5 +1,5 @@
 import 'package:admin_dashboard/presentations/home/domain/entities/total_statistics_of_uses_entity.dart';
-import 'package:admin_dashboard/presentations/home/presentation/logic/bloc/statistics_of_users_bloc.dart';
+import 'package:admin_dashboard/presentations/home/presentation/logic/statistics_of_users/statistics_of_users_bloc.dart';
 import 'package:admin_dashboard/presentations/home/presentation/widgets/pie_texts_widget.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -35,7 +35,9 @@ class PieChartWidget extends StatelessWidget {
                 width: size.width * .3,
                 height: size.height * .35,
                 child: ListView(
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: const BouncingScrollPhysics(
+                    decelerationRate: ScrollDecelerationRate.normal,
+                  ),
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
@@ -60,15 +62,7 @@ class PieChartWidget extends StatelessWidget {
                                   .admins,
                           color: textFieldBorder,
                         ),
-                        PieTextsWidget(
-                          size: size,
-                          title: 'economic teams',
-                          value:
-                              totalStatisticsOfUsesEntity
-                                  .statisticsOfUsersEntity
-                                  .economicTeams,
-                          color: graphite,
-                        ),
+
                         PieTextsWidget(
                           size: size,
                           title: 'legal teams',
@@ -78,11 +72,20 @@ class PieChartWidget extends StatelessWidget {
                                   .admins,
                           color: sky,
                         ),
+                        PieTextsWidget(
+                          size: size,
+                          title: 'economic teams',
+                          value:
+                              totalStatisticsOfUsesEntity
+                                  .statisticsOfUsersEntity
+                                  .economicTeams,
+                          color: graphite,
+                        ),
                       ],
                     ),
                     SizedBox(
-                      width: size.width * .2,
-                      height: size.width * .2,
+                      width: size.width * .18,
+                      //height: size.width * .2,
                       child: PieChart(
                         curve: Curves.easeInBack,
                         duration: const Duration(milliseconds: 500),

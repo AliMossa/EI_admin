@@ -40,6 +40,8 @@ class ReGetEmployeesDataSourceWithDio extends ReGetEmployeesDataSource {
         );
       }
       return TotalEmployeesEntity(employees: list, nextPage: '');
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

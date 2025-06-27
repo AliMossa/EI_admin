@@ -40,6 +40,8 @@ class ReGetUsesDataSourceWithDio extends ReGetUsesDataSource {
         );
       }
       return TotalUserEntity(users: list, nextPage: '');
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

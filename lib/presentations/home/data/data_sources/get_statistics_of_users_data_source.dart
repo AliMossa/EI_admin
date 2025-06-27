@@ -29,6 +29,12 @@ class GetStatisticsOfUsersDataSourceWithDio
         {},
         requestStatisticsOfUsersEntity.token,
       );
+      if (response['errors'] == null) {
+        message = response['message'];
+      } else {
+        message = response['message'] ?? response['errors'];
+        throw Exception();
+      }
       final item = response['data'];
       print(item);
       return StatisticsOfUsersEntity(
@@ -37,6 +43,8 @@ class GetStatisticsOfUsersDataSourceWithDio
         economicTeams: item['economic team'],
         legalTeams: item['legal team'],
       );
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

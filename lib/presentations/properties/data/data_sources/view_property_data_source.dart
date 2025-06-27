@@ -81,6 +81,8 @@ class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
           ids: getImages(idsItem),
         ),
       );
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
       throw ServerAdminError(message: message);

@@ -45,6 +45,8 @@ class GetAllRequestsDataSrouceWithDio extends GetAllRequestsDataSrouce {
         );
       }
       return TotalRequestEntity(requests: requests, nextPage: '');
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

@@ -39,6 +39,8 @@ class AddCommonQuestionDataSourceWithDio extends AddCommonQuestionDataSource {
       //   throw Exception();
       // }
       return message;
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       print(error);
       throw ServerAdminError(message: message);

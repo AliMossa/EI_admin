@@ -41,6 +41,8 @@ class ReGetSearchDataSourceWithDio extends ReGetSearchDataSource {
         );
       }
       return SearchTotalEntity(list: list, link: '');
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }

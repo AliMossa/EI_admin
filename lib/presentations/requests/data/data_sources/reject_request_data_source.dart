@@ -33,6 +33,8 @@ class RejectRequestDataSourceWithDio extends RejectRequestDataSource {
         throw Exception();
       }
       return message;
+    } on ClientAdminError catch (error) {
+      throw ServerAdminError(message: error.message);
     } catch (error) {
       throw ServerAdminError(message: message);
     }
