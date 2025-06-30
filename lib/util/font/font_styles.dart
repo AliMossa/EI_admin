@@ -104,6 +104,15 @@ TextStyle getProfileTitleLogginDateStyle(Size size) {
   );
 }
 
+TextStyle getPieTextStyle(Size size) {
+  return TextStyle(
+    color: black75,
+    fontWeight: FontWeight.bold,
+    fontSize: size.width * .021,
+    overflow: TextOverflow.ellipsis,
+  );
+}
+
 TextStyle getMoneytTextStyle(Size size) {
   return TextStyle(
     color: Colors.green,

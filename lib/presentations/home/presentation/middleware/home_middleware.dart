@@ -5,19 +5,24 @@ import 'package:admin_dashboard/presentations/home/domain/entities/statistics_of
 import 'package:admin_dashboard/presentations/home/domain/entities/success_statistics_entity.dart';
 import 'package:admin_dashboard/presentations/home/domain/entities/total_statistics_of_uses_entity.dart';
 import 'package:admin_dashboard/presentations/home/presentation/logic/bloc/requests_statistics_bloc.dart';
+import 'package:admin_dashboard/presentations/home/presentation/logic/cubit/statistics_date_cubit.dart';
 import 'package:admin_dashboard/presentations/home/presentation/logic/monies_rates/monies_rates_bloc.dart';
 import 'package:admin_dashboard/presentations/home/presentation/logic/statistics_of_users/statistics_of_users_bloc.dart';
 import 'package:admin_dashboard/presentations/home/presentation/logic/success_statistics/success_statistics_bloc.dart';
 import 'package:admin_dashboard/presentations/public/error_widget/snack_bar_widget.dart';
 import 'package:admin_dashboard/presentations/public/shimmers/liner_chart_shimmer.dart';
+import 'package:admin_dashboard/presentations/public/shimmers/monies_rates_shimmer.dart';
 import 'package:admin_dashboard/presentations/public/shimmers/pie_shimmer.dart';
 import 'package:admin_dashboard/presentations/public/shimmers/row_pie_chart_shimmer.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 bool showError = false;
 
 class HomeMiddleware {
+  String _time = DateTime.now().year.toString();
   ListSuccessStatisticsEntity _successStatisticsEntity =
       ListSuccessStatisticsEntity.init();
   TotalStatisticsOfUsesEntity _totalStatisticsOfUsesEntity =
@@ -37,6 +42,8 @@ class HomeMiddleware {
 
   TotalStatisticsOfUsesEntity getTotalStatisticsOfUsesEntity() =>
       _totalStatisticsOfUsesEntity;
+
+  String getTime() => _time;
 
   MoniesRatesEntity getMoniesRatesEntity() => _moniesRatesEntity;
   double getMaxLineChartValue() => _maxLineChartValue;
@@ -98,6 +105,7 @@ class HomeMiddleware {
     _moniesRatesEntity.SYR = newMoniesRatesEntity.SYR;
     _moniesRatesEntity.EUR = newMoniesRatesEntity.EUR;
     _moniesRatesEntity.JPY = newMoniesRatesEntity.JPY;
+    _moniesRatesEntity.TRY = newMoniesRatesEntity.TRY;
   }
 
   Either<Widget, Widget> getCorrectWidgetForLinerChart(
@@ -130,7 +138,7 @@ class HomeMiddleware {
     Size size,
   ) {
     if (state is LoadingGetAllMoniesRatesState) {
-      return right(PieShimmer(size: size));
+      return right(MoniesRatesShimmer(size: size));
     } else {
       return left(const SizedBox());
     }
@@ -176,6 +184,56 @@ class HomeMiddleware {
       await Future.delayed(
         const Duration(seconds: 2),
       ).whenComplete(() => showError = false);
+    }
+  }
+
+  void setDate(BuildContext context, StatisticsDateCubit cubit) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BlocProvider.value(
+          value: cubit,
+          child: BlocBuilder<StatisticsDateCubit, StatisticsDateState>(
+            builder: (context, state) {
+              return AlertDialog(
+                title: Text("Select Year"),
+                content: SizedBox(
+                  width: 300,
+                  height: 300,
+                  child: YearPicker(
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime.now(),
+                    selectedDate: DateTime(int.parse(_time)),
+                    onChanged: (DateTime result) {
+                      Navigator.of(context).pop(); // close dialog
+                      if (result != null) {
+                        _time = result.year.toString();
+                        // ignore: use_build_context_synchronously
+                        context
+                            .read<StatisticsDateCubit>()
+                            .setStatististicsDate();
+                      }
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  void sendManyRequests(BuildContext context, StatisticsDateState state) async {
+    if (state is SetStatisticsDateState) {
+      context.read<MoniesRatesBloc>().add(GetAllMoniesRatesEvent());
+      context.read<SuccessStatisticsBloc>().add(
+        GetSuccessStatisticsEvent(year: int.parse(_time)),
+      );
+      context.read<RequestsStatisticsBloc>().add(
+        GetAllRequestsStatisticsEvent(year: int.parse(_time)),
+      );
+      context.read<StatisticsOfUsersBloc>().add(GetStatisticsOfusersEvent());
     }
   }
 }

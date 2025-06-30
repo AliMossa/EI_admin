@@ -20,11 +20,6 @@ class MoveToProfilePageEvent extends ChangePageEvent {
 }
 
 // ignore: must_be_immutable
-class MoveToLoggingProfilePageEvent extends ChangePageEvent {
-  MoveToLoggingProfilePageEvent({required super.title});
-}
-
-// ignore: must_be_immutable
 class MoveToEmployeesPageEvent extends ChangePageEvent {
   MoveToEmployeesPageEvent({required super.title});
 }

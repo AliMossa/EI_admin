@@ -31,7 +31,6 @@ class InfromationProfileWidget extends StatelessWidget {
               (_) => Container(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 width: FlexibleMethod.getCorrectProfileWidth(size).width,
-                height: FlexibleMethod.getCorrectProfileWidth(size).height,
 
                 decoration: BoxDecoration(
                   color: background,
@@ -39,6 +38,7 @@ class InfromationProfileWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListView(
+                  shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Row(
@@ -56,7 +56,7 @@ class InfromationProfileWidget extends StatelessWidget {
                         ),
                         SizedBox(width: size.width * .01),
 
-                        LogPageIconButtonWidget(),
+                        LogPageIconButtonWidget(id: profileEntity.id),
                       ],
                     ),
                     SizedBox(width: size.width * .01),

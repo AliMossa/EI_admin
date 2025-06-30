@@ -30,9 +30,7 @@ class MoneyRatesWidget extends StatelessWidget {
                   gradient: mainGradient3,
                   borderRadius: BorderRadius.circular(15),
                 ),
-
                 width: size.width * .3,
-
                 child: ListView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -55,6 +53,11 @@ class MoneyRatesWidget extends StatelessWidget {
                     MoneyTextWidget(
                       titel: 'Jp Yen',
                       value: moniesRatesEntity.JPY.toString(),
+                      size: size,
+                    ),
+                    MoneyTextWidget(
+                      titel: 'Turkish lira',
+                      value: moniesRatesEntity.TRY.toString(),
                       size: size,
                     ),
                   ],

@@ -95,7 +95,7 @@ class EmployeesMiddleware extends MemberImageMiddleware {
   void setViewAddress(String address) => _viewEmployeeEntity.address = address;
   String getPassword() => _password;
   String getConfirmPassword() => _confirmPassword;
-  String getDateBirth() => _time!;
+  String getDateBirth() => _time ?? '';
   GlobalKey<FormState> getAddEmployeeGlobalKey() => _addEmoloyeeGlobalKey;
   GlobalKey<AnimatedListState> getAnimatedListGlobalKey() =>
       _animatedListGlobalKey;
@@ -185,21 +185,13 @@ class EmployeesMiddleware extends MemberImageMiddleware {
     cubit.addImage();
   }
 
-  void setEmployees(List<EmployeeEnitity> list) async {
-    _totalEmployeesEntity.employees.clear();
-    for (EmployeeEnitity item in list.reversed) {
-      await Future.delayed(Duration(milliseconds: 150));
-      _totalEmployeesEntity.employees.add(item);
-      if (_animatedListGlobalKey.currentState != null) {
-        _animatedListGlobalKey.currentState!.insertItem(
-          _totalEmployeesEntity.employees.length - 1,
-        );
-      }
+  void setEmployees(
+    TotalEmployeesEntity totalEmployeesEntity,
+    bool doClean,
+  ) async {
+    if (doClean) {
+      _totalEmployeesEntity.employees.clear();
     }
-  }
-
-  void reSetEmployees(TotalEmployeesEntity totalEmployeesEntity) async {
-    _totalEmployeesEntity.nextPage = totalEmployeesEntity.nextPage;
     for (EmployeeEnitity item in totalEmployeesEntity.employees.reversed) {
       await Future.delayed(Duration(milliseconds: 150));
       _totalEmployeesEntity.employees.add(item);
@@ -209,6 +201,8 @@ class EmployeesMiddleware extends MemberImageMiddleware {
         );
       }
     }
+
+    _totalEmployeesEntity.nextPage = totalEmployeesEntity.nextPage;
   }
 
   TotalEmployeesEntity getTotalEmployeesEntity() => _totalEmployeesEntity;

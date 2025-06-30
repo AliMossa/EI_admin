@@ -38,63 +38,24 @@ class RequestsImagesWidget extends StatelessWidget {
                       child: Image.network(images[index], fit: BoxFit.cover),
                     ),
               )
-              : Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-
-                    children: [
-                      SvgPicture.asset(
+              : GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: 6,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  maxCrossAxisExtent: 75,
+                ),
+                itemBuilder:
+                    (context, index) => ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: SvgPicture.asset(
                         Assets.images.image,
                         width: size.width * .05,
                         height: size.width * .04,
                       ),
-                      SvgPicture.asset(
-                        Assets.images.image,
-                        width: size.width * .05,
-                        height: size.width * .04,
-                      ),
-                      SvgPicture.asset(
-                        Assets.images.image,
-                        width: size.width * .05,
-                        height: size.width * .04,
-                      ),
-                      SvgPicture.asset(
-                        Assets.images.image,
-                        width: size.width * .05,
-                        height: size.width * .04,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-
-                    children: [
-                      SvgPicture.asset(
-                        Assets.images.image,
-                        width: size.width * .05,
-                        height: size.width * .04,
-                      ),
-                      SvgPicture.asset(
-                        Assets.images.image,
-                        width: size.width * .05,
-                        height: size.width * .04,
-                      ),
-                      SvgPicture.asset(
-                        Assets.images.image,
-                        width: size.width * .05,
-                        height: size.width * .04,
-                      ),
-                      SvgPicture.asset(
-                        Assets.images.image,
-                        width: size.width * .05,
-                        height: size.width * .04,
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
               ),
     );
   }

@@ -15,6 +15,7 @@ class ViewUserInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('id =>$id');
     return BlocConsumer<ViewUserBloc, ViewUserState>(
       listener: (context, state) {
         if (state is SuccessActivateUserState ||

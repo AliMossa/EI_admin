@@ -8,6 +8,7 @@ class DateCubit extends Cubit<DateState> {
 
   void setDate() {
     emit(LoadingSetDateState());
+
     emit(SetDateState());
   }
 }

@@ -86,6 +86,7 @@ class PropertiesMiddlewar {
   ViewPropertyEntity getViewPropertyEntity() => _viewPropertyEntity;
 
   void setViewPropertyEntity(ViewPropertyEntity viewPropertyEntity) {
+    _viewPropertyEntity.aggreement = viewPropertyEntity.aggreement;
     {
       _viewPropertyEntity.requestDescriptionInfoEntity.areaSize =
           viewPropertyEntity.requestDescriptionInfoEntity.areaSize;
@@ -129,6 +130,32 @@ class PropertiesMiddlewar {
           viewPropertyEntity.requestDescriptionInfoEntity.status;
     }
     {
+      _viewPropertyEntity.requestEconomicInfoEntity.agreedNegotiation =
+          viewPropertyEntity.requestEconomicInfoEntity.agreedNegotiation;
+      _viewPropertyEntity.requestEconomicInfoEntity.buyingPrice =
+          viewPropertyEntity.requestEconomicInfoEntity.buyingPrice;
+      _viewPropertyEntity.requestEconomicInfoEntity.chancePrice =
+          viewPropertyEntity.requestEconomicInfoEntity.chancePrice;
+      _viewPropertyEntity.requestEconomicInfoEntity.expectedPrice =
+          viewPropertyEntity.requestEconomicInfoEntity.expectedPrice;
+      _viewPropertyEntity.requestEconomicInfoEntity.incommingTime =
+          viewPropertyEntity.requestEconomicInfoEntity.incommingTime;
+      _viewPropertyEntity.requestEconomicInfoEntity.investmentMode =
+          viewPropertyEntity.requestEconomicInfoEntity.investmentMode;
+      _viewPropertyEntity.requestEconomicInfoEntity.investmentTime =
+          viewPropertyEntity.requestEconomicInfoEntity.investmentTime;
+      _viewPropertyEntity.requestEconomicInfoEntity.numberOfChances =
+          viewPropertyEntity.requestEconomicInfoEntity.numberOfChances;
+      _viewPropertyEntity.requestEconomicInfoEntity.profitPercent =
+          viewPropertyEntity.requestEconomicInfoEntity.profitPercent;
+      _viewPropertyEntity.requestEconomicInfoEntity.propertyManagement =
+          viewPropertyEntity.requestEconomicInfoEntity.propertyManagement;
+      _viewPropertyEntity.requestEconomicInfoEntity.rentingPrice =
+          viewPropertyEntity.requestEconomicInfoEntity.rentingPrice;
+      _viewPropertyEntity.requestEconomicInfoEntity.totalExpectedTaxes =
+          viewPropertyEntity.requestEconomicInfoEntity.totalExpectedTaxes;
+    }
+    {
       _viewPropertyEntity.requestImagesInfoEntity.images =
           viewPropertyEntity.requestImagesInfoEntity.images
               .map((item) => getCorrectImagePage(item))
@@ -137,12 +164,17 @@ class PropertiesMiddlewar {
           viewPropertyEntity.requestImagesInfoEntity.documents
               .map((item) => getCorrectImagePage(item))
               .toList();
-      ;
+
       _viewPropertyEntity.requestImagesInfoEntity.ids =
           viewPropertyEntity.requestImagesInfoEntity.ids
               .map((item) => getCorrectImagePage(item))
               .toList();
-      ;
+    }
+    {
+      _viewPropertyEntity.documentsImagesEntity.images =
+          viewPropertyEntity.documentsImagesEntity.images
+              .map((item) => getCorrectImagePage(item))
+              .toList();
     }
   }
 

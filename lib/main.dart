@@ -1,20 +1,16 @@
 import 'package:admin_dashboard/util/routes/routes.dart';
-import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dart:io'; // To check the platform
+import 'package:window_size/window_size.dart';
+// The actual package to control window size
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await windowManager.ensureInitialized();
-
-  // windowManager.setMinimumSize(const Size(500, 500));
-  // windowManager.setResizable(false);
-  await DesktopWindow.setMinWindowSize(Size(600, 600));
-  await DesktopWindow.setMaxWindowSize(Size(600, 600));
-
-  print(
-    "*******************************${await DesktopWindow.getWindowSize()}",
-  );
+  if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+    setWindowTitle('My Linux App');
+    setWindowMinSize(const Size(600, 600));
+  }
 
   runApp(const MyApp());
 }

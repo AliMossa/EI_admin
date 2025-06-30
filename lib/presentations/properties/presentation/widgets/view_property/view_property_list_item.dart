@@ -3,8 +3,9 @@ import 'package:admin_dashboard/presentations/properties/presentation/logic/desi
 import 'package:admin_dashboard/presentations/properties/presentation/logic/view_property/view_property_bloc.dart';
 import 'package:admin_dashboard/presentations/properties/presentation/widgets/view_property/view_property_desicion_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/property_information_widget.dart';
-import 'package:admin_dashboard/presentations/public/public_widgets/sold_tag_widget.dart';
-import 'package:admin_dashboard/presentations/requests/presentaiton/widgets/view_request/images_widget.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/request_notice_widget.dart';
+import 'package:admin_dashboard/presentations/requests/presentaiton/widgets/view_request/economy_study_widget.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/images_widget.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,10 +68,45 @@ class ViewPropertyListItem extends StatelessWidget {
             documents: viewPropertyEntity.requestImagesInfoEntity.documents,
             ids: viewPropertyEntity.requestImagesInfoEntity.ids,
             images: viewPropertyEntity.requestImagesInfoEntity.images,
+            buyDocuments: viewPropertyEntity.documentsImagesEntity.images,
             onPress:
                 context.read<ViewPropertyBloc>().propertiesMiddlewar.viewImages,
             size: size,
           ),
+          const SizedBox(height: 10),
+          if (viewPropertyEntity.aggreement != null)
+            RequestNoticeWidget(
+              size: size,
+              content: viewPropertyEntity.aggreement!,
+              isDirector: false,
+            ),
+          EconomyStudyWidget(
+            agreedNegotiation: '',
+            buyingPrice:
+                viewPropertyEntity.requestEconomicInfoEntity.buyingPrice,
+            chancePrice:
+                viewPropertyEntity.requestEconomicInfoEntity.chancePrice,
+            expectedPrice:
+                viewPropertyEntity.requestEconomicInfoEntity.expectedPrice,
+            incommingTime:
+                viewPropertyEntity.requestEconomicInfoEntity.incommingTime,
+            investmentMode:
+                viewPropertyEntity.requestEconomicInfoEntity.investmentMode,
+            investmentTime:
+                viewPropertyEntity.requestEconomicInfoEntity.incommingTime,
+            numberOfChances:
+                viewPropertyEntity.requestEconomicInfoEntity.numberOfChances,
+            profitPercent:
+                viewPropertyEntity.requestEconomicInfoEntity.profitPercent,
+            propertyManagement:
+                viewPropertyEntity.requestEconomicInfoEntity.propertyManagement,
+            rentingPrice:
+                viewPropertyEntity.requestEconomicInfoEntity.rentingPrice,
+            size: size,
+            totalExpectedTaxes:
+                viewPropertyEntity.requestEconomicInfoEntity.totalExpectedTaxes,
+          ),
+
           const SizedBox(height: 10),
 
           viewPropertyEntity.requestDescriptionInfoEntity.status!.contains(

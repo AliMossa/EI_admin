@@ -32,9 +32,9 @@ class PieChartWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
 
-                width: size.width * .3,
-                height: size.height * .35,
+                height: size.height * .3,
                 child: ListView(
+                  // itemExtent: size.width * .15,
                   physics: const BouncingScrollPhysics(
                     decelerationRate: ScrollDecelerationRate.normal,
                   ),
@@ -59,7 +59,7 @@ class PieChartWidget extends StatelessWidget {
                           value:
                               totalStatisticsOfUsesEntity
                                   .statisticsOfUsersEntity
-                                  .admins,
+                                  .investors,
                           color: textFieldBorder,
                         ),
 
@@ -69,7 +69,7 @@ class PieChartWidget extends StatelessWidget {
                           value:
                               totalStatisticsOfUsesEntity
                                   .statisticsOfUsersEntity
-                                  .admins,
+                                  .legalTeams,
                           color: sky,
                         ),
                         PieTextsWidget(
@@ -85,65 +85,76 @@ class PieChartWidget extends StatelessWidget {
                     ),
                     SizedBox(
                       width: size.width * .18,
-                      //height: size.width * .2,
-                      child: PieChart(
-                        curve: Curves.easeInBack,
-                        duration: const Duration(milliseconds: 500),
-
-                        PieChartData(
-                          sections: [
-                            PieChartSectionData(
-                              value: totalStatisticsOfUsesEntity.adminsPercent,
-                              color: coral,
-                              title:
-                                  '${totalStatisticsOfUsesEntity.adminsPercent}%',
-                              radius: 60,
-                              showTitle: true,
-                              titleStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            final chartSize = constraints.biggest.shortestSide;
+                            final radius = chartSize * 0.25;
+                            return PieChart(
+                              curve: Curves.easeInBack,
+                              duration: const Duration(milliseconds: 200),
+                              PieChartData(
+                                sections: [
+                                  PieChartSectionData(
+                                    value:
+                                        totalStatisticsOfUsesEntity
+                                            .adminsPercent,
+                                    color: coral,
+                                    title:
+                                        '${totalStatisticsOfUsesEntity.adminsPercent}%',
+                                    radius: radius,
+                                    showTitle: true,
+                                    titleStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  PieChartSectionData(
+                                    value:
+                                        totalStatisticsOfUsesEntity
+                                            .invesetorsPercent,
+                                    color: textFieldBorder,
+                                    title:
+                                        '${totalStatisticsOfUsesEntity.invesetorsPercent}%',
+                                    radius: radius,
+                                    titleStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  PieChartSectionData(
+                                    value:
+                                        totalStatisticsOfUsesEntity
+                                            .economicTeamPercent,
+                                    color: graphite,
+                                    title:
+                                        '${totalStatisticsOfUsesEntity.economicTeamPercent}%',
+                                    radius: radius,
+                                    titleStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  PieChartSectionData(
+                                    value:
+                                        totalStatisticsOfUsesEntity
+                                            .legalTeamPercent,
+                                    color: sky,
+                                    title:
+                                        '${totalStatisticsOfUsesEntity.legalTeamPercent}%',
+                                    radius: radius,
+                                    titleStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                                centerSpaceRadius: 40,
+                                sectionsSpace: 2,
                               ),
-                            ),
-                            PieChartSectionData(
-                              value:
-                                  totalStatisticsOfUsesEntity.invesetorsPercent,
-                              color: textFieldBorder,
-                              title:
-                                  '${totalStatisticsOfUsesEntity.invesetorsPercent}%',
-                              radius: 60,
-                              titleStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            PieChartSectionData(
-                              value:
-                                  totalStatisticsOfUsesEntity
-                                      .economicTeamPercent,
-                              color: graphite,
-                              title:
-                                  '${totalStatisticsOfUsesEntity.economicTeamPercent}%',
-                              radius: 60,
-                              titleStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            PieChartSectionData(
-                              value:
-                                  totalStatisticsOfUsesEntity.legalTeamPercent,
-                              color: sky,
-                              title:
-                                  '${totalStatisticsOfUsesEntity.legalTeamPercent}%',
-                              radius: 60,
-                              titleStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                          centerSpaceRadius: 40,
-                          sectionsSpace: 2,
+                            );
+                          },
                         ),
                       ),
                     ),

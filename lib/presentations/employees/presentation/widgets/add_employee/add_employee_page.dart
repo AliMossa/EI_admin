@@ -1,6 +1,7 @@
 import 'package:admin_dashboard/presentations/employees/data/repository_source/employee_rempository_imp_source.dart';
 import 'package:admin_dashboard/presentations/employees/domain/use_cases/add_employee_use_case.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/logic/bloc/add_employee/add_employee_bloc.dart';
+import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit/date/date_cubit.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit/kinds_cubit.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/middleware/employees_middleware.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/add_employee_items.dart';
@@ -24,6 +25,7 @@ class AddEmployeePage extends StatelessWidget {
                 ),
               ),
         ),
+        BlocProvider(create: (context) => DateCubit()),
 
         BlocProvider<KindsCubit>(
           create:

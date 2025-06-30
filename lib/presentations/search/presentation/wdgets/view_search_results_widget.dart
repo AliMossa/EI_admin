@@ -28,7 +28,6 @@ class ViewSearchResultsWidget extends StatelessWidget {
       ),
 
       child: SizedBox(
-        height: size.height * .74,
         width: size.width * .8,
         child: NotificationListener(
           onNotification: (ScrollNotification notification) {

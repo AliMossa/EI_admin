@@ -6,9 +6,32 @@ import 'package:flutter/widgets.dart';
 // ignore: must_be_immutable
 class EconomyStudyWidget extends StatelessWidget {
   Size size;
-  RequestEconomicInfoEntity requestEconomicInfoEntity;
+  int numberOfChances;
+  int profitPercent;
+  double expectedPrice;
+  double totalExpectedTaxes;
+  double buyingPrice;
+  double? rentingPrice;
+  double chancePrice;
+  String investmentTime;
+  String incommingTime;
+  String investmentMode;
+  String propertyManagement;
+  String? agreedNegotiation;
   EconomyStudyWidget({
-    required this.requestEconomicInfoEntity,
+    required this.numberOfChances,
+    required this.profitPercent,
+    required this.expectedPrice,
+    required this.totalExpectedTaxes,
+    required this.buyingPrice,
+    required this.rentingPrice,
+    required this.chancePrice,
+    required this.investmentTime,
+    required this.incommingTime,
+    required this.investmentMode,
+    required this.propertyManagement,
+    required this.agreedNegotiation,
+
     required this.size,
     super.key,
   });
@@ -36,7 +59,7 @@ class EconomyStudyWidget extends StatelessWidget {
 
             PropertyVariablesWidget(
               title: 'total expected taxes',
-              value: requestEconomicInfoEntity.expectedPrice.toString(),
+              value: expectedPrice.toString(),
               width: 300,
               textWidth: 90,
               height: 25,
@@ -46,7 +69,7 @@ class EconomyStudyWidget extends StatelessWidget {
             ),
             PropertyVariablesWidget(
               title: 'investment time',
-              value: requestEconomicInfoEntity.investmentTime,
+              value: investmentTime,
               width: 350,
               textWidth: 100,
               height: 25,
@@ -56,7 +79,7 @@ class EconomyStudyWidget extends StatelessWidget {
             ),
             PropertyVariablesWidget(
               title: 'investment mode:',
-              value: requestEconomicInfoEntity.investmentMode,
+              value: investmentMode,
               width: 300,
               textWidth: 100,
               height: 25,
@@ -67,7 +90,7 @@ class EconomyStudyWidget extends StatelessWidget {
           secondItemsWidget: [
             PropertyVariablesWidget(
               title: 'buying price:',
-              value: requestEconomicInfoEntity.buyingPrice.toString(),
+              value: buyingPrice.toString(),
               width: 300,
               textWidth: 90,
               height: 25,
@@ -78,7 +101,7 @@ class EconomyStudyWidget extends StatelessWidget {
 
             PropertyVariablesWidget(
               title: 'chances number:',
-              value: requestEconomicInfoEntity.numberOfChances.toString(),
+              value: numberOfChances.toString(),
               width: 300,
               textWidth: 90,
               height: 25,
@@ -87,17 +110,17 @@ class EconomyStudyWidget extends StatelessWidget {
             ),
             PropertyVariablesWidget(
               title: 'incomming time:',
-              value: requestEconomicInfoEntity.incommingTime,
+              value: incommingTime,
               width: 300,
               textWidth: 100,
               height: 25,
               isMovible: true,
               size: size,
             ),
-            if (requestEconomicInfoEntity.rentingPrice != null)
+            if (rentingPrice != null)
               PropertyVariablesWidget(
                 title: 'property management:',
-                value: requestEconomicInfoEntity.propertyManagement.toString(),
+                value: propertyManagement.toString(),
                 width: 300,
                 textWidth: 70,
                 height: 25,
@@ -108,7 +131,7 @@ class EconomyStudyWidget extends StatelessWidget {
           thirdItemsWidget: [
             PropertyVariablesWidget(
               title: 'chance price:',
-              value: requestEconomicInfoEntity.chancePrice.toString(),
+              value: chancePrice.toString(),
               width: 300,
               textWidth: 90,
               height: 25,
@@ -119,7 +142,7 @@ class EconomyStudyWidget extends StatelessWidget {
             ),
             PropertyVariablesWidget(
               title: 'expected price:',
-              value: requestEconomicInfoEntity.expectedPrice.toString(),
+              value: expectedPrice.toString(),
               width: 300,
               textWidth: 90,
               height: 25,
@@ -129,7 +152,7 @@ class EconomyStudyWidget extends StatelessWidget {
             ),
             PropertyVariablesWidget(
               title: 'profil precentage:',
-              value: requestEconomicInfoEntity.profitPercent.toString(),
+              value: profitPercent.toString(),
               width: 300,
               textWidth: 90,
               height: 25,

@@ -8,11 +8,13 @@ class ImagesWidget extends StatelessWidget {
   List<String> images;
   List<String> documents;
   List<String> ids;
+  List<String>? buyDocuments;
   Function(BuildContext, List<String>) onPress;
   ImagesWidget({
     required this.images,
     required this.documents,
     required this.ids,
+    this.buyDocuments,
     required this.onPress,
     required this.size,
     super.key,
@@ -26,7 +28,6 @@ class ImagesWidget extends StatelessWidget {
         PropertyStudyWidget(
           title: 'Property images',
           height: size.height * .28,
-          width: size.width * .27,
           firstItemsWidget: [
             InkWell(
               onTap: () => onPress(context, images),
@@ -38,7 +39,6 @@ class ImagesWidget extends StatelessWidget {
         PropertyStudyWidget(
           title: 'Property document',
           height: size.height * .28,
-          width: size.width * .27,
           firstItemsWidget: [
             InkWell(
               onTap: () => onPress(context, documents),
@@ -50,7 +50,6 @@ class ImagesWidget extends StatelessWidget {
         PropertyStudyWidget(
           title: 'Id images',
           height: size.height * .28,
-          width: size.width * .27,
           firstItemsWidget: [
             InkWell(
               onTap: () => onPress(context, ids),
@@ -58,6 +57,19 @@ class ImagesWidget extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(width: 10),
+
+        if (buyDocuments != null)
+          PropertyStudyWidget(
+            title: 'Baying documents',
+            height: size.height * .28,
+            firstItemsWidget: [
+              InkWell(
+                onTap: () => onPress(context, buyDocuments!),
+                child: RequestsImagesWidget(size: size, images: buyDocuments!),
+              ),
+            ],
+          ),
       ],
     );
   }

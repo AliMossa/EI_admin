@@ -1,6 +1,3 @@
-import 'package:admin_dashboard/presentations/public/error_widget/snack_bar_widget.dart';
-import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
-import 'package:admin_dashboard/presentations/public/public_widgets/devider_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/loading_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/request_notice_widget.dart';
 import 'package:admin_dashboard/presentations/requests/domain/entities/request_info_entity.dart';
@@ -8,7 +5,7 @@ import 'package:admin_dashboard/presentations/requests/presentaiton/logic/cubit/
 import 'package:admin_dashboard/presentations/requests/presentaiton/logic/request_info/request_info_bloc.dart';
 import 'package:admin_dashboard/presentations/requests/presentaiton/widgets/view_request/desicion_widget.dart';
 import 'package:admin_dashboard/presentations/requests/presentaiton/widgets/view_request/economy_study_widget.dart';
-import 'package:admin_dashboard/presentations/requests/presentaiton/widgets/view_request/images_widget.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/images_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/property_information_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,9 +81,7 @@ class ViewRequestItemsInfo extends StatelessWidget {
                         .viewImages,
                 size: size,
               ),
-              const SizedBox(height: 10),
-              DeviderWidget(),
-              const SizedBox(height: 10),
+
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -111,17 +106,42 @@ class ViewRequestItemsInfo extends StatelessWidget {
                     ),
                 ],
               ),
-              const SizedBox(height: 10),
-              DeviderWidget(),
-              const SizedBox(height: 10),
+
               EconomyStudyWidget(
-                requestEconomicInfoEntity:
-                    requestInfoEntity.requestEconomicInfoEntity,
+                numberOfChances:
+                    requestInfoEntity.requestEconomicInfoEntity.numberOfChances,
+                buyingPrice:
+                    requestInfoEntity.requestEconomicInfoEntity.buyingPrice,
+                chancePrice:
+                    requestInfoEntity.requestEconomicInfoEntity.chancePrice,
+                expectedPrice:
+                    requestInfoEntity.requestEconomicInfoEntity.expectedPrice,
+                incommingTime:
+                    requestInfoEntity.requestEconomicInfoEntity.incommingTime,
+                investmentTime:
+                    requestInfoEntity.requestEconomicInfoEntity.investmentTime,
+                investmentMode:
+                    requestInfoEntity.requestEconomicInfoEntity.investmentMode,
+                profitPercent:
+                    requestInfoEntity.requestEconomicInfoEntity.profitPercent,
+                propertyManagement:
+                    requestInfoEntity
+                        .requestEconomicInfoEntity
+                        .propertyManagement,
+                rentingPrice:
+                    requestInfoEntity.requestEconomicInfoEntity.rentingPrice,
+                totalExpectedTaxes:
+                    requestInfoEntity
+                        .requestEconomicInfoEntity
+                        .totalExpectedTaxes,
+                agreedNegotiation:
+                    requestInfoEntity
+                        .requestEconomicInfoEntity
+                        .agreedNegotiation,
                 size: size,
               ),
               const SizedBox(height: 10),
-              DeviderWidget(),
-              const SizedBox(height: 10),
+
               (state is LoadingAcceptPropertyRequestState ||
                       state is LoadingRejectPropertyRequestState)
                   ? LoadingWidget()

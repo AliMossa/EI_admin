@@ -40,7 +40,7 @@ class EmployeesBloc extends Bloc<EmployeesEvent, EmployeesState> {
         (failed) => emit(FailedGetEmployeesState(message: failed.message)),
         (success) {
           employeesMiddleware.tempList = success.employees;
-          employeesMiddleware.setEmployees(success.employees);
+          employeesMiddleware.setEmployees(success, true);
           emit(SuccessGetEmployeesState());
         },
       );
@@ -63,7 +63,7 @@ class EmployeesBloc extends Bloc<EmployeesEvent, EmployeesState> {
         (success) {
           emit(SuccessGetEmployeesState());
 
-          employeesMiddleware.reSetEmployees(success);
+          employeesMiddleware.setEmployees(success, false);
         },
       );
     } on ServerAdminException catch (error) {

@@ -18,6 +18,7 @@ class RequestNoticeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width * .4,
+      margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 10),
       decoration: BoxDecoration(
         color: background,

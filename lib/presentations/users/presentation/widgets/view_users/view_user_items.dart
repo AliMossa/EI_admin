@@ -29,7 +29,7 @@ class ViewUserItems extends StatelessWidget {
                       size: moreInfo,
                       id:
                           context
-                              .read<ViewUserBloc>()
+                              .watch<ViewUserBloc>()
                               .userMiddleware
                               .getUserInfo()
                               .id,

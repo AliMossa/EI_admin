@@ -21,11 +21,11 @@ class ProfileImageWidget extends StatelessWidget {
       child: BlocListener<ProfileBloc, ProfileState>(
         listener: (context, state) {},
         child: Container(
+          width: size.width * .08,
+          height: size.width * .08,
           margin: const EdgeInsets.all(10),
           padding: EdgeInsets.all(1),
           clipBehavior: Clip.hardEdge,
-          width: size.width * .08,
-          height: size.width * .08,
           decoration: BoxDecoration(
             border: Border.all(color: textFieldBorder, width: 2),
             shape: BoxShape.circle,
@@ -78,25 +78,23 @@ class ProfileImageWidget extends StatelessWidget {
                         ),
                       ),
                   AnimatedPositioned(
-                    top: state is HoverProfileImageState ? 0 : 100,
+                    top: state is HoverProfileImageState ? 0 : size.height * .1,
                     duration: Duration(milliseconds: 400),
                     child: Stack(
+                      alignment: Alignment.bottomCenter,
                       children: [
                         CustomPaint(
                           size: Size(100, 100),
                           painter: ArchWidget(),
                         ),
-                        Positioned(
-                          top: 70,
-                          left: 35,
-                          child: InkWell(
-                            onTap:
-                                () => context
-                                    .read<ProfileBloc>()
-                                    .profileMiddleware
-                                    .loadImage(context.read<ProfileBloc>()),
-                            child: Icon(Icons.camera_alt_rounded),
-                          ),
+
+                        InkWell(
+                          onTap:
+                              () => context
+                                  .read<ProfileBloc>()
+                                  .profileMiddleware
+                                  .loadImage(context.read<ProfileBloc>()),
+                          child: Icon(Icons.camera_alt_rounded),
                         ),
                       ],
                     ),

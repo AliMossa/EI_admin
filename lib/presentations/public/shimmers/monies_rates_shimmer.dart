@@ -9,13 +9,13 @@ class MoniesRatesShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: size.height * .24,
+      height: size.height * .3,
       width: size.width * .3,
       child: Shimmer.fromColors(
         baseColor: Colors.grey[300]!,
         highlightColor: Colors.grey[100]!,
         child: ListView.builder(
-          itemCount: 4,
+          itemCount: 5,
           padding: const EdgeInsets.all(16),
           itemBuilder: (context, index) {
             return Container(

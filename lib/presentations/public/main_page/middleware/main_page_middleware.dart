@@ -6,7 +6,6 @@ import 'package:admin_dashboard/presentations/employees/presentation/widgets/add
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/view_employee/view_update_employee_page.dart';
 import 'package:admin_dashboard/presentations/home/presentation/home_page.dart';
 import 'package:admin_dashboard/presentations/profile/presentation/profile_page.dart';
-import 'package:admin_dashboard/presentations/profile/presentation/widgets/logs/profile_logs_page.dart';
 import 'package:admin_dashboard/presentations/properties/presentation/properties_page.dart';
 import 'package:admin_dashboard/presentations/properties/presentation/widgets/view_property/view_property_page.dart';
 import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
@@ -36,8 +35,6 @@ class MainPageMiddleware {
         return HomePage();
       case MoveToProfilePageState():
         return ProfilePage();
-      case MoveToLoggingProfilePageState():
-        return ProfileLogsPage();
       case MoveToEmployeesPageState():
         return EmployeesPage();
       case MoveToAddEmployeesPageState():

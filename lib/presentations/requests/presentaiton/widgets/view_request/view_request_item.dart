@@ -1,6 +1,6 @@
 import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
 import 'package:admin_dashboard/presentations/requests/presentaiton/logic/request_info/request_info_bloc.dart';
-import 'package:admin_dashboard/presentations/requests/presentaiton/widgets/view_request/view_request_items_info.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/view_request_items_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

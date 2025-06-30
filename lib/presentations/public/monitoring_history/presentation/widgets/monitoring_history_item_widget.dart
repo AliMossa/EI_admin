@@ -3,12 +3,12 @@ import 'package:admin_dashboard/util/font/font_styles.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class MonitoringHistoryItem extends StatelessWidget {
+class MonitoringHistoryItemWidget extends StatelessWidget {
   String title;
   String time;
   Size size;
 
-  MonitoringHistoryItem({
+  MonitoringHistoryItemWidget({
     required this.time,
     required this.title,
     required this.size,

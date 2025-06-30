@@ -36,28 +36,47 @@ class CollectSinglPieCahrtsWidget extends StatelessWidget {
             .homeMiddleware
             .getCorrectWidgetForRequestsStatistics(context, state, size)
             .fold(
-              (_) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SinglePieChartWidget(
-                    value: requestsStatisticsEntity.acceptedByAdmin,
-                    size: size,
-                    color: firstColor,
-                    title: firstText,
-                  ),
-                  SinglePieChartWidget(
-                    value: requestsStatisticsEntity.rejectedByLawyer,
-                    size: size,
-                    color: secondColor,
-                    title: secondText,
-                  ),
-                  SinglePieChartWidget(
-                    value: requestsStatisticsEntity.rejectedByUser,
-                    size: size,
-                    color: thirdColor,
-                    title: thirdText,
-                  ),
-                ],
+              (_) => LayoutBuilder(
+                builder: (context, constraints) {
+                  final crossAxisCount = (constraints.maxWidth / 200)
+                      .floor()
+                      .clamp(1, 4);
+                  final rowCount = (3 / crossAxisCount).ceil();
+                  return SizedBox(
+                    height: rowCount * 350 + (rowCount - 1) * 10,
+                    child: GridView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 400,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        childAspectRatio: 1,
+                      ),
+
+                      children: [
+                        SinglePieChartWidget(
+                          value: requestsStatisticsEntity.acceptedByAdmin,
+                          size: size,
+                          color: firstColor,
+                          title: firstText,
+                        ),
+                        SinglePieChartWidget(
+                          value: requestsStatisticsEntity.rejectedByLawyer,
+                          size: size,
+                          color: secondColor,
+                          title: secondText,
+                        ),
+                        SinglePieChartWidget(
+                          value: requestsStatisticsEntity.rejectedByUser,
+                          size: size,
+                          color: thirdColor,
+                          title: thirdText,
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
               (widget) => widget,
             );

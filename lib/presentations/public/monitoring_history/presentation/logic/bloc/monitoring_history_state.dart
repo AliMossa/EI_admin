@@ -13,4 +13,8 @@ class LoadingGetMonitoringHistoryState extends MonitoringHistoryState {}
 
 class SuccessGetMonitoringHistoryState extends MonitoringHistoryState {}
 
-class FailedGetMonitoringHistoryState extends MonitoringHistoryState {}
+// ignore: must_be_immutable
+class FailedGetMonitoringHistoryState extends MonitoringHistoryState {
+  String message;
+  FailedGetMonitoringHistoryState({required this.message});
+}

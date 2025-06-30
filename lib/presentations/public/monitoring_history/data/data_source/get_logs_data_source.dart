@@ -36,6 +36,7 @@ class GetLogsDataSourceWithDio extends GetLogsDataSource {
           ),
         );
       }
+      print(response);
       return TotalLogsEntity(
         logs: list,
         nextPage: response['data']['pagination']['next_page_url'],

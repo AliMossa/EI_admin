@@ -25,11 +25,6 @@ class MoveToProfilePageState extends ChangePageState {
 }
 
 // ignore: must_be_immutable
-class MoveToLoggingProfilePageState extends ChangePageState {
-  MoveToLoggingProfilePageState({required super.title});
-}
-
-// ignore: must_be_immutable
 class MoveToEmployeesPageState extends ChangePageState {
   MoveToEmployeesPageState({required super.title});
 }

@@ -27,57 +27,60 @@ class PropertyStudyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return width == 0
-        ? Container(
-          height: height,
-          padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 10),
-          decoration: BoxDecoration(
-            color: background,
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: linkColor),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5, bottom: 10),
-                child: Text(title, style: titleVariableContainerStyle),
-              ),
-
-              SizedBox(
-                width: width,
-                height: height,
-                child: ListView(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: firstItemsWidget,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-
-                      children: secondItemsWidget,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-
-                      children: thirdItemsWidget,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-
-                      crossAxisAlignment: CrossAxisAlignment.start,
-
-                      children: fourthItemsWidget,
-                    ),
-                  ],
+        ? Expanded(
+          child: Container(
+            height: height,
+            padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 10),
+            decoration: BoxDecoration(
+              color: background,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: linkColor),
+            ),
+            child: ListView(
+              physics: const NeverScrollableScrollPhysics(),
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 5, bottom: 10),
+                  child: Text(title, style: titleVariableContainerStyle),
                 ),
-              ),
-            ],
+
+                SizedBox(
+                  // width: width,
+                  height: height,
+                  child: ListView(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: firstItemsWidget,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: secondItemsWidget,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: thirdItemsWidget,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: fourthItemsWidget,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         )
         : Container(

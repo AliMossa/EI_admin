@@ -19,52 +19,67 @@ class SinglePieChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        gradient: mainGradient3,
-        borderRadius: BorderRadius.circular(20),
-      ),
-
-      width: size.width * .2,
-      height: size.height * .4,
-      child: SizedBox(
+    return GridTile(
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: mainGradient3,
+          borderRadius: BorderRadius.circular(20),
+        ),
         width: size.width * .2,
-        // height: size.width * .1,
+        height: size.height * .3,
         child: Stack(
           alignment: Alignment.center,
           children: [
-            PieChart(
-              curve: Curves.easeInBack,
-              duration: const Duration(milliseconds: 500),
-              PieChartData(
-                sections: [
-                  PieChartSectionData(
-                    value: value,
-                    color: color,
-                    title: '',
-                    radius: 30,
-                    showTitle: true,
-                    titleStyle: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  PieChartSectionData(
-                    value: 100 - value,
-                    color: Colors.deepPurple.shade100,
-                    title: '',
-                    radius: 30,
-                    showTitle: true,
-                    titleStyle: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ],
-                centerSpaceRadius: 80,
-                sectionsSpace: 0,
-                startDegreeOffset: 270,
+            AspectRatio(
+              aspectRatio: 1,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final chartSize = constraints.biggest.shortestSide;
+                  final radius = chartSize * 0.15;
+                  final centerRadius = chartSize * 0.40;
+
+                  return PieChart(
+                    curve: Curves.easeInBack,
+                    duration: const Duration(milliseconds: 200),
+                    PieChartData(
+                      sections: [
+                        PieChartSectionData(
+                          value: value,
+                          color: color,
+                          title: '',
+                          radius: radius,
+                          showTitle: true,
+                          titleStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: chartSize * 0.07,
+                          ),
+                        ),
+                        PieChartSectionData(
+                          value: 100 - value,
+                          color: Colors.deepPurple.shade100,
+                          title: '',
+                          radius: radius,
+                          showTitle: true,
+                          titleStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: chartSize * 0.07,
+                          ),
+                        ),
+                      ],
+                      centerSpaceRadius: centerRadius,
+                      sectionsSpace: 0,
+                      startDegreeOffset: 270,
+                    ),
+                  );
+                },
               ),
             ),
             Text(
-              '$value % \n$title',
-              style: getProfileTitleLogginDateStyle(size),
+              '$value % \n $title',
               textAlign: TextAlign.center,
+              style: getProfileTitleLogginDateStyle(size),
             ),
           ],
         ),

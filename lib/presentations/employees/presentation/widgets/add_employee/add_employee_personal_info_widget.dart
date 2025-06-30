@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/presentations/employees/presentation/logic/bloc/add_employee/add_employee_bloc.dart';
-import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/add_employee_birth_date_widget.dart';
+import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit/date/date_cubit.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/add_date_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/add_employee_cities_types_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/employee_info_textfield_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/employee_password_text_field_widget.dart';
@@ -167,7 +168,24 @@ class AddEmployeePersonalInfoWidget extends StatelessWidget {
               ),
             ],
           ),
-          AddEmployeeBirthDateWidget(size: size),
+          BlocBuilder<DateCubit, DateState>(
+            builder: (context, state) {
+              return AddDateWidget(
+                title: 'birth date',
+                birth:
+                    context
+                        .watch<AddEmployeeBloc>()
+                        .employeesMiddleware
+                        .getDateBirth(),
+                size: size,
+                onPress:
+                    () => context
+                        .read<AddEmployeeBloc>()
+                        .employeesMiddleware
+                        .setDate(context),
+              );
+            },
+          ),
           AddEmployeeCitiesTypesWidget(size: size),
         ],
       ),

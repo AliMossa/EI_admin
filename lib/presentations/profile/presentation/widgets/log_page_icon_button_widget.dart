@@ -3,8 +3,10 @@ import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class LogPageIconButtonWidget extends StatelessWidget {
-  const LogPageIconButtonWidget({super.key});
+  int id;
+  LogPageIconButtonWidget({required this.id, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,12 @@ class LogPageIconButtonWidget extends StatelessWidget {
         child: InkWell(
           onTap:
               () => context.read<ChangePageBloc>().add(
-                MoveToLoggingProfilePageEvent(title: 'Profile'),
+                MoveToHistoryPageEvent(
+                  id: id,
+
+                  backWordFunction: MoveToProfilePageEvent(title: 'Profile'),
+                  title: 'Profile',
+                ),
               ),
           child: Icon(Icons.access_time_rounded, color: black75),
         ),

@@ -22,18 +22,15 @@ class GetMoniesRatesDataSourceWithDio extends GetMoniesRatesDataSource {
         {},
         '',
       );
-      if (response['errors'] == null) {
-        message = response['message'];
-      } else {
-        message = response['message'] ?? response['errors'];
-        throw Exception();
-      }
+
       final item = response['rates'];
+
       return MoniesRatesEntity(
         USD: double.parse((item['USD'] * 1.0).toStringAsFixed(2)),
         EUR: double.parse((item['EUR'] * 1.0).toStringAsFixed(2)),
         JPY: double.parse((item['JPY'] * 1.0).toStringAsFixed(2)),
         SYR: double.parse((item['SYP'] * 1.0).toStringAsFixed(2)),
+        TRY: double.parse((item['TRY'] * 1.0).toStringAsFixed(2)),
       );
     } on ClientAdminError catch (error) {
       throw ServerAdminError(message: error.message);

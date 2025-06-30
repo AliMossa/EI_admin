@@ -2,7 +2,7 @@ import 'package:admin_dashboard/presentations/employees/presentation/logic/bloc/
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/monitoring_history.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/view_employee/view_employee_connection_info_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/view_employee/view_employee_personal_info_widget.dart';
-import 'package:admin_dashboard/presentations/employees/presentation/widgets/view_employee/view_ids_employee_widget.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/view_ids_employee_widget.dart';
 import 'package:admin_dashboard/presentations/public/add_new_member/add_new_member.dart';
 import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/loading_widget.dart';
@@ -131,6 +131,101 @@ class ViewUpdateEmployeeTotalItems extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 10),
                                         ViewIdsEmployeeWidget(
+                                          backIcon: Positioned(
+                                            top: 0,
+                                            right: -1,
+                                            child: IconButton(
+                                              onPressed:
+                                                  () => context
+                                                      .read<
+                                                        ViewUpdateEmployeeBloc
+                                                      >()
+                                                      .employeesMiddleware
+                                                      .updateBackIdImage(
+                                                        context
+                                                            .read<
+                                                              ViewUpdateEmployeeBloc
+                                                            >(),
+                                                      ),
+                                              icon: Icon(
+                                                Icons.refresh,
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                          ),
+                                          frontIcon: Positioned(
+                                            top: 0,
+                                            right: -1,
+                                            child: IconButton(
+                                              onPressed:
+                                                  () => context
+                                                      .read<
+                                                        ViewUpdateEmployeeBloc
+                                                      >()
+                                                      .employeesMiddleware
+                                                      .updateFrontIdImage(
+                                                        context
+                                                            .read<
+                                                              ViewUpdateEmployeeBloc
+                                                            >(),
+                                                      ),
+                                              icon: Icon(
+                                                Icons.refresh,
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                          ),
+                                          showFrontImage:
+                                              () => context
+                                                  .read<
+                                                    ViewUpdateEmployeeBloc
+                                                  >()
+                                                  .employeesMiddleware
+                                                  .showUpdatedFrontIdImages(
+                                                    context,
+                                                  ),
+                                          showBackImage:
+                                              () => context
+                                                  .read<
+                                                    ViewUpdateEmployeeBloc
+                                                  >()
+                                                  .employeesMiddleware
+                                                  .showupdatedBackIdImages(
+                                                    context,
+                                                  ),
+                                          loadedBackFile:
+                                              context
+                                                  .watch<
+                                                    ViewUpdateEmployeeBloc
+                                                  >()
+                                                  .employeesMiddleware
+                                                  .getBackIdImage(),
+                                          loadedFrontFile:
+                                              context
+                                                  .watch<
+                                                    ViewUpdateEmployeeBloc
+                                                  >()
+                                                  .employeesMiddleware
+                                                  .getFrontIdImage(),
+                                          showAddedFrontId:
+                                              () => context
+                                                  .read<
+                                                    ViewUpdateEmployeeBloc
+                                                  >()
+                                                  .employeesMiddleware
+                                                  .showUpdatedViewFrontIdImages(
+                                                    context,
+                                                  ),
+                                          showAddedBackId:
+                                              () => context
+                                                  .read<
+                                                    ViewUpdateEmployeeBloc
+                                                  >()
+                                                  .employeesMiddleware
+                                                  .showUpdatedViewBackIdImages(
+                                                    context,
+                                                  ),
+
                                           frontIdImage:
                                               context
                                                   .watch<

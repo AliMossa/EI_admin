@@ -9,7 +9,6 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
   ChangePageBloc() : super(ChangePageInitial(title: '')) {
     on<MoveToHomePageEvent>(moveToHomePage);
     on<MoveToProfilePageEvent>(moveToProfilePage);
-    on<MoveToLoggingProfilePageEvent>(moveToLoggingProfilePage);
     on<MoveToAddEmployeesPageEvent>(moveToAddEmployeesPage);
     on<MoveToEmployeesPageEvent>(moveToEmployeesPage);
     on<MoveToViewEmployeePageEvent>(moveToViewEmployeesPage);
@@ -40,11 +39,6 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     MoveToProfilePageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToProfilePageState(title: event.title));
-
-  void moveToLoggingProfilePage(
-    MoveToLoggingProfilePageEvent event,
-    Emitter<ChangePageState> emit,
-  ) => emit(MoveToLoggingProfilePageState(title: event.title));
 
   void moveToEmployeesPage(
     MoveToEmployeesPageEvent event,

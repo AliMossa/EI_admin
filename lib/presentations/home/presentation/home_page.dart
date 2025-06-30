@@ -4,6 +4,7 @@ import 'package:admin_dashboard/presentations/home/domain/use_cases/get_requests
 import 'package:admin_dashboard/presentations/home/domain/use_cases/get_statistics_of_uses_use_case.dart';
 import 'package:admin_dashboard/presentations/home/domain/use_cases/get_success_statistics_use_case.dart';
 import 'package:admin_dashboard/presentations/home/presentation/logic/bloc/requests_statistics_bloc.dart';
+import 'package:admin_dashboard/presentations/home/presentation/logic/cubit/statistics_date_cubit.dart';
 import 'package:admin_dashboard/presentations/home/presentation/logic/monies_rates/monies_rates_bloc.dart';
 import 'package:admin_dashboard/presentations/home/presentation/logic/statistics_of_users/statistics_of_users_bloc.dart';
 import 'package:admin_dashboard/presentations/home/presentation/logic/success_statistics/success_statistics_bloc.dart';
@@ -54,7 +55,11 @@ class HomePage extends StatelessWidget {
                 getRequestsStatisticsUseCase: GetRequestsStatisticsUseCase(
                   homeRepository: HomeRepositoryImpSource(),
                 ),
-              )..add(GetAllRequestsStatisticsEvent(year: 2025)),
+              )..add(GetAllRequestsStatisticsEvent(year: DateTime.now().year)),
+        ),
+        BlocProvider(
+          create:
+              (context) => StatisticsDateCubit(homeMiddleware: _homeMiddleware),
         ),
       ],
       child: const HomeItems(),
