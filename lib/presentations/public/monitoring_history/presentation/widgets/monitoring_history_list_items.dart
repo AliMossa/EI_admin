@@ -22,6 +22,7 @@ class MonitoringHistoryListItems extends StatelessWidget {
       builder: (context, state) {
         return SizedBox(
           width: size.width * .8,
+          height: size.height * .8,
           child: ListView(
             children: [
               context

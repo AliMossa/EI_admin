@@ -48,7 +48,10 @@ class ViewPropertyDesicionWidget extends StatelessWidget {
 
                   Row(
                     children: [
-                      Text(title.toLowerCase(), style: variableTitleStyle),
+                      Text(
+                        title.toLowerCase(),
+                        style: getVariableTitleStyle(size),
+                      ),
                       DesicionDropDownWidget(
                         size: size,
                         kinds:

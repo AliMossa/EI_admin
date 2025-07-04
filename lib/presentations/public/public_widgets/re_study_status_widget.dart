@@ -24,11 +24,11 @@ class ReStudyStatusWidget extends StatelessWidget {
         children: [
           Icon(Icons.star, color: negotiationStatusIconColor, size: normalSize),
           SizedBox(width: 5),
-          Text('expert studied', style: employeesStatusStyle),
+          Text('expert studied', style: getemployeesStatusStyle(size)),
 
           SizedBox(width: 5),
 
-          Text(date, style: employeesStatusStyle),
+          Text(date, style: getemployeesStatusStyle(size)),
         ],
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit/password/show_password_cubit.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/password_widget/password/show_password_cubit.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:admin_dashboard/util/font/font_styles.dart';
 import 'package:admin_dashboard/util/sizes/fonts_sizes.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
-class EmployeePasswordTextFieldWidget extends StatelessWidget {
+class PasswordWidget extends StatelessWidget {
   Size size;
   String title;
   double widthSizeFactor;
@@ -14,13 +14,15 @@ class EmployeePasswordTextFieldWidget extends StatelessWidget {
   FocusNode nextFocusNode;
   Function onChange;
   Function(String?) validate;
-  EmployeePasswordTextFieldWidget({
+  MainAxisAlignment mainAxisAlignment;
+  PasswordWidget({
     required this.title,
     required this.widthSizeFactor,
     required this.currentFocusNode,
     required this.nextFocusNode,
     required this.onChange,
     required this.validate,
+    this.mainAxisAlignment = MainAxisAlignment.end,
     required this.size,
     super.key,
   });
@@ -32,10 +34,10 @@ class EmployeePasswordTextFieldWidget extends StatelessWidget {
       child: BlocBuilder<ShowPasswordCubit, ShowPasswordState>(
         builder: (context, state) {
           return Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: mainAxisAlignment,
 
             children: [
-              Text(title, style: variableTitleStyle),
+              Text(title, style: getVariableTitleStyle(size)),
 
               Container(
                 width: size.width * widthSizeFactor,

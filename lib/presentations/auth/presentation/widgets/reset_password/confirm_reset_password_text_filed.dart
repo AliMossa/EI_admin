@@ -29,14 +29,11 @@ class ConfirmResetPasswordTextFiled extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             child: TextFormField(
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'please insert password';
-                } else if (value.length <= 5) {
-                  return 'please insert more than 5 characters';
-                }
-                return null;
-              },
+              validator:
+                  (value) => context
+                      .read<ResetPasswordBloc>()
+                      .authMiddleware
+                      .getConfirmPasswordValidation(value),
               onChanged:
                   (value) => context
                       .read<ResetPasswordBloc>()
@@ -51,7 +48,10 @@ class ConfirmResetPasswordTextFiled extends StatelessWidget {
               obscureText: state is ShowPasswordState ? false : true,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
-                label: Text('confirm new password', style: variableTitleStyle),
+                label: Text(
+                  'confirm new password',
+                  style: getVariableTitleStyle(size),
+                ),
                 maintainHintHeight: true,
                 hintStyle: TextStyle(fontWeight: FontWeight.bold),
                 border: InputBorder.none,

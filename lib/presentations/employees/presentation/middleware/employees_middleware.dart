@@ -12,6 +12,7 @@ import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit
 import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit/date/date_cubit.dart';
 import 'package:admin_dashboard/presentations/public/error_widget/snack_bar_widget.dart';
 import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/loading_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/notice_cancle_button_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/notice_ok_button_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/show_notice_widget.dart';
@@ -729,52 +730,18 @@ class EmployeesMiddleware extends MemberImageMiddleware {
       SnackBarWidget().show(context, state.message, Colors.red);
     } else if (state is FailedUpdateEmployeesState) {
       SnackBarWidget().show(context, state.message, Colors.red);
+    } else if (state is SuccessUpdateEmployeesState) {
+      context.read<ChangePageBloc>().add(
+        MoveToEmployeesPageEvent(title: 'Employees'),
+      );
+    } else if (state is SuccessActiveEmployeesState ||
+        state is SuccessUnActiveEmployeesState) {
+      Navigator.of(context).pop();
     }
   }
 
   bool checkTempList(EmployeesState state) =>
       state is SuccessGetEmployeesState && tempList.isEmpty ? true : false;
-
-  String? getEmailVaidation(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    }
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    if (!emailRegex.hasMatch(value)) {
-      return 'Please enter a valid email address';
-    }
-    return null;
-  }
-
-  String? getNameValidation(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'This field cannot be empty';
-    } else if (value.length <= 2) {
-      return 'should be more than 2 characters';
-    } else {
-      return null;
-    }
-  }
-
-  String? getNumberValidation(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your mobile number';
-    }
-    final mobileRegex = RegExp(r'^\d{10}$');
-    if (!mobileRegex.hasMatch(value)) {
-      return 'Enter a valid 10-digit mobile number';
-    }
-    return null;
-  }
-
-  String? getPasswordValidation(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'please insert password';
-    } else if (value.length <= 5) {
-      return 'please insert more than 5 characters';
-    }
-    return null;
-  }
 
   String? getConfirmPasswordValidation(String? value) {
     if (value == null || value.isEmpty) {
@@ -793,6 +760,32 @@ class EmployeesMiddleware extends MemberImageMiddleware {
     } else if (state is SuccessGetEmployeesState && tempList.isEmpty) {
       return right(SvgPicture.asset(Assets.images.empty, fit: BoxFit.contain));
     } else if (state is FailedGetEmployeesState) {
+      return right(SvgPicture.asset(Assets.images.error, fit: BoxFit.contain));
+    } else {
+      return left(const SizedBox());
+    }
+  }
+
+  Either<Widget, Widget> getCorrectWidgetForAddEmployee(
+    AddEmployeeState state,
+    Size size,
+  ) {
+    if (state is LoadingAddNewEmployeeState) {
+      return right(LoadingWidget());
+    } else if (state is FailedAddNewEmployeeState) {
+      return right(SvgPicture.asset(Assets.images.error, fit: BoxFit.contain));
+    } else {
+      return left(const SizedBox());
+    }
+  }
+
+  Either<Widget, Widget> getCorrectWidgetForUpdateEmployee(
+    ViewUpdateEmployeeState state,
+    Size size,
+  ) {
+    if (state is LoadingUpdateEmployeeIdImage) {
+      return right(LoadingWidget());
+    } else if (state is FailedUpdateEmployeesState) {
       return right(SvgPicture.asset(Assets.images.error, fit: BoxFit.contain));
     } else {
       return left(const SizedBox());

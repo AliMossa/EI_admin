@@ -28,6 +28,7 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     on<MoveToAddRewardPageEvent>(moveToAddReward);
     on<MoveToViewUpdateRewardPageEvent>(moveToUpdateReward);
     on<MoveToViewPropertyPageEvent>(moveToViewProperty);
+    on<MoveToChangePsswordPageEvent>(moveToChangePassword);
   }
 
   void moveToHomePage(
@@ -136,4 +137,9 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     MoveToViewPropertyPageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToViewPropertyPageState(title: event.title, id: event.id));
+
+  void moveToChangePassword(
+    MoveToChangePsswordPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToChangePsswordPageState(title: event.title));
 }

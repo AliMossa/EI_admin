@@ -30,11 +30,11 @@ class StatusItemWidget extends StatelessWidget {
           Row(
             children: [
               Icon(Icons.wifi, color: statusIconColor, size: normalSize),
-              Text(status, style: employeesStatusStyle),
+              Text(status, style: getemployeesStatusStyle(size)),
             ],
           ),
           SizedBox(width: 1),
-          Text(date, style: employeesStatusStyle),
+          Text(date, style: getemployeesStatusStyle(size)),
         ],
       ),
     );

@@ -21,8 +21,8 @@ class ProfileImageWidget extends StatelessWidget {
       child: BlocListener<ProfileBloc, ProfileState>(
         listener: (context, state) {},
         child: Container(
-          width: size.width * .08,
-          height: size.width * .08,
+          width: 110,
+          height: 110,
           margin: const EdgeInsets.all(10),
           padding: EdgeInsets.all(1),
           clipBehavior: Clip.hardEdge,
@@ -78,7 +78,7 @@ class ProfileImageWidget extends StatelessWidget {
                         ),
                       ),
                   AnimatedPositioned(
-                    top: state is HoverProfileImageState ? 0 : size.height * .1,
+                    top: state is HoverProfileImageState ? 0 : 60,
                     duration: Duration(milliseconds: 400),
                     child: Stack(
                       alignment: Alignment.bottomCenter,

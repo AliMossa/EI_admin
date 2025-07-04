@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/presentations/employees/presentation/logic/bloc/add_employee/add_employee_bloc.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/employee_info_textfield_widget.dart';
+import 'package:admin_dashboard/presentations/public/validations/validations.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,11 +23,7 @@ class AddEmployeeConnectionInfoWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           EmployeeInfoTextfieldWidget(
-            validate:
-                (value) => context
-                    .read<AddEmployeeBloc>()
-                    .employeesMiddleware
-                    .getEmailVaidation(value),
+            validate: (value) => Validations.getEmailVaidation(value),
 
             onChange:
                 (value) => context
@@ -49,11 +46,7 @@ class AddEmployeeConnectionInfoWidget extends StatelessWidget {
             widthSizeFactor: .3,
           ),
           EmployeeInfoTextfieldWidget(
-            validate:
-                (value) => context
-                    .read<AddEmployeeBloc>()
-                    .employeesMiddleware
-                    .getNumberValidation(value),
+            validate: (value) => Validations.getNumberValidation(value),
             onChange:
                 (value) => context
                     .read<AddEmployeeBloc>()
@@ -75,11 +68,7 @@ class AddEmployeeConnectionInfoWidget extends StatelessWidget {
             widthSizeFactor: .3,
           ),
           EmployeeInfoTextfieldWidget(
-            validate:
-                (value) => context
-                    .read<AddEmployeeBloc>()
-                    .employeesMiddleware
-                    .getNameValidation(value),
+            validate: (value) => Validations.getNameValidation(value),
             onChange:
                 (value) => context
                     .read<AddEmployeeBloc>()

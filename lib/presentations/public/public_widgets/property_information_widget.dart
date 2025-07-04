@@ -2,6 +2,7 @@ import 'package:admin_dashboard/presentations/public/public_widgets/property_stu
 import 'package:admin_dashboard/presentations/public/public_widgets/property_type_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/property_variables_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/sold_tag_widget.dart';
+import 'package:admin_dashboard/util/flexible/flexible_method.dart';
 import 'package:flutter/widgets.dart';
 
 // ignore: must_be_immutable
@@ -50,8 +51,12 @@ class PropertyInformationWidget extends StatelessWidget {
       width: size.width * .7,
       height: size.width * .2,
       child: ListView(
+        shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        scrollDirection: Axis.horizontal,
+        scrollDirection:
+            !FlexibleMethod.getAddEmployeePageFlexible(size)
+                ? Axis.horizontal
+                : Axis.vertical,
         children: [
           PropertyStudyWidget(
             width: size.width * .35,

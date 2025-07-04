@@ -39,7 +39,7 @@ class CheckCodeTextFieldWidget extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.bold),
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
-          label: Text('check code', style: variableTitleStyle),
+          label: Text('check code', style: getVariableTitleStyle(size)),
           maintainHintHeight: true,
           hintStyle: TextStyle(fontWeight: FontWeight.bold),
           border: InputBorder.none,

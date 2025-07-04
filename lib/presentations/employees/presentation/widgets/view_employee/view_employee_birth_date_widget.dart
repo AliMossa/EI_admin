@@ -26,7 +26,7 @@ class ViewEmployeeBirthDateWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text('birth date', style: variableTitleStyle),
+                Text('birth date', style: getVariableTitleStyle(size)),
                 Container(
                   width: size.width * .15,
                   height: 40,

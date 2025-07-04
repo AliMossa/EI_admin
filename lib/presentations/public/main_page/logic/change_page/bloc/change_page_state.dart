@@ -130,3 +130,8 @@ class MoveToViewPropertyPageState extends ChangePageState {
   int id;
   MoveToViewPropertyPageState({required this.id, required super.title});
 }
+
+// ignore: must_be_immutable
+class MoveToChangePsswordPageState extends ChangePageState {
+  MoveToChangePsswordPageState({required super.title});
+}

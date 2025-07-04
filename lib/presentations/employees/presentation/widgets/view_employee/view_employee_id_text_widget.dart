@@ -23,7 +23,7 @@ class ViewEmployeeIdTextWidget extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text('Id', style: variableTitleStyle),
+            Text('Id', style: getVariableTitleStyle(size)),
             FittedBox(
               child: Container(
                 width: size.width * widthSizeFactor,

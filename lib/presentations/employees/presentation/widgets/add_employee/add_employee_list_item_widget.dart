@@ -2,8 +2,9 @@ import 'package:admin_dashboard/presentations/employees/presentation/logic/bloc/
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/add_employee_connection_info_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/add_employee_id_image_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/add_employee_personal_info_widget.dart';
+import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/flexible_add_employee_personal_info_widget.dart';
 import 'package:admin_dashboard/presentations/public/add_new_member/add_new_member.dart';
-import 'package:admin_dashboard/presentations/public/public_widgets/loading_widget.dart';
+import 'package:admin_dashboard/util/flexible/flexible_method.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,36 +31,55 @@ class AddEmployeeListItemWidget extends StatelessWidget {
               dragStartBehavior: DragStartBehavior.start,
               shrinkWrap: true,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                !FlexibleMethod.getAddEmployeePageFlexible(size)
+                    ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
 
-                  children: [
-                    AddEmployeePersonalInfoWidget(size: size),
-                    const SizedBox(width: 10),
-                    Column(
                       children: [
+                        AddEmployeePersonalInfoWidget(size: size),
+                        const SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AddEmployeeConnectionInfoWidget(size: size),
+                            const SizedBox(height: 10),
+                            AddEmployeeIdImageWidget(size: size),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                      ],
+                    )
+                    : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+                        FlexibleAddEmployeePersonalInfoWidget(size: size),
+                        const SizedBox(width: 10),
                         AddEmployeeConnectionInfoWidget(size: size),
                         const SizedBox(height: 10),
                         AddEmployeeIdImageWidget(size: size),
                         const SizedBox(height: 10),
                       ],
                     ),
-                  ],
-                ),
-                state is LoadingAddNewEmployeeState
-                    ? LoadingWidget()
-                    : AddNewMember(
-                      onPress:
-                          () => context
-                              .read<AddEmployeeBloc>()
-                              .employeesMiddleware
-                              .addEmployeeFunction(
-                                context,
-                                context.read<AddEmployeeBloc>(),
-                              ),
+                context
+                    .read<AddEmployeeBloc>()
+                    .employeesMiddleware
+                    .getCorrectWidgetForAddEmployee(state, size)
+                    .fold(
+                      (_) => AddNewMember(
+                        onPress:
+                            () => context
+                                .read<AddEmployeeBloc>()
+                                .employeesMiddleware
+                                .addEmployeeFunction(
+                                  context,
+                                  context.read<AddEmployeeBloc>(),
+                                ),
 
-                      size: size,
-                      title: 'add',
+                        size: size,
+                        title: 'add',
+                      ),
+                      (widget) => widget,
                     ),
               ],
             ),

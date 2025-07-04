@@ -28,26 +28,25 @@ class MainPage extends StatelessWidget {
             return Row(
               children: [
                 Sidebar(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppBarWidget(
-                      title:
-                          context
-                              .read<ChangePageBloc>()
-                              .mainPageMiddleware
-                              .title,
-                      size: moreInfo,
-                    ),
-                    Expanded(
-                      child: Padding(
+                Expanded(
+                  child: ListView(
+                    children: [
+                      AppBarWidget(
+                        title:
+                            context
+                                .read<ChangePageBloc>()
+                                .mainPageMiddleware
+                                .title,
+                        size: moreInfo,
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(10),
                         child: Stack(
                           children: [_mainPageMiddleware.getPages(state)],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             );

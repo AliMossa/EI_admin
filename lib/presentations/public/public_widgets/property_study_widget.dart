@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:admin_dashboard/util/font/font_styles.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 // ignore: must_be_immutable
@@ -36,50 +37,56 @@ class PropertyStudyWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: linkColor),
             ),
-            child: ListView(
-              physics: const NeverScrollableScrollPhysics(),
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, bottom: 10),
-                  child: Text(title, style: titleVariableContainerStyle),
-                ),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(
+                context,
+              ).copyWith(scrollbars: false),
+              child: ListView(
+                physics: const NeverScrollableScrollPhysics(),
 
-                SizedBox(
-                  // width: width,
-                  height: height,
-                  child: ListView(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: firstItemsWidget,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: secondItemsWidget,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: thirdItemsWidget,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: fourthItemsWidget,
-                      ),
-                    ],
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5, bottom: 10),
+                    child: Text(title, style: titleVariableContainerStyle),
                   ),
-                ),
-              ],
+
+                  SizedBox(
+                    // width: width,
+                    height: height,
+                    child: ListView(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: firstItemsWidget,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: secondItemsWidget,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: thirdItemsWidget,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: fourthItemsWidget,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         )

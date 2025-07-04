@@ -38,7 +38,8 @@ class ViewUserInfoWidget extends StatelessWidget {
               child:
                   state is LoadingGetUserInformationState
                       ? ListSearchShimmer(size: size)
-                      : Column(
+                      : ListView(
+                        shrinkWrap: true,
                         children: [
                           ViewUserVariableWidget(
                             value:

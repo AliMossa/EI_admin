@@ -235,7 +235,7 @@ class PropertiesMiddlewar {
                     left: 10,
                     child: IconButton(
                       onPressed: () {
-                        if (currentIndex > 0) {
+                        if (currentIndex >= 0) {
                           pageController.previousPage(
                             duration: Duration(milliseconds: 300),
                             curve: Curves.easeInOut,

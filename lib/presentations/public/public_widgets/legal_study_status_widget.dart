@@ -22,9 +22,9 @@ class LegalStudyStatusWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Icon(Icons.balance_rounded, color: statusIconColor, size: normalSize),
-          Text('legally accepted ', style: employeesStatusStyle),
+          Text('legally accepted ', style: getemployeesStatusStyle(size)),
 
-          Text(date, style: employeesStatusStyle),
+          Text(date, style: getemployeesStatusStyle(size)),
         ],
       ),
     );

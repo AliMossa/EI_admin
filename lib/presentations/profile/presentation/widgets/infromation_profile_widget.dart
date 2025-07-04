@@ -30,8 +30,8 @@ class InfromationProfileWidget extends StatelessWidget {
             .fold(
               (_) => Container(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                width: FlexibleMethod.getCorrectProfileWidth(size).width,
 
+                width: FlexibleMethod.getCorrectProfileWidth(size).width,
                 decoration: BoxDecoration(
                   color: background,
                   border: Border.all(color: textFieldBorder),

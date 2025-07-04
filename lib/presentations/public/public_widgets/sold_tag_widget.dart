@@ -1,7 +1,7 @@
 import 'package:admin_dashboard/util/colors/colors.dart';
-import 'package:admin_dashboard/util/font/font_styles.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SoldTagWidget extends StatelessWidget {
   Size size;
   SoldTagWidget({required this.size, super.key});
@@ -13,9 +13,9 @@ class SoldTagWidget extends StatelessWidget {
       transform: Matrix4.rotationZ(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        gradient: soldGradiant,
+        color: soldLineColor,
       ),
-      child: Center(child: Text('Sold', style: getSoldPropertyStyle(size))),
+      child: Center(heightFactor: 0.6, child: Icon(Icons.link_rounded)),
     );
   }
 }

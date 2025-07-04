@@ -35,7 +35,7 @@ class ViewEmployeeTextfieldWidget extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(title, style: variableTitleStyle),
+            Text(title, style: getVariableTitleStyle(size)),
             FittedBox(
               child: Container(
                 width: size.width * widthSizeFactor,

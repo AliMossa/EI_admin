@@ -1,7 +1,6 @@
-import 'package:admin_dashboard/presentations/employees/presentation/logic/bloc/add_employee/add_employee_bloc.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/logic/bloc/view_update_employee/view_update_employee_bloc.dart';
-import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/employee_info_textfield_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/view_employee/view_employee_textfield_widget.dart';
+import 'package:admin_dashboard/presentations/public/validations/validations.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,11 +33,7 @@ class ViewEmployeeConnectionInfoWidget extends StatelessWidget {
         children: [
           ViewEmployeeTextfieldWidget(
             initialInfo: email,
-            validate:
-                (value) => context
-                    .read<ViewUpdateEmployeeBloc>()
-                    .employeesMiddleware
-                    .getEmailVaidation(value),
+            validate: (value) => Validations.getEmailVaidation(value),
 
             onChange:
                 (value) => context
@@ -62,11 +57,7 @@ class ViewEmployeeConnectionInfoWidget extends StatelessWidget {
           ),
           ViewEmployeeTextfieldWidget(
             initialInfo: phone,
-            validate:
-                (value) => context
-                    .read<ViewUpdateEmployeeBloc>()
-                    .employeesMiddleware
-                    .getNumberValidation(value),
+            validate: (value) => Validations.getNumberValidation(value),
             onChange:
                 (value) => context
                     .read<ViewUpdateEmployeeBloc>()
@@ -89,11 +80,7 @@ class ViewEmployeeConnectionInfoWidget extends StatelessWidget {
           ),
           ViewEmployeeTextfieldWidget(
             initialInfo: address,
-            validate:
-                (value) => context
-                    .read<ViewUpdateEmployeeBloc>()
-                    .employeesMiddleware
-                    .getNameValidation(value),
+            validate: (value) => Validations.getNameValidation(value),
             onChange:
                 (value) => context
                     .read<ViewUpdateEmployeeBloc>()

@@ -1,6 +1,5 @@
 import 'package:admin_dashboard/presentations/public/app_bar/widgets/search_bar_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/devider_widget.dart';
-import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../util/font/font_styles.dart';

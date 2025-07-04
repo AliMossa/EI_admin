@@ -3,7 +3,8 @@ import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit
 import 'package:admin_dashboard/presentations/public/public_widgets/add_date_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/add_employee_cities_types_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/employee_info_textfield_widget.dart';
-import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/employee_password_text_field_widget.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/password_widget/password_widget.dart';
+import 'package:admin_dashboard/presentations/public/validations/validations.dart';
 import 'package:admin_dashboard/presentations/public/view_personal_image/view_pesonal_image.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/widgets.dart';
@@ -39,11 +40,7 @@ class AddEmployeePersonalInfoWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   EmployeeInfoTextfieldWidget(
-                    validate:
-                        (value) => context
-                            .read<AddEmployeeBloc>()
-                            .employeesMiddleware
-                            .getNameValidation(value),
+                    validate: (value) => Validations.getNameValidation(value),
                     onChange:
                         (value) => context
                             .read<AddEmployeeBloc>()
@@ -60,11 +57,7 @@ class AddEmployeePersonalInfoWidget extends StatelessWidget {
                     widthSizeFactor: .15,
                   ),
                   EmployeeInfoTextfieldWidget(
-                    validate:
-                        (value) => context
-                            .read<AddEmployeeBloc>()
-                            .employeesMiddleware
-                            .getNameValidation(value),
+                    validate: (value) => Validations.getNameValidation(value),
                     onChange:
                         (value) => context
                             .read<AddEmployeeBloc>()
@@ -87,11 +80,7 @@ class AddEmployeePersonalInfoWidget extends StatelessWidget {
                   ),
 
                   EmployeeInfoTextfieldWidget(
-                    validate:
-                        (value) => context
-                            .read<AddEmployeeBloc>()
-                            .employeesMiddleware
-                            .getNameValidation(value),
+                    validate: (value) => Validations.getNameValidation(value),
                     onChange:
                         (value) => context
                             .read<AddEmployeeBloc>()
@@ -112,12 +101,9 @@ class AddEmployeePersonalInfoWidget extends StatelessWidget {
                             .getmotherNameFocusNode(),
                     widthSizeFactor: .15,
                   ),
-                  EmployeePasswordTextFieldWidget(
+                  PasswordWidget(
                     validate:
-                        (value) => context
-                            .read<AddEmployeeBloc>()
-                            .employeesMiddleware
-                            .getPasswordValidation(value),
+                        (value) => Validations.getPasswordValidation(value),
                     onChange:
                         (value) => context
                             .read<AddEmployeeBloc>()
@@ -138,7 +124,7 @@ class AddEmployeePersonalInfoWidget extends StatelessWidget {
                             .getPasswordFocusNode(),
                     widthSizeFactor: .15,
                   ),
-                  EmployeePasswordTextFieldWidget(
+                  PasswordWidget(
                     validate:
                         (value) => context
                             .read<AddEmployeeBloc>()

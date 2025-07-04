@@ -110,3 +110,6 @@ final statusNegotiationBackgroundColor = const Color.fromARGB(
   96,
 );
 final greyBackground = const Color.fromARGB(99, 158, 158, 158);
+final soldLineColor = Color.fromRGBO(230, 255, 86, 47);
+final addItemColor = const Color.fromARGB(0, 255, 255, 255);
+final generalButtonColor = const Color.fromARGB(0, 255, 255, 255);

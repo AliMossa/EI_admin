@@ -29,7 +29,7 @@ class PeopertyListItem extends StatelessWidget {
     return BlocBuilder<RequestsBloc, RequestsState>(
       builder: (context, state) {
         return SizedBox(
-          // height: size.height * .83,
+          height: size.height * .83,
           width: size.width * .8,
           child: context
               .read<RequestsBloc>()
@@ -60,7 +60,7 @@ class PeopertyListItem extends StatelessWidget {
                                         .lawyerTimeAcceptance,
                                 size: size,
                               ),
-                              SizedBox(width: 5),
+                              SizedBox(width: 5, height: 5),
                               ReStudyStatusWidget(
                                 date:
                                     totalRequestEntity

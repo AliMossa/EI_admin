@@ -55,7 +55,7 @@ class ResetPasswordTextFieldWidget extends StatelessWidget {
               obscureText: state is ShowPasswordState ? false : true,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
-                label: Text('new password', style: variableTitleStyle),
+                label: Text('new password', style: getVariableTitleStyle(size)),
                 maintainHintHeight: true,
                 hintStyle: TextStyle(fontWeight: FontWeight.bold),
                 border: InputBorder.none,

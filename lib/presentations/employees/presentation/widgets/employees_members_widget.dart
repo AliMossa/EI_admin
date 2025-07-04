@@ -30,83 +30,75 @@ class _EmployeesMembersWidgetState extends State<EmployeesMembersWidget> {
       builder: (context, state) {
         return Stack(
           children: [
-            RefreshIndicator(
-              triggerMode: RefreshIndicatorTriggerMode.onEdge,
-              elevation: 5,
-              onRefresh:
-                  () async =>
-                      context.read<EmployeesBloc>().add(GetEmployeesEvent()),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  ViewKindsMenusWidget(
-                    size: moreInfo,
-                    activeList: EmployeeModel().getEmployeesStatus(),
-                    teamKindList: EmployeeModel().getEmployeesTeams(),
-                  ),
-                  SizedBox(
-                    height: moreInfo.height * .76,
-                    width: moreInfo.width * .8,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ViewKindsMenusWidget(
+                  size: moreInfo,
+                  activeList: EmployeeModel().getEmployeesStatus(),
+                  teamKindList: EmployeeModel().getEmployeesTeams(),
+                ),
+                SizedBox(
+                  height: moreInfo.height * .76,
+                  width: moreInfo.width * .8,
 
-                    child: context
-                        .read<EmployeesBloc>()
-                        .employeesMiddleware
-                        .getCorrectWidget(state, moreInfo)
-                        .fold(
-                          (_) => NotificationListener(
-                            onNotification: (ScrollNotification notification) {
-                              if (notification.metrics.pixels ==
-                                  notification.metrics.maxScrollExtent) {}
-                              return false;
-                            },
-                            child: AnimatedList(
-                              key:
-                                  context
-                                      .watch<EmployeesBloc>()
-                                      .employeesMiddleware
-                                      .getAnimatedListGlobalKey(),
-                              initialItemCount:
-                                  context
-                                      .watch<EmployeesBloc>()
-                                      .employeesMiddleware
-                                      .getTotalEmployeesEntity()
-                                      .employees
-                                      .length,
-                              shrinkWrap: true,
-                              itemBuilder:
-                                  (context, index, animation) => FadeTransition(
-                                    opacity: animation.drive(
-                                      Tween<double>(begin: 0, end: 1),
-                                    ),
-                                    child: ItemListWidget(
-                                      name: widget.list[index].name,
-                                      size: moreInfo,
-                                      status: [
-                                        StatusItemWidget(
-                                          date: widget.list[index].joinedDate,
-                                          size: moreInfo,
-                                          status: 'logged in ',
-                                        ),
-                                      ],
-                                      date: '10-12-2025',
-                                      onPressed:
-                                          () => context
-                                              .read<ChangePageBloc>()
-                                              .add(
-                                                MoveToViewEmployeePageEvent(
-                                                  id: widget.list[index].id,
-                                                  title: 'Employee',
-                                                ),
-                                              ),
-                                    ),
+                  child: context
+                      .read<EmployeesBloc>()
+                      .employeesMiddleware
+                      .getCorrectWidget(state, moreInfo)
+                      .fold(
+                        (_) => NotificationListener(
+                          onNotification: (ScrollNotification notification) {
+                            if (notification.metrics.pixels ==
+                                notification.metrics.maxScrollExtent) {}
+                            return false;
+                          },
+                          child: AnimatedList(
+                            key:
+                                context
+                                    .watch<EmployeesBloc>()
+                                    .employeesMiddleware
+                                    .getAnimatedListGlobalKey(),
+                            initialItemCount:
+                                context
+                                    .watch<EmployeesBloc>()
+                                    .employeesMiddleware
+                                    .getTotalEmployeesEntity()
+                                    .employees
+                                    .length,
+                            shrinkWrap: true,
+                            itemBuilder:
+                                (context, index, animation) => FadeTransition(
+                                  opacity: animation.drive(
+                                    Tween<double>(begin: 0, end: 1),
                                   ),
-                            ),
+                                  child: ItemListWidget(
+                                    name: widget.list[index].name,
+                                    size: moreInfo,
+                                    status: [
+                                      StatusItemWidget(
+                                        date: widget.list[index].joinedDate,
+                                        size: moreInfo,
+                                        status: 'logged in ',
+                                      ),
+                                    ],
+                                    date: '10-12-2025',
+                                    onPressed:
+                                        () =>
+                                            context.read<ChangePageBloc>().add(
+                                              MoveToViewEmployeePageEvent(
+                                                id: widget.list[index].id,
+                                                title: 'Employee',
+                                              ),
+                                            ),
+                                  ),
+                                ),
                           ),
-                          (widget) => widget,
                         ),
-                  ),
-                ],
-              ),
+                        (widget) => widget,
+                      ),
+                ),
+              ],
             ),
             AddMemberButtonWidget(
               onPress:

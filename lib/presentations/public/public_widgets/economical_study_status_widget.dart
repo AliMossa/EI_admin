@@ -26,7 +26,7 @@ class EconomicalStudyStatusWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Icon(Icons.wifi, color: statusIconColor, size: normalSize),
-          Text(date, style: employeesStatusStyle),
+          Text(date, style: getProfileTitleLogginDateStyle(size)),
         ],
       ),
     );

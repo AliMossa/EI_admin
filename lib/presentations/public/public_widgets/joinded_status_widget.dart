@@ -23,9 +23,9 @@ class JoindedStatusWidget extends StatelessWidget {
         children: [
           Icon(Icons.event, color: textFieldBorder, size: normalSize),
           SizedBox(width: 2),
-          Text('joined in ', style: employeesStatusStyle),
+          Text('joined in ', style: getProfileTitleLogginDateStyle(size)),
 
-          Text(date, style: employeesStatusStyle),
+          Text(date, style: getProfileTitleLogginDateStyle(size)),
         ],
       ),
     );

@@ -47,11 +47,17 @@ final sideBarItemsStyle = TextStyle(
   fontWeight: FontWeight.bold,
   overflow: TextOverflow.ellipsis,
 );
-final searchBarStyle = TextStyle(
-  color: white75,
-  fontWeight: FontWeight.bold,
-  overflow: TextOverflow.ellipsis,
-);
+
+TextStyle getCorrectsearchBarStyle(Size size) {
+  return TextStyle(
+    color: white75,
+    fontWeight: FontWeight.bold,
+    fontSize: FlexibleMethod.getCorrectListTileTextWidth(size).width,
+
+    overflow: TextOverflow.ellipsis,
+  );
+}
+
 final titleBarStyle = TextStyle(
   color: black75,
   fontWeight: FontWeight.bold,
@@ -128,10 +134,17 @@ final profileTitleLogginDateStyle1 = TextStyle(
   fontSize: normalSize,
   overflow: TextOverflow.visible,
 );
-final variableTitleStyle = TextStyle(
+TextStyle getVariableTitleStyle(Size size) => TextStyle(
   color: black50,
   fontWeight: FontWeight.bold,
-  fontSize: normalSize,
+  fontSize: FlexibleMethod.getCorrectListTileTextWidth(size).width,
+  overflow: TextOverflow.ellipsis,
+);
+
+TextStyle getButtonStyle(Size size) => TextStyle(
+  color: white75,
+  fontWeight: FontWeight.bold,
+  fontSize: FlexibleMethod.getCorrectListTileTextWidth(size).width,
   overflow: TextOverflow.ellipsis,
 );
 final variableSymbolTitleStyle = TextStyle(
@@ -141,13 +154,16 @@ final variableSymbolTitleStyle = TextStyle(
   overflow: TextOverflow.visible,
 );
 
-final employeesStatusStyle = TextStyle(
-  color: black75,
-  inherit: true,
-  fontWeight: FontWeight.bold,
-  fontSize: verysmallSize,
-  overflow: TextOverflow.ellipsis,
-);
+TextStyle getemployeesStatusStyle(Size size) {
+  return TextStyle(
+    color: black75,
+    inherit: true,
+    fontWeight: FontWeight.bold,
+    fontSize: FlexibleMethod.getCorrectListTileStatuesTextWidth(size).width,
+    overflow: TextOverflow.ellipsis,
+  );
+}
+
 final requestsStatusStyle = TextStyle(
   color: black75,
   fontWeight: FontWeight.bold,

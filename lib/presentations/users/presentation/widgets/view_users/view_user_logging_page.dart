@@ -30,7 +30,7 @@ class ViewUserLoggingPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('monitoring history', style: variableTitleStyle),
+          Text('monitoring history', style: getVariableTitleStyle(size)),
           IconButton(
             icon: Icon(Icons.menu),
             onPressed:

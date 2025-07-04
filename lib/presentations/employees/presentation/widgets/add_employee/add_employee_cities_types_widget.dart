@@ -23,7 +23,7 @@ class AddEmployeeCitiesTypesWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text('work city', style: variableTitleStyle),
+              Text('work city', style: getVariableTitleStyle(size)),
 
               Container(
                 width: size.width * .15,
@@ -61,7 +61,7 @@ class AddEmployeeCitiesTypesWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
 
             children: [
-              Text('employee type', style: variableTitleStyle),
+              Text('employee type', style: getVariableTitleStyle(size)),
               Container(
                 width: size.width * .15,
                 height: 40,

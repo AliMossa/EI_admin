@@ -7,11 +7,13 @@ class ViewContainerItemWidget extends StatelessWidget {
   String title;
   Widget firstColumn;
   Widget secondColumn;
+  Size size;
 
   ViewContainerItemWidget({
     required this.firstColumn,
     required this.title,
     this.secondColumn = const SizedBox(),
+    required this.size,
     super.key,
   });
 
@@ -26,7 +28,7 @@ class ViewContainerItemWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(title, style: variableTitleStyle),
+          Text(title, style: getVariableTitleStyle(size)),
           Row(children: [firstColumn, secondColumn]),
         ],
       ),

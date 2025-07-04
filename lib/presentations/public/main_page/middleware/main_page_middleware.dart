@@ -16,6 +16,8 @@ import 'package:admin_dashboard/presentations/rewards/presentation/rewards_page.
 import 'package:admin_dashboard/presentations/rewards/presentation/widgets/add_reward/add_reward_page.dart';
 import 'package:admin_dashboard/presentations/rewards/presentation/widgets/view_upate_reward/view_update_rewards_page.dart';
 import 'package:admin_dashboard/presentations/search/presentation/search_page.dart';
+import 'package:admin_dashboard/presentations/settings/presentation/settings_page.dart';
+import 'package:admin_dashboard/presentations/settings/presentation/widgets/change_password/change_password_page.dart';
 import 'package:admin_dashboard/presentations/users/presentation/users_page.dart';
 import 'package:admin_dashboard/presentations/users/presentation/widgets/add_user/add_user_page.dart';
 import 'package:admin_dashboard/presentations/users/presentation/widgets/view_users/view_user_page.dart';
@@ -61,6 +63,7 @@ class MainPageMiddleware {
       case MoveToQuestionsPageState():
         return CommonQuestionsPage();
       case MoveToSettingsPageState():
+        return SettingsPage();
       case MoveToSearchPageState():
         return SearchPage();
       case MoveToViewCommonQuestionPageState():
@@ -75,6 +78,8 @@ class MainPageMiddleware {
         return ViewUpdateRewardsPage(id: state.id);
       case MoveToViewPropertyPageState():
         return ViewPropertyPage(id: state.id);
+      case MoveToChangePsswordPageState():
+        return ChangePasswordPage();
     }
   }
 }

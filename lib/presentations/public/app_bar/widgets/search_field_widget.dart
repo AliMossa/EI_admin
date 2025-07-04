@@ -30,7 +30,7 @@ class SearchFieldWidget extends StatelessWidget {
           children: [
             Icon(CupertinoIcons.search, color: white75),
             const SizedBox(width: 5),
-            Text('search', style: searchBarStyle),
+            Text('search', style: getCorrectsearchBarStyle(size)),
           ],
         ),
       ),

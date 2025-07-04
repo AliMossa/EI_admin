@@ -3,6 +3,7 @@ import 'package:admin_dashboard/presentations/employees/domain/use_cases/add_emp
 import 'package:admin_dashboard/presentations/employees/presentation/logic/bloc/add_employee/add_employee_bloc.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit/date/date_cubit.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/logic/cubit/kinds_cubit.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/password_widget/password/show_password_cubit.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/middleware/employees_middleware.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/add_employee_items.dart';
 import 'package:flutter/material.dart';

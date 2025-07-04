@@ -36,7 +36,7 @@ class AddUserPasswordTextFieldWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
 
             children: [
-              Text(title, style: variableTitleStyle),
+              Text(title, style: getVariableTitleStyle(size)),
 
               Container(
                 width: size.width * widthSizeFactor,

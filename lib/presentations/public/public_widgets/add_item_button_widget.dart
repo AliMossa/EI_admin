@@ -35,7 +35,7 @@ class AddItemButtonWidget extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            backgroundColor: const Color.fromARGB(0, 255, 255, 255),
+            backgroundColor: addItemColor,
           ),
           child: Text(
             title,

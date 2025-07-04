@@ -28,7 +28,6 @@ class ItemListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size.width * .9,
       clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
@@ -38,17 +37,6 @@ class ItemListWidget extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          ListTile(
-            title: Text(name, style: getProfileTitleLogginDateStyle(size)),
-            trailing: ViewMemberInfoButtonWidget(onPressed: onPressed),
-            subtitle: SizedBox(
-              height: size.height * .028,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: status,
-              ),
-            ),
-          ),
           isSold!
               ? Positioned(
                 top: -20,
@@ -56,6 +44,22 @@ class ItemListWidget extends StatelessWidget {
                 child: SoldTagWidget(size: size),
               )
               : const SizedBox(),
+          ListTile(
+            title: Text(name, style: getProfileTitleLogginDateStyle(size)),
+            trailing: ViewMemberInfoButtonWidget(onPressed: onPressed),
+            subtitle: SizedBox(
+              child:
+                  !FlexibleMethod.getListItemsFlexible(size)
+                      ? Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: status,
+                      )
+                      : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: status,
+                      ),
+            ),
+          ),
         ],
       ),
     );

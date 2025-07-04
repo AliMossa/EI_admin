@@ -23,7 +23,7 @@ class AddDateWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(title, style: variableTitleStyle),
+          Text(title, style: getVariableTitleStyle(size)),
           Container(
             width: size.width * .15,
             height: 40,

@@ -5,6 +5,7 @@ import 'package:admin_dashboard/presentations/employees/presentation/widgets/vie
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/view_employee/view_employee_id_text_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/view_employee/view_employee_presonal_image_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/view_employee/view_employee_textfield_widget.dart';
+import 'package:admin_dashboard/presentations/public/validations/validations.dart';
 import 'package:admin_dashboard/presentations/public/view_personal_image/logic/cubit/member_image_cubit.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/widgets.dart';
@@ -67,11 +68,7 @@ class ViewEmployeePersonalInfoWidget extends StatelessWidget {
                   ),
                   ViewEmployeeTextfieldWidget(
                     initialInfo: name!,
-                    validate:
-                        (value) => context
-                            .read<ViewUpdateEmployeeBloc>()
-                            .employeesMiddleware
-                            .getNameValidation(value),
+                    validate: (value) => Validations.getNameValidation(value),
                     onChange:
                         (value) => context
                             .read<ViewUpdateEmployeeBloc>()
@@ -89,11 +86,7 @@ class ViewEmployeePersonalInfoWidget extends StatelessWidget {
                   ),
                   ViewEmployeeTextfieldWidget(
                     initialInfo: fatherName,
-                    validate:
-                        (value) => context
-                            .read<ViewUpdateEmployeeBloc>()
-                            .employeesMiddleware
-                            .getNameValidation(value),
+                    validate: (value) => Validations.getNameValidation(value),
                     onChange:
                         (value) => context
                             .read<ViewUpdateEmployeeBloc>()
@@ -117,11 +110,7 @@ class ViewEmployeePersonalInfoWidget extends StatelessWidget {
 
                   ViewEmployeeTextfieldWidget(
                     initialInfo: motherName,
-                    validate:
-                        (value) => context
-                            .read<ViewUpdateEmployeeBloc>()
-                            .employeesMiddleware
-                            .getNameValidation(value),
+                    validate: (value) => Validations.getNameValidation(value),
                     onChange:
                         (value) => context
                             .read<ViewUpdateEmployeeBloc>()

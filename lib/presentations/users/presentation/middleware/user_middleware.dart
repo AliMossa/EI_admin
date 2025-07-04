@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/gen/assets.gen.dart';
 import 'package:admin_dashboard/presentations/public/error_widget/snack_bar_widget.dart';
+import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/loading_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/notice_cancle_button_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/notice_ok_button_widget.dart';
@@ -155,6 +156,8 @@ class UserMiddleware {
   void showAddUserFailedMessage(BuildContext context, AddUserState state) {
     if (state is FailedAddUserState) {
       SnackBarWidget().show(context, state.message, Colors.red);
+    } else if (state is SuccessAddUserState) {
+      context.read<ChangePageBloc>().add(MoveToUsersPageEvent(title: 'Users'));
     }
   }
 

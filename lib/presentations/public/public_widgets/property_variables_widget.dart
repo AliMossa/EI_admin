@@ -36,7 +36,7 @@ class PropertyVariablesWidget extends StatelessWidget {
         child: Row(
           children: [
             const SizedBox(width: 10),
-            Text(title, style: variableTitleStyle),
+            Text(title, style: getVariableTitleStyle(size)),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10),
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -64,18 +64,23 @@ class PropertyVariablesWidget extends StatelessWidget {
                         child:
                             textWidth == 0
                                 ? SizedBox(
-                                  width: width * .35,
+                                  width: width * .25,
                                   height: height * .8,
-                                  child: ListView(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    children: [
-                                      Text(
-                                        value,
-                                        style: getProfileTitleLogginDateStyle(
-                                          size,
+                                  child: ScrollConfiguration(
+                                    behavior: ScrollConfiguration.of(
+                                      context,
+                                    ).copyWith(scrollbars: false),
+                                    child: ListView(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      children: [
+                                        Text(
+                                          value,
+                                          style: getProfileTitleLogginDateStyle(
+                                            size,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 )
                                 : SizedBox(

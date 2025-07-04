@@ -72,6 +72,7 @@ class PropertyListItemWidget extends StatelessWidget {
                               child: ItemListWidget(
                                 name: propertyListEntity.list[index].location,
                                 size: size,
+                                isSold: propertyType > 0 ? true : false,
                                 status: [],
                                 date:
                                     propertyListEntity.list[index].propertyType,

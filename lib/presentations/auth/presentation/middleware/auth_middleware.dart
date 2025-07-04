@@ -107,8 +107,10 @@ class AuthMiddleware {
     return false;
   }
 
-  Future<void> saveToken(String token) async =>
-      await SafeStorage.write('token', token);
+  Future<void> saveData(String token) async {
+    await SafeStorage.write('token', token);
+    await SafeStorage.write('email', _email!);
+  }
 
   FocusNode? _passwordFocusNode;
   FocusNode? _confirmNewPasswordFocusNode;
@@ -192,5 +194,16 @@ class AuthMiddleware {
     if (state is FailedSendVerificationCodeState) {
       SnackBarWidget().show(context, state.message, Colors.red);
     }
+  }
+
+  String? getConfirmPasswordValidation(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'please insert password';
+    } else if (value.length <= 5) {
+      return 'please insert more than 5 characters';
+    } else if (_newPassword != value) {
+      return 'diffirent password';
+    }
+    return null;
   }
 }

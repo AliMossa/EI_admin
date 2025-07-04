@@ -7,6 +7,7 @@ import 'package:admin_dashboard/presentations/requests/domain/entities/request_i
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:intl/intl.dart';
 
 abstract class ViewPropertyDataSource {
   Future<ViewPropertyEntity> viewProperty(
@@ -86,7 +87,9 @@ class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
           kitchenType: descriptionItem['kitchen_type'],
           flooringType: descriptionItem['flooring_type'],
           balconySize: descriptionItem['balcony_size'],
-          price: descriptionItem['price'],
+          price: NumberFormat.decimalPattern().format(
+            double.parse(descriptionItem['price']),
+          ),
           payWay: descriptionItem['pay_way'],
           state: descriptionItem['state'],
           expertCheck: descriptionItem['expert_check'],
@@ -107,6 +110,7 @@ class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
           totalExpectedTaxes: economicItem['total_expected_taxes'] * 1.0,
           rentingPrice: economicItem['renting_price'] * 1.0,
           chancePrice: economicItem['chance_price'] * 1.0,
+
           investmentTime: economicItem['investment_time'],
           incommingTime: economicItem['incoming_time'],
           investmentMode: economicItem['investment_mode'],

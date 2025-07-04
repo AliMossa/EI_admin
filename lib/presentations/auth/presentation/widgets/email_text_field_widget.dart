@@ -40,7 +40,7 @@ class EmailTextFieldWidget extends StatelessWidget {
         autofocus: true,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
-          label: Text('email', style: variableTitleStyle),
+          label: Text('email', style: getVariableTitleStyle(size)),
           maintainHintHeight: true,
           hintStyle: TextStyle(fontWeight: FontWeight.bold),
           border: InputBorder.none,

@@ -73,11 +73,17 @@ class SearchBarFieldWidget extends StatelessWidget {
                           icon: Icon(Icons.search_rounded),
                         ),
                         border: InputBorder.none,
-                        label: Text('Search', style: variableTitleStyle),
+                        label: Text(
+                          'Search',
+                          style: getVariableTitleStyle(size),
+                        ),
                       )
                       : InputDecoration(
                         border: InputBorder.none,
-                        label: Text('Search', style: variableTitleStyle),
+                        label: Text(
+                          'Search',
+                          style: getVariableTitleStyle(size),
+                        ),
                       ),
             ),
           ),
@@ -110,7 +116,10 @@ class SearchBarFieldWidget extends StatelessWidget {
                       cursorHeight: smallSize,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        label: Text('father name', style: variableTitleStyle),
+                        label: Text(
+                          'father name',
+                          style: getVariableTitleStyle(size),
+                        ),
                       ),
                     ),
                   ),
@@ -134,7 +143,10 @@ class SearchBarFieldWidget extends StatelessWidget {
                       cursorHeight: smallSize,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        label: Text('mother name', style: variableTitleStyle),
+                        label: Text(
+                          'mother name',
+                          style: getVariableTitleStyle(size),
+                        ),
                       ),
                     ),
                   ),

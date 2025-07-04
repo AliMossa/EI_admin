@@ -124,3 +124,8 @@ class MoveToViewPropertyPageEvent extends ChangePageEvent {
   int id;
   MoveToViewPropertyPageEvent({required this.id, required super.title});
 }
+
+// ignore: must_be_immutable
+class MoveToChangePsswordPageEvent extends ChangePageEvent {
+  MoveToChangePsswordPageEvent({required super.title});
+}

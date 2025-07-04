@@ -97,7 +97,8 @@ class SidebarMiddleware {
         state is MoveToViewUpdateRewardPageState ||
         state is MoveToViewPropertyPageState ||
         state is MoveToAddAdminCommonQuestionPageState ||
-        state is MoveToViewCommonQuestionPageState) {
+        state is MoveToViewCommonQuestionPageState ||
+        state is MoveToChangePsswordPageState) {
       return true;
     }
     return false;

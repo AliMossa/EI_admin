@@ -24,7 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         (failed) => emit(FailedSendLoginState(message: failed.message)),
         (success) async {
           emit(SuccessSendLoginState(message: success.message));
-          await authMiddleware.saveToken(success.token);
+          await authMiddleware.saveData(success.token);
         },
       );
     } on ServerAdminException catch (error) {

@@ -25,10 +25,10 @@ class NegotiationStatusWidget extends StatelessWidget {
         children: [
           Icon(Icons.chat, color: negotiationStatusIconColor, size: normalSize),
           SizedBox(width: 5),
-          Text('negotiation accepted', style: employeesStatusStyle),
+          Text('negotiation accepted', style: getemployeesStatusStyle(size)),
           SizedBox(width: 5),
 
-          Text(date, style: employeesStatusStyle),
+          Text(date, style: getemployeesStatusStyle(size)),
         ],
       ),
     );

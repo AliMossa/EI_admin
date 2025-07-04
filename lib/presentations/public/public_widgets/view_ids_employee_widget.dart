@@ -56,7 +56,7 @@ class ViewIdsEmployeeWidget extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text('front id image', style: variableTitleStyle),
+                    Text('front id image', style: getVariableTitleStyle(size)),
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 10),
                       width: size.width * .175,
@@ -105,7 +105,7 @@ class ViewIdsEmployeeWidget extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text('back id image', style: variableTitleStyle),
+                    Text('back id image', style: getVariableTitleStyle(size)),
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 10),
                       width: size.width * .175,
