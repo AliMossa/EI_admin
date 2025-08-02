@@ -26,106 +26,159 @@ class ViewPropertyListItem extends StatelessWidget {
     return SizedBox(
       width: size.width * .825,
       height: size.height * .8,
-      child: ListView(
-        children: [
-          PropertyInformationWidget(
-            areaSize: viewPropertyEntity.requestDescriptionInfoEntity.areaSize,
-            balconySize:
-                viewPropertyEntity.requestDescriptionInfoEntity.balconySize,
-            bathroomNumbers:
-                viewPropertyEntity.requestDescriptionInfoEntity.bathroomNumbers
-                    .toString(),
-            roomNumbers:
-                viewPropertyEntity.requestDescriptionInfoEntity.roomNumbers
-                    .toString(),
-            decoration:
-                viewPropertyEntity.requestDescriptionInfoEntity.decoration,
-            flooringType:
-                viewPropertyEntity.requestDescriptionInfoEntity.flooringType,
-            kitchenType:
-                viewPropertyEntity.requestDescriptionInfoEntity.kitchenType,
-            paintingType:
-                viewPropertyEntity.requestDescriptionInfoEntity.paintingType,
-            propertyAge:
-                viewPropertyEntity.requestDescriptionInfoEntity.propertyAge
-                    .toString(),
-            contract: viewPropertyEntity.requestDescriptionInfoEntity.contract,
-            exactPosition:
-                viewPropertyEntity.requestDescriptionInfoEntity.exactPosition,
-            overlook:
-                viewPropertyEntity.requestDescriptionInfoEntity.overlook
-                    .toString(),
-            payWay: viewPropertyEntity.requestDescriptionInfoEntity.payWay,
-            price: viewPropertyEntity.requestDescriptionInfoEntity.price,
-            propertyType:
-                viewPropertyEntity.requestDescriptionInfoEntity.propertyType,
-            state: viewPropertyEntity.requestDescriptionInfoEntity.state,
-            size: size,
-          ),
-          const SizedBox(height: 10),
+      child: context
+          .read<ViewPropertyBloc>()
+          .propertiesMiddlewar
+          .showCorrectViewProperty(
+            context.read<ViewPropertyBloc>(),
+            context.read<ViewPropertyBloc>().state,
+            size,
+          )
+          .fold(
+            (_) => ListView(
+              children: [
+                PropertyInformationWidget(
+                  areaSize:
+                      viewPropertyEntity.requestDescriptionInfoEntity.areaSize,
+                  balconySize:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .balconySize!,
+                  bathroomNumbers:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .bathroomNumbers
+                          .toString(),
+                  roomNumbers:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .roomNumbers
+                          .toString(),
+                  decoration:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .decoration!,
+                  flooringType:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .flooringType!,
+                  kitchenType:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .kitchenType!,
+                  paintingType:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .paintingType!,
+                  propertyAge:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .propertyAge
+                          .toString(),
+                  contract:
+                      viewPropertyEntity.requestDescriptionInfoEntity.contract,
+                  exactPosition:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .exactPosition,
+                  overlook:
+                      viewPropertyEntity.requestDescriptionInfoEntity.overlook
+                          .toString(),
+                  payWay:
+                      viewPropertyEntity.requestDescriptionInfoEntity.payWay,
+                  price: viewPropertyEntity.requestDescriptionInfoEntity.price,
+                  propertyType:
+                      viewPropertyEntity
+                          .requestDescriptionInfoEntity
+                          .propertyType,
+                  state: viewPropertyEntity.requestDescriptionInfoEntity.state,
+                  size: size,
+                ),
+                const SizedBox(height: 10),
 
-          ImagesWidget(
-            documents: viewPropertyEntity.requestImagesInfoEntity.documents,
-            ids: viewPropertyEntity.requestImagesInfoEntity.ids,
-            images: viewPropertyEntity.requestImagesInfoEntity.images,
-            buyDocuments: viewPropertyEntity.documentsImagesEntity.images,
-            onPress:
-                context.read<ViewPropertyBloc>().propertiesMiddlewar.viewImages,
-            size: size,
-          ),
-          const SizedBox(height: 10),
-          if (viewPropertyEntity.aggreement != null)
-            RequestNoticeWidget(
-              size: size,
-              content: viewPropertyEntity.aggreement!,
-              isDirector: false,
+                ImagesWidget(
+                  documents:
+                      viewPropertyEntity.requestImagesInfoEntity.documents,
+                  ids: viewPropertyEntity.requestImagesInfoEntity.ids,
+                  images: viewPropertyEntity.requestImagesInfoEntity.images,
+                  buyDocuments: viewPropertyEntity.documentsImagesEntity.images,
+                  onPress:
+                      context
+                          .read<ViewPropertyBloc>()
+                          .propertiesMiddlewar
+                          .viewImages,
+                  size: size,
+                ),
+                const SizedBox(height: 10),
+                if (viewPropertyEntity.aggreement != null)
+                  RequestNoticeWidget(
+                    size: size,
+                    content: viewPropertyEntity.aggreement!,
+                    isDirector: false,
+                  ),
+                EconomyStudyWidget(
+                  agreedNegotiation: '',
+                  buyingPrice:
+                      viewPropertyEntity.requestEconomicInfoEntity.buyingPrice,
+                  chancePrice:
+                      viewPropertyEntity.requestEconomicInfoEntity.chancePrice,
+                  expectedPrice:
+                      viewPropertyEntity
+                          .requestEconomicInfoEntity
+                          .expectedPrice,
+                  incommingTime:
+                      viewPropertyEntity
+                          .requestEconomicInfoEntity
+                          .incommingTime,
+                  investmentMode:
+                      viewPropertyEntity
+                          .requestEconomicInfoEntity
+                          .investmentMode,
+                  investmentTime:
+                      viewPropertyEntity
+                          .requestEconomicInfoEntity
+                          .incommingTime,
+                  numberOfChances:
+                      viewPropertyEntity
+                          .requestEconomicInfoEntity
+                          .numberOfChances,
+                  profitPercent:
+                      viewPropertyEntity
+                          .requestEconomicInfoEntity
+                          .profitPercent,
+                  propertyManagement:
+                      viewPropertyEntity
+                          .requestEconomicInfoEntity
+                          .propertyManagement,
+                  rentingPrice:
+                      viewPropertyEntity.requestEconomicInfoEntity.rentingPrice,
+                  size: size,
+                  totalExpectedTaxes:
+                      viewPropertyEntity
+                          .requestEconomicInfoEntity
+                          .totalExpectedTaxes,
+                ),
+
+                const SizedBox(height: 10),
+
+                viewPropertyEntity.requestDescriptionInfoEntity.status!
+                        .contains('تم البيع')
+                    ? const SizedBox()
+                    : ViewPropertyDesicionWidget(
+                      id: id,
+                      currentValue:
+                          context
+                              .watch<DesicionCubit>()
+                              .propertiesMiddlewar
+                              .getCurrentValue(),
+                      size: size,
+                      title: 'Desicion',
+                    ),
+                const SizedBox(height: 10),
+              ],
             ),
-          EconomyStudyWidget(
-            agreedNegotiation: '',
-            buyingPrice:
-                viewPropertyEntity.requestEconomicInfoEntity.buyingPrice,
-            chancePrice:
-                viewPropertyEntity.requestEconomicInfoEntity.chancePrice,
-            expectedPrice:
-                viewPropertyEntity.requestEconomicInfoEntity.expectedPrice,
-            incommingTime:
-                viewPropertyEntity.requestEconomicInfoEntity.incommingTime,
-            investmentMode:
-                viewPropertyEntity.requestEconomicInfoEntity.investmentMode,
-            investmentTime:
-                viewPropertyEntity.requestEconomicInfoEntity.incommingTime,
-            numberOfChances:
-                viewPropertyEntity.requestEconomicInfoEntity.numberOfChances,
-            profitPercent:
-                viewPropertyEntity.requestEconomicInfoEntity.profitPercent,
-            propertyManagement:
-                viewPropertyEntity.requestEconomicInfoEntity.propertyManagement,
-            rentingPrice:
-                viewPropertyEntity.requestEconomicInfoEntity.rentingPrice,
-            size: size,
-            totalExpectedTaxes:
-                viewPropertyEntity.requestEconomicInfoEntity.totalExpectedTaxes,
+            (widget) => widget,
           ),
-
-          const SizedBox(height: 10),
-
-          viewPropertyEntity.requestDescriptionInfoEntity.status!.contains(
-                'تم البيع',
-              )
-              ? const SizedBox()
-              : ViewPropertyDesicionWidget(
-                id: id,
-                currentValue:
-                    context
-                        .watch<DesicionCubit>()
-                        .propertiesMiddlewar
-                        .getCurrentValue(),
-                size: size,
-                title: 'Desicion',
-              ),
-          const SizedBox(height: 10),
-        ],
-      ),
     );
   }
 }

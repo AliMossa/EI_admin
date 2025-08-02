@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/home/domain/entities/request_requests_statistics_entity.dart';
 import 'package:admin_dashboard/presentations/home/domain/entities/requests_statistics_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class GetRequestsStatisticsDataSource {
@@ -13,11 +16,6 @@ abstract class GetRequestsStatisticsDataSource {
 
 class GetRequestsStatisticsDataSourceWithDio
     extends GetRequestsStatisticsDataSource {
-  GetRequestsStatisticsDataSource? _getRequestsStatisticsDataSource;
-  GetRequestsStatisticsDataSource get() =>
-      _getRequestsStatisticsDataSource ??
-      (_getRequestsStatisticsDataSource =
-          GetRequestsStatisticsDataSourceWithDio());
   @override
   Future<RequestsStatisticsEntity> getRequestsStatistics(
     RequestRequestsStatisticsEntity requestRequestsStatisticsEntity,
@@ -36,14 +34,25 @@ class GetRequestsStatisticsDataSourceWithDio
         throw Exception();
       }
       return RequestsStatisticsEntity(
-        acceptedByAdmin: response['accepted_by_admin_percentage'],
-        rejectedByLawyer: response['rejected_by_lawyer_percentage'],
-        rejectedByUser: response['rejected_by_user_percentage'],
+        acceptedByAdmin: response['accepted_by_admin_percentage'] * 1.0,
+        rejectedByLawyer: response['rejected_by_lawyer_percentage'] * 1.0,
+        rejectedByUser: response['rejected_by_user_percentage'] * 1.0,
       );
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetRequestsStatistics');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetRequestsStatistics');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetRequestsStatistics',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

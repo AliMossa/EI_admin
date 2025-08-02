@@ -41,7 +41,7 @@ class HomeListItems extends StatelessWidget {
                                 .getSuccessStatisticsEntity(),
                         maxValue:
                             context
-                                .read<SuccessStatisticsBloc>()
+                                .watch<SuccessStatisticsBloc>()
                                 .homeMiddleware
                                 .getMaxLineChartValue(),
                         minValue: 0,

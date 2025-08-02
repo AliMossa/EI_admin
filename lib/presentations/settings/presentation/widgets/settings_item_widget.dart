@@ -22,9 +22,8 @@ class SettingsItemWidget extends StatelessWidget {
       onTap: function,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: linkColor),
           borderRadius: BorderRadius.circular(20),
-          gradient: mainGradient2,
+          gradient: mainGradient3,
         ),
         child: ListTile(
           title: Text(title, style: getProfileTitleLogginDateStyle(size)),

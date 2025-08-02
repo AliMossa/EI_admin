@@ -42,6 +42,7 @@ class PropertyStudyWidget extends StatelessWidget {
                 context,
               ).copyWith(scrollbars: false),
               child: ListView(
+                shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
 
                 // crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,6 +56,7 @@ class PropertyStudyWidget extends StatelessWidget {
                     // width: width,
                     height: height,
                     child: ListView(
+                      shrinkWrap: true,
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,

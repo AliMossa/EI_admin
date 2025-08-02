@@ -232,7 +232,12 @@ class UserMiddleware {
     } else if (state is SuccessGetUserState && tempList.isEmpty) {
       return right(SvgPicture.asset(Assets.images.empty));
     } else if (state is FailedGetUserState) {
-      return right(SvgPicture.asset(Assets.images.error));
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else {
       return left(const SizedBox());
     }

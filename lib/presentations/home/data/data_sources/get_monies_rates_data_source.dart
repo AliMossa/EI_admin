@@ -1,18 +1,17 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/home/domain/entities/monies_rates_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 
 abstract class GetMoniesRatesDataSource {
   Future<MoniesRatesEntity> getMoniesRates();
 }
 
 class GetMoniesRatesDataSourceWithDio extends GetMoniesRatesDataSource {
-  GetMoniesRatesDataSourceWithDio? _getMoniesRatesDataSourceWithDio;
-  GetMoniesRatesDataSourceWithDio get() =>
-      _getMoniesRatesDataSourceWithDio ??
-      (_getMoniesRatesDataSourceWithDio = GetMoniesRatesDataSourceWithDio());
-
   @override
   Future<MoniesRatesEntity> getMoniesRates() async {
     String message = '';
@@ -33,9 +32,18 @@ class GetMoniesRatesDataSourceWithDio extends GetMoniesRatesDataSource {
         TRY: double.parse((item['TRY'] * 1.0).toStringAsFixed(2)),
       );
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetMoniesRates');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: 'error');
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetMoniesRates');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetMoniesRates',
+      );
+      throw ServerAdminError(message: ShowNotices.abnormalError);
     }
   }
 }

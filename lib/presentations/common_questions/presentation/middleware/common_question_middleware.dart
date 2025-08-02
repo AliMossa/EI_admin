@@ -261,7 +261,12 @@ class CommonQuestionMiddleware {
         state is SuccessGetUserCommonQuestionsState) {
       return right(SvgPicture.asset(Assets.images.empty, fit: BoxFit.contain));
     } else if (state is FailedGetUserCommonQuestionsState) {
-      return right(SvgPicture.asset(Assets.images.error, fit: BoxFit.contain));
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else {
       return left(SizedBox());
     }
@@ -277,7 +282,12 @@ class CommonQuestionMiddleware {
         state is SuccessGetAdminCommonQuestionsState) {
       return right(SvgPicture.asset(Assets.images.empty, fit: BoxFit.contain));
     } else if (state is FailedGetAdminCommonQuestionsState) {
-      return right(SvgPicture.asset(Assets.images.error, fit: BoxFit.contain));
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else {
       return left(SizedBox());
     }

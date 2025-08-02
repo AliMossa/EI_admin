@@ -18,7 +18,7 @@ class RewardRepositoryImpSource implements RewardsRepository {
     String token,
   ) async {
     try {
-      return right(await GetRewardsDataSourceWithDio().get().getRewards(token));
+      return right(await GetRewardsDataSourceWithDio().getRewards(token));
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
     }
@@ -30,7 +30,7 @@ class RewardRepositoryImpSource implements RewardsRepository {
   ) async {
     try {
       return right(
-        await AddRewardDataSourceWithDio().get().addReward(addRewardEntity),
+        await AddRewardDataSourceWithDio().addReward(addRewardEntity),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -43,9 +43,7 @@ class RewardRepositoryImpSource implements RewardsRepository {
   ) async {
     try {
       return right(
-        await UpdateRewardDataSourceWithDio().get().updateReward(
-          updateRewardEntity,
-        ),
+        await UpdateRewardDataSourceWithDio().updateReward(updateRewardEntity),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -58,9 +56,7 @@ class RewardRepositoryImpSource implements RewardsRepository {
   ) async {
     try {
       return right(
-        await RemoveRewardDataSourceWithDio().get().removeReward(
-          removeRewardEntity,
-        ),
+        await RemoveRewardDataSourceWithDio().removeReward(removeRewardEntity),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -72,9 +68,7 @@ class RewardRepositoryImpSource implements RewardsRepository {
     String link,
   ) async {
     try {
-      return right(
-        await ReGetRewardDataSourceWithDio().get().reGetRewards(link),
-      );
+      return right(await ReGetRewardDataSourceWithDio().reGetRewards(link));
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
     }

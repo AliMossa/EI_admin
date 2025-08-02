@@ -2,6 +2,7 @@ import 'package:admin_dashboard/presentations/properties/domain/entities/propert
 import 'package:admin_dashboard/presentations/properties/domain/entities/view_property_request_entity.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/new_property_study_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/set_property_sold_use_case.dart';
+import 'package:admin_dashboard/presentations/properties/domain/use_cases/show_on_stage_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/view_property_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/presentation/middleware/properties_middlewar.dart';
 import 'package:admin_dashboard/util/errors/admin_exceptions.dart';
@@ -17,15 +18,18 @@ class ViewPropertyBloc extends Bloc<ViewPropertyEvent, ViewPropertyState> {
   ViewPropertyUseCase viewPropertyUseCase;
   SetPropertySoldUseCase setPropertySoldUseCase;
   NewPropertyStudyUseCase newPropertyStudyUseCase;
+  ShowOnStageUseCase showOnStageUseCase;
   ViewPropertyBloc({
     required this.propertiesMiddlewar,
     required this.viewPropertyUseCase,
     required this.setPropertySoldUseCase,
     required this.newPropertyStudyUseCase,
+    required this.showOnStageUseCase,
   }) : super(ViewPropertyInitial()) {
     on<ViewPropertyInfoEvent>(showPropertyInfo);
     on<SetPropertySoldEvent>(setPropertySold);
     on<NewPropertyStudyEvent>(newPropertyStudy);
+    on<ShowOnStageEvent>(showOnStage);
   }
 
   void showPropertyInfo(
@@ -95,6 +99,29 @@ class ViewPropertyBloc extends Bloc<ViewPropertyEvent, ViewPropertyState> {
       emit(FailedNewPropertyStudyState(message: error.message));
     } catch (error) {
       emit(FailedNewPropertyStudyState(message: 'error'));
+    }
+  }
+
+  void showOnStage(
+    ShowOnStageEvent event,
+    Emitter<ViewPropertyState> emit,
+  ) async {
+    emit(LoadingShowOnStageState());
+    try {
+      final token = await SafeStorage.read('token');
+      final response = await showOnStageUseCase(
+        PropertyDesicionEntity(id: event.id, token: token!),
+      );
+      response.fold(
+        (failed) => emit(FailedShowOnStageState(message: failed.message)),
+        (success) {
+          emit(SuccessShowOnStageState());
+        },
+      );
+    } on ServerAdminException catch (error) {
+      emit(FailedShowOnStageState(message: error.message));
+    } catch (error) {
+      emit(FailedShowOnStageState(message: 'error'));
     }
   }
 }

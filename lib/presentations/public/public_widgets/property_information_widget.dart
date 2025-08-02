@@ -72,73 +72,83 @@ class PropertyInformationWidget extends StatelessWidget {
                 isMovible: true,
                 size: size,
               ),
-              PropertyVariablesWidget(
-                title: 'number of bathroom',
-                value: bathroomNumbers,
-                width: 225,
-                height: 25,
-                size: size,
-              ),
-              PropertyVariablesWidget(
-                title: 'overlook from 10',
-                value: overlook,
-                width: 220,
-                height: 25,
-                size: size,
-              ),
-              PropertyVariablesWidget(
-                title: 'property age',
-                value: propertyAge,
-                width: 220,
-                height: 25,
-                size: size,
-              ),
-              PropertyVariablesWidget(
-                title: 'balcony size',
-                value: balconySize,
-                symbol: 'm\u00b2',
-                width: 250,
-                height: 25,
-                isMovible: true,
-                size: size,
-              ),
+              if (!bathroomNumbers.contains('-1'))
+                PropertyVariablesWidget(
+                  title: 'number of bathroom',
+                  value: bathroomNumbers,
+                  width: 225,
+                  height: 25,
+                  size: size,
+                ),
+              if (!overlook.contains('-1'))
+                PropertyVariablesWidget(
+                  title: 'overlook from 10',
+                  value: overlook,
+                  width: 220,
+                  height: 25,
+                  size: size,
+                ),
+              if (!propertyAge.contains('0'))
+                PropertyVariablesWidget(
+                  title: 'property age',
+                  value: propertyAge,
+                  width: 220,
+                  height: 25,
+                  size: size,
+                ),
+              if (!balconySize.contains('-1'))
+                PropertyVariablesWidget(
+                  title: 'balcony size',
+                  value: balconySize,
+                  symbol: 'm\u00b2',
+                  width: 250,
+                  height: 25,
+                  isMovible: true,
+                  size: size,
+                ),
             ],
             secondItemsWidget: [
-              PropertyVariablesWidget(
-                title: 'number of rooms',
-                value: roomNumbers,
-                width: 220,
-                height: 25,
-                size: size,
-              ),
-              PropertyVariablesWidget(
-                title: 'flooring type',
-                value: flooringType,
-                width: 220,
-                height: 25,
-                size: size,
-              ),
-              PropertyVariablesWidget(
-                title: 'decoration',
-                value: decoration,
-                width: 220,
-                height: 25,
-                size: size,
-              ),
-              PropertyVariablesWidget(
-                title: 'kitchen type',
-                value: kitchenType,
-                width: 220,
-                height: 25,
-                size: size,
-              ),
-              PropertyVariablesWidget(
-                title: 'painting type',
-                value: paintingType,
-                width: 220,
-                height: 25,
-                size: size,
-              ),
+              if (!roomNumbers.contains('-1'))
+                PropertyVariablesWidget(
+                  title: 'number of rooms',
+                  value: roomNumbers,
+                  width: 220,
+                  height: 25,
+                  size: size,
+                ),
+              if (!flooringType.contains('-1'))
+                PropertyVariablesWidget(
+                  title: 'flooring type',
+                  value: flooringType,
+                  width: 220,
+                  height: 25,
+                  isMovible: true,
+                  size: size,
+                ),
+              if (!decoration.contains('-1'))
+                PropertyVariablesWidget(
+                  title: 'decoration',
+                  value: decoration,
+                  width: 220,
+                  height: 25,
+                  size: size,
+                ),
+              if (!kitchenType.contains('-1'))
+                PropertyVariablesWidget(
+                  title: 'kitchen type',
+                  value: kitchenType,
+                  width: 220,
+                  height: 25,
+                  size: size,
+                ),
+              if (!paintingType.contains('-1'))
+                PropertyVariablesWidget(
+                  title: 'painting type',
+                  value: paintingType,
+                  width: 220,
+                  height: 25,
+                  size: size,
+                ),
             ],
           ),
           const SizedBox(width: 10),
@@ -199,8 +209,10 @@ class PropertyInformationWidget extends StatelessWidget {
                   PropertyVariablesWidget(
                     title: 'state',
                     value: state,
-                    width: 220,
+                    width: size.width * .4,
                     height: 25,
+                    isMovible: true,
+
                     size: size,
                   ),
                   PropertyVariablesWidget(

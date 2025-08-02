@@ -17,7 +17,6 @@ import 'package:admin_dashboard/presentations/public/shimmers/row_pie_chart_shim
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 bool showError = false;
 
@@ -34,11 +33,12 @@ class HomeMiddleware {
   double _maxLineChartValue = 0;
   void setSuccessStatisticsEntity(ListSuccessStatisticsEntity newStatistics) {
     _successStatisticsEntity.statics = newStatistics.statics;
-    getMax(_successStatisticsEntity.statics);
+    getMax(newStatistics.statics);
   }
 
-  ListSuccessStatisticsEntity getSuccessStatisticsEntity() =>
-      _successStatisticsEntity;
+  ListSuccessStatisticsEntity getSuccessStatisticsEntity() {
+    return _successStatisticsEntity;
+  }
 
   TotalStatisticsOfUsesEntity getTotalStatisticsOfUsesEntity() =>
       _totalStatisticsOfUsesEntity;
@@ -172,14 +172,18 @@ class HomeMiddleware {
   }
 
   void getMax(List<SuccessStatisticsEntity> list) {
-    list.sort((a, b) => a.value.compareTo(b.value));
-    _maxLineChartValue = list.first.value + 10;
+    double temp = 0.0;
+    for (SuccessStatisticsEntity item in list) {
+      if (temp < item.value) {
+        temp = item.value;
+      }
+    }
+    _maxLineChartValue = temp + 10;
   }
 
   void showErrorFunction(BuildContext context, String content) async {
     if (!showError) {
       showError = true;
-
       SnackBarWidget().show(context, content, Colors.red);
       await Future.delayed(
         const Duration(seconds: 2),
@@ -226,7 +230,6 @@ class HomeMiddleware {
 
   void sendManyRequests(BuildContext context, StatisticsDateState state) async {
     if (state is SetStatisticsDateState) {
-      context.read<MoniesRatesBloc>().add(GetAllMoniesRatesEvent());
       context.read<SuccessStatisticsBloc>().add(
         GetSuccessStatisticsEvent(year: int.parse(_time)),
       );

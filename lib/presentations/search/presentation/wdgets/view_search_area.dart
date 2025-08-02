@@ -1,11 +1,8 @@
-import 'package:admin_dashboard/gen/assets.gen.dart';
-import 'package:admin_dashboard/presentations/public/shimmers/list_search_shimmer.dart';
 import 'package:admin_dashboard/presentations/search/presentation/logic/bloc/search_bloc.dart';
 import 'package:admin_dashboard/presentations/search/presentation/wdgets/search_bar_field_widget.dart';
 import 'package:admin_dashboard/presentations/search/presentation/wdgets/view_search_results_widget.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
 class ViewSearchArea extends StatelessWidget {

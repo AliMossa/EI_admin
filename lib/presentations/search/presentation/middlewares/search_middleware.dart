@@ -75,7 +75,12 @@ class SearchMiddleware {
     } else if (state is SuccessSendSearchState && temp.isEmpty) {
       return right(SvgPicture.asset(Assets.images.empty));
     } else if (state is FailedSendSearchState) {
-      return right(SvgPicture.asset(Assets.images.error));
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else {
       return left(const SizedBox());
     }

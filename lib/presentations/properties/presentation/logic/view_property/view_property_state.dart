@@ -38,3 +38,13 @@ class FailedNewPropertyStudyState extends ViewPropertyState {
   String message;
   FailedNewPropertyStudyState({required this.message});
 }
+
+class LoadingShowOnStageState extends ViewPropertyState {}
+
+class SuccessShowOnStageState extends ViewPropertyState {}
+
+// ignore: must_be_immutable
+class FailedShowOnStageState extends ViewPropertyState {
+  String message;
+  FailedShowOnStageState({required this.message});
+}

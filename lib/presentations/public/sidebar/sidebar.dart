@@ -167,11 +167,24 @@ class Sidebar extends StatelessWidget {
                       ),
                       SidebarItem(
                         index: 7,
-                        icon: Icons.help_rounded,
+                        icon: Icons.wallet,
                         onClicked: () {
                           context
                               .read<ChangeSelectedColorCubit>()
                               .ChangeColorSelectedItem(7);
+                          context.read<ChangePageBloc>().add(
+                            MoveToWalletPageEvent(title: 'Wallet'),
+                          );
+                        },
+                        title: 'Wallet',
+                      ),
+                      SidebarItem(
+                        index: 8,
+                        icon: Icons.help_rounded,
+                        onClicked: () {
+                          context
+                              .read<ChangeSelectedColorCubit>()
+                              .ChangeColorSelectedItem(8);
                           context.read<ChangePageBloc>().add(
                             MoveToQuestionsPageEvent(title: 'Questions'),
                           );
@@ -181,7 +194,7 @@ class Sidebar extends StatelessWidget {
 
                       SideBarDividerWidget(color: Colors.white, thickness: 3),
                       SidebarItem(
-                        index: 8,
+                        index: 9,
                         icon: Icons.settings,
                         onClicked: () {
                           context
@@ -196,7 +209,7 @@ class Sidebar extends StatelessWidget {
                       BlocConsumer<LogoutBloc, LogoutState>(
                         builder: (context, state) {
                           return SidebarItem(
-                            index: 9,
+                            index: 10,
                             icon: Icons.logout,
                             onClicked:
                                 () => context

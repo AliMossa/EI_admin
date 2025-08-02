@@ -28,15 +28,15 @@ class PeopertyListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RequestsBloc, RequestsState>(
       builder: (context, state) {
-        return SizedBox(
-          height: size.height * .83,
-          width: size.width * .8,
-          child: context
-              .read<RequestsBloc>()
-              .requestMiddleware
-              .getCorrectWidget(state, size)
-              .fold(
-                (_) => NotificationListener(
+        return context
+            .read<RequestsBloc>()
+            .requestMiddleware
+            .getCorrectWidget(state, size)
+            .fold(
+              (_) => SizedBox(
+                height: size.height * .83,
+                width: size.width * .8,
+                child: NotificationListener(
                   onNotification: (ScrollNotification notification) {
                     if (notification.metrics.pixels ==
                         notification.metrics.maxScrollExtent) {}
@@ -82,9 +82,9 @@ class PeopertyListItem extends StatelessWidget {
                         ),
                   ),
                 ),
-                (widget) => widget,
               ),
-        );
+              (widget) => widget,
+            );
       },
     );
   }

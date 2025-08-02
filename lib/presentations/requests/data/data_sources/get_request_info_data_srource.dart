@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/requests/domain/entities/request_description_info_entity.dart';
 import 'package:admin_dashboard/presentations/requests/domain/entities/request_economic_info_entity.dart';
 import 'package:admin_dashboard/presentations/requests/domain/entities/request_images_info_entity.dart';
@@ -6,17 +8,14 @@ import 'package:admin_dashboard/presentations/requests/domain/entities/send_requ
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 
 abstract class GetRequestInfoDataSrource {
   Future<RequestInfoEntity> getRequestInfo(SendRequestEntity sendRequestEntity);
 }
 
 class GetRequestInfoDataSrourceWithDio extends GetRequestInfoDataSrource {
-  GetRequestInfoDataSrourceWithDio? _getRequestInfoDataSrourceWithDio;
-  GetRequestInfoDataSrourceWithDio get() =>
-      _getRequestInfoDataSrourceWithDio ??
-      (_getRequestInfoDataSrourceWithDio = GetRequestInfoDataSrourceWithDio());
-
   @override
   Future<RequestInfoEntity> getRequestInfo(
     SendRequestEntity sendRequestEntity,
@@ -81,10 +80,20 @@ class GetRequestInfoDataSrourceWithDio extends GetRequestInfoDataSrource {
         requestStatus: item['status'],
       );
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetRequestInfo');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print(error);
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetRequestInfo');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetRequestInfo',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

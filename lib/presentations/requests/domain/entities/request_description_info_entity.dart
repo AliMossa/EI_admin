@@ -3,19 +3,19 @@ import 'package:equatable/equatable.dart';
 // ignore: must_be_immutable
 class RequestDescriptionInfoEntity extends Equatable {
   int userId;
-  int roomNumbers;
-  int bathroomNumbers;
-  int propertyAge;
-  int overlook;
+  int? roomNumbers;
+  int? bathroomNumbers;
+  int? propertyAge;
+  int? overlook;
   int legalCheck;
   int expertCheck;
   String propertyType;
   String areaSize;
-  String decoration;
-  String kitchenType;
-  String flooringType;
-  String balconySize;
-  String paintingType;
+  String? decoration;
+  String? kitchenType;
+  String? flooringType;
+  String? balconySize;
+  String? paintingType;
   String price;
   String payWay;
   String state;

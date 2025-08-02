@@ -14,83 +14,65 @@ class UsersListMembersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UsersBloc, UsersState>(
-      builder: (context, state) {
-        return SizedBox(
-          height: size.height * .76,
-          width: size.width * .8,
-
-          child: context
-              .read<UsersBloc>()
-              .userMiddleware
-              .getCorrectWidget(state, size)
-              .fold(
-                (_) => NotificationListener(
-                  onNotification: (ScrollNotification notification) {
-                    if (notification.metrics.pixels ==
-                        notification.metrics.maxScrollExtent) {}
-                    return false;
-                  },
-                  child: AnimatedList(
-                    physics: BouncingScrollPhysics(),
-                    key:
-                        context
-                            .watch<UsersBloc>()
-                            .userMiddleware
-                            .getAnimatedListGlobalKey(),
-                    initialItemCount:
-                        context
-                            .watch<UsersBloc>()
-                            .userMiddleware
-                            .getUsersList()
-                            .length,
-                    shrinkWrap: true,
-                    itemBuilder:
-                        (context, index, animation) => FadeTransition(
-                          opacity: animation.drive(
-                            Tween<double>(begin: 0, end: 1),
-                          ),
-                          child: ItemListWidget(
-                            name:
-                                context
-                                    .watch<UsersBloc>()
-                                    .userMiddleware
-                                    .getUsersList()[index]
-                                    .fullName,
-                            size: size,
-                            status: [
-                              StatusItemWidget(
-                                date:
-                                    context
-                                        .watch<UsersBloc>()
-                                        .userMiddleware
-                                        .getUsersList()[index]
-                                        .loggedIn,
-                                size: size,
-                                status: 'logged in',
-                              ),
-                            ],
-                            date: '10-12-2025',
-                            onPressed:
-                                () => context.read<ChangePageBloc>().add(
-                                  MoveToViewUserPageEvent(
-                                    id:
-                                        context
-                                            .read<UsersBloc>()
-                                            .userMiddleware
-                                            .getUsersList()[index]
-                                            .id,
-                                    title: 'User',
-                                  ),
-                                ),
-                          ),
+    return SizedBox(
+      height: size.height * .76,
+      width: size.width * .8,
+      child: NotificationListener(
+        onNotification: (ScrollNotification notification) {
+          if (notification.metrics.pixels ==
+              notification.metrics.maxScrollExtent) {}
+          return false;
+        },
+        child: AnimatedList(
+          physics: BouncingScrollPhysics(),
+          key:
+              context
+                  .watch<UsersBloc>()
+                  .userMiddleware
+                  .getAnimatedListGlobalKey(),
+          initialItemCount:
+              context.watch<UsersBloc>().userMiddleware.getUsersList().length,
+          shrinkWrap: true,
+          itemBuilder:
+              (context, index, animation) => FadeTransition(
+                opacity: animation.drive(Tween<double>(begin: 0, end: 1)),
+                child: ItemListWidget(
+                  name:
+                      context
+                          .watch<UsersBloc>()
+                          .userMiddleware
+                          .getUsersList()[index]
+                          .fullName,
+                  size: size,
+                  status: [
+                    StatusItemWidget(
+                      date:
+                          context
+                              .watch<UsersBloc>()
+                              .userMiddleware
+                              .getUsersList()[index]
+                              .loggedIn,
+                      size: size,
+                      status: 'logged in',
+                    ),
+                  ],
+                  date: '10-12-2025',
+                  onPressed:
+                      () => context.read<ChangePageBloc>().add(
+                        MoveToViewUserPageEvent(
+                          id:
+                              context
+                                  .read<UsersBloc>()
+                                  .userMiddleware
+                                  .getUsersList()[index]
+                                  .id,
+                          title: 'User',
                         ),
-                  ),
+                      ),
                 ),
-                (widget) => widget,
               ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

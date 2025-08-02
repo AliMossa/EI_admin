@@ -24,3 +24,9 @@ class NewPropertyStudyEvent extends ViewPropertyEvent {
   int id;
   NewPropertyStudyEvent({required this.id});
 }
+
+// ignore: must_be_immutable
+class ShowOnStageEvent extends ViewPropertyEvent {
+  int id;
+  ShowOnStageEvent({required this.id});
+}

@@ -28,8 +28,11 @@ class $AssetsImagesGen {
   /// File path: assets/images/user.svg
   String get user => 'assets/images/user.svg';
 
+  /// File path: assets/images/wallet.png
+  AssetGenImage get wallet => const AssetGenImage('assets/images/wallet.png');
+
   /// List of all assets
-  List<dynamic> get values => [empty, error, image, loginImage, user];
+  List<dynamic> get values => [empty, error, image, loginImage, user, wallet];
 }
 
 class $AssetsLogoGen {

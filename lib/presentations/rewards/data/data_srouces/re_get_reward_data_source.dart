@@ -1,17 +1,17 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/rewards/domain/entities/reward_entity.dart';
 import 'package:admin_dashboard/presentations/rewards/domain/entities/total_reward_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 
 abstract class ReGetRewardDataSource {
   Future<TotalRewardEntity> reGetRewards(String link);
 }
 
 class ReGetRewardDataSourceWithDio extends ReGetRewardDataSource {
-  ReGetRewardDataSourceWithDio? _reGetRewardDataSourceWithDio;
-  ReGetRewardDataSourceWithDio get() =>
-      _reGetRewardDataSourceWithDio ??
-      (_reGetRewardDataSourceWithDio = ReGetRewardDataSourceWithDio());
   @override
   Future<TotalRewardEntity> reGetRewards(String link) async {
     String message = '';
@@ -40,9 +40,20 @@ class ReGetRewardDataSourceWithDio extends ReGetRewardDataSource {
       }
       return TotalRewardEntity(nextPage: '', rewards: list);
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ReGetReward');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ReGetReward');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ReGetReward',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

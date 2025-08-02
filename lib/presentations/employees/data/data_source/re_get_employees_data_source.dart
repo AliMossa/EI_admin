@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/employees/domain/entities/employee_enitity.dart';
 import 'package:admin_dashboard/presentations/employees/domain/entities/total_employees_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 abstract class ReGetEmployeesDataSource {
@@ -9,10 +13,6 @@ abstract class ReGetEmployeesDataSource {
 }
 
 class ReGetEmployeesDataSourceWithDio extends ReGetEmployeesDataSource {
-  ReGetEmployeesDataSourceWithDio? _reGetEmployeesDataSourceWithDio;
-  ReGetEmployeesDataSourceWithDio get() =>
-      _reGetEmployeesDataSourceWithDio ??
-      (_reGetEmployeesDataSourceWithDio = ReGetEmployeesDataSourceWithDio());
   @override
   Future<TotalEmployeesEntity> reGetEmployees(String link) async {
     String message = '';
@@ -41,9 +41,20 @@ class ReGetEmployeesDataSourceWithDio extends ReGetEmployeesDataSource {
       }
       return TotalEmployeesEntity(employees: list, nextPage: '');
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ReGetEmployees');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ReGetEmployees');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ReGetEmployees',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

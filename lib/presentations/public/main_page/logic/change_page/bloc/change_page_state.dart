@@ -135,3 +135,8 @@ class MoveToViewPropertyPageState extends ChangePageState {
 class MoveToChangePsswordPageState extends ChangePageState {
   MoveToChangePsswordPageState({required super.title});
 }
+
+// ignore: must_be_immutable
+class MoveToWalletPageState extends ChangePageState {
+  MoveToWalletPageState({required super.title});
+}

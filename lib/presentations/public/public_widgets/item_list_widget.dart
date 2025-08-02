@@ -31,8 +31,7 @@ class ItemListWidget extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
-        border: Border.all(color: linkColor),
-        gradient: mainGradient2,
+        gradient: mainGradient3,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Stack(

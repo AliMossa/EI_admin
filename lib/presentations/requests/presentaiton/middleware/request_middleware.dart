@@ -1,7 +1,6 @@
 import 'package:admin_dashboard/gen/assets.gen.dart';
 import 'package:admin_dashboard/presentations/public/error_widget/snack_bar_widget.dart';
 import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
-import 'package:admin_dashboard/presentations/public/shimmers/grid_shimmer.dart';
 import 'package:admin_dashboard/presentations/public/shimmers/list_search_shimmer.dart';
 import 'package:admin_dashboard/presentations/requests/domain/entities/request_entity.dart';
 import 'package:admin_dashboard/presentations/requests/domain/entities/request_info_entity.dart';
@@ -282,7 +281,12 @@ class RequestMiddleware {
     } else if (state is SuccessGetAllRequestsState && tempList.isEmpty) {
       return right(SvgPicture.asset(Assets.images.empty));
     } else if (state is FailedGetAllRequestsState) {
-      return right(SvgPicture.asset(Assets.images.error));
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else {
       return left(const SizedBox());
     }

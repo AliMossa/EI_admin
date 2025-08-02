@@ -21,7 +21,7 @@ class UserRepositoryImp implements UserRepository {
     AddUserEntity userEntity,
   ) async {
     try {
-      return right(await AddUserDataSourceWithDio().get().addUser(userEntity));
+      return right(await AddUserDataSourceWithDio().addUser(userEntity));
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
     }
@@ -33,7 +33,7 @@ class UserRepositoryImp implements UserRepository {
   ) async {
     try {
       return right(
-        await GetUsersDataSourceWithDio().get().getUsers(getUserRequestEntity),
+        await GetUsersDataSourceWithDio().getUsers(getUserRequestEntity),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -46,7 +46,7 @@ class UserRepositoryImp implements UserRepository {
   ) async {
     try {
       return right(
-        await GetUserInfoDataSourceWithDio().get().getUserInfo(
+        await GetUserInfoDataSourceWithDio().getUserInfo(
           getUserInfoRequestEntity,
         ),
       );
@@ -61,9 +61,7 @@ class UserRepositoryImp implements UserRepository {
   ) async {
     try {
       return right(
-        await ActivateUserDataSourceWithDio().get().activateUser(
-          activateUserEntity,
-        ),
+        await ActivateUserDataSourceWithDio().activateUser(activateUserEntity),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -76,7 +74,7 @@ class UserRepositoryImp implements UserRepository {
   ) async {
     try {
       return right(
-        await UnActiveUserDataSrouceWithDio().get().unActivateUser(
+        await UnActiveUserDataSrouceWithDio().unActivateUser(
           activateUserEntity,
         ),
       );
@@ -90,7 +88,7 @@ class UserRepositoryImp implements UserRepository {
     String link,
   ) async {
     try {
-      return right(await ReGetUsesDataSourceWithDio().get().reGetUsers(link));
+      return right(await ReGetUsesDataSourceWithDio().reGetUsers(link));
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
     }

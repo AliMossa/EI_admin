@@ -760,7 +760,12 @@ class EmployeesMiddleware extends MemberImageMiddleware {
     } else if (state is SuccessGetEmployeesState && tempList.isEmpty) {
       return right(SvgPicture.asset(Assets.images.empty, fit: BoxFit.contain));
     } else if (state is FailedGetEmployeesState) {
-      return right(SvgPicture.asset(Assets.images.error, fit: BoxFit.contain));
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else {
       return left(const SizedBox());
     }
@@ -773,7 +778,12 @@ class EmployeesMiddleware extends MemberImageMiddleware {
     if (state is LoadingAddNewEmployeeState) {
       return right(LoadingWidget());
     } else if (state is FailedAddNewEmployeeState) {
-      return right(SvgPicture.asset(Assets.images.error, fit: BoxFit.contain));
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else {
       return left(const SizedBox());
     }
@@ -783,10 +793,17 @@ class EmployeesMiddleware extends MemberImageMiddleware {
     ViewUpdateEmployeeState state,
     Size size,
   ) {
-    if (state is LoadingUpdateEmployeeIdImage) {
+    if (state is LoadingUpdateEmployeeIdImage ||
+        state is LoadingViewEmployeesState ||
+        state is ViewUpdateEmployeeInitial) {
       return right(LoadingWidget());
     } else if (state is FailedUpdateEmployeesState) {
-      return right(SvgPicture.asset(Assets.images.error, fit: BoxFit.contain));
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else {
       return left(const SizedBox());
     }

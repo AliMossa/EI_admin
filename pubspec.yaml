@@ -87,6 +87,7 @@ flutter:
     - assets/images/image.svg
     - assets/images/error.svg
     - assets/images/empty.svg
+    - assets/images/wallet.png
     - assets/logo/logo.png
 
     

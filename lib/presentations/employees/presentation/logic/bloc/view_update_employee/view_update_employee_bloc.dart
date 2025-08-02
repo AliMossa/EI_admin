@@ -57,8 +57,9 @@ class ViewUpdateEmployeeBloc
       response.fold(
         (failed) => emit(FailedViewEmployeesState(message: failed.message)),
         (success) async {
-          employeesMiddleware.setViewEmployeeEntity(success);
           emit(SuccessViewEmployeesState());
+
+          employeesMiddleware.setViewEmployeeEntity(success);
         },
       );
     } on ServerAdminException catch (error) {

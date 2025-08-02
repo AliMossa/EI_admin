@@ -22,23 +22,22 @@ class ViewEmployeeIdTextWidget extends StatelessWidget {
       builder: (context, state) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('Id', style: getVariableTitleStyle(size)),
-            FittedBox(
-              child: Container(
-                width: size.width * widthSizeFactor,
-                height: 40,
-                padding: EdgeInsets.only(left: 5, right: 5, top: 4),
-                margin: EdgeInsets.only(left: 20, top: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: linkColor),
-                  color: textFieldInside,
-                ),
-                child: Text(
-                  id.toString(),
-                  style: getProfileTitleLogginDateStyle(size),
-                ),
+            Container(
+              width: size.width * widthSizeFactor,
+              height: 40,
+              padding: EdgeInsets.only(left: 5, right: 5, top: 0),
+              margin: EdgeInsets.only(left: 20, top: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: linkColor),
+                color: textFieldInside,
+              ),
+              child: Text(
+                id.toString(),
+                style: getProfileTitleLogginDateStyle(size),
               ),
             ),
           ],

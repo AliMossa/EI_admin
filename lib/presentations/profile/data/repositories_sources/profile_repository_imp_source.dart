@@ -18,7 +18,7 @@ class ProfileRepositoryImpSource implements ProfileRepository {
   ) async {
     try {
       return right(
-        await GetProfileInfoDataSourceWithDio().get().getProfileInfo(token),
+        await GetProfileInfoDataSourceWithDio().getProfileInfo(token),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -32,7 +32,7 @@ class ProfileRepositoryImpSource implements ProfileRepository {
   ) async {
     try {
       return right(
-        await UpdateProfileInfoDataSourceWithDio().get().updateProfileInfo(
+        await UpdateProfileInfoDataSourceWithDio().updateProfileInfo(
           updateEnitity,
           token,
         ),
@@ -48,7 +48,7 @@ class ProfileRepositoryImpSource implements ProfileRepository {
   ) async {
     try {
       return right(
-        await GetProfileLogsDataSourceWithDio().get().getProfileLogs(
+        await GetProfileLogsDataSourceWithDio().getProfileLogs(
           logsRequestEntity,
         ),
       );
@@ -63,7 +63,7 @@ class ProfileRepositoryImpSource implements ProfileRepository {
   ) async {
     try {
       return right(
-        await ReGetProfileLogsDataSourceWithDio().get().reGetProfileLogs(link),
+        await ReGetProfileLogsDataSourceWithDio().reGetProfileLogs(link),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));

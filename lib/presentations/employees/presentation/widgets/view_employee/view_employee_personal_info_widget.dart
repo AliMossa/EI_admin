@@ -92,7 +92,6 @@ class ViewEmployeePersonalInfoWidget extends StatelessWidget {
                             .read<ViewUpdateEmployeeBloc>()
                             .employeesMiddleware
                             .setFatherName(value),
-
                     title: 'father name',
                     size: size,
                     nextFocusNode:
@@ -107,7 +106,6 @@ class ViewEmployeePersonalInfoWidget extends StatelessWidget {
                             .getfatherNameFocusNode(),
                     widthSizeFactor: .15,
                   ),
-
                   ViewEmployeeTextfieldWidget(
                     initialInfo: motherName,
                     validate: (value) => Validations.getNameValidation(value),
@@ -116,14 +114,13 @@ class ViewEmployeePersonalInfoWidget extends StatelessWidget {
                             .read<ViewUpdateEmployeeBloc>()
                             .employeesMiddleware
                             .setMotherName(value),
-
                     title: 'mother name',
                     size: size,
                     nextFocusNode:
                         context
                             .read<ViewUpdateEmployeeBloc>()
                             .employeesMiddleware
-                            .getPasswordFocusNode(),
+                            .getEmailFocusNode(),
                     focusNode:
                         context
                             .read<ViewUpdateEmployeeBloc>()

@@ -17,39 +17,50 @@ class UsersMembersWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final moreInfo = MediaQuery.sizeOf(context);
 
-    return Stack(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            DropDownMenuWidget(
-              size: moreInfo,
-              currntValue:
-                  context
-                      .watch<UsersTypeCubit>()
-                      .userMiddleware
-                      .getSelectedUsersState(),
-              kinds: DropDownUserStateModel().listStates,
-              onPressed:
-                  (value) => context
-                      .read<UsersTypeCubit>()
-                      .userMiddleware
-                      .changeSelectedUserState(
-                        value,
-                        context.read<UsersTypeCubit>(),
-                        context.read<UsersBloc>(),
+    return BlocBuilder<UsersBloc, UsersState>(
+      builder: (context, state) {
+        return context
+            .read<UsersBloc>()
+            .userMiddleware
+            .getCorrectWidget(state, moreInfo)
+            .fold(
+              (_) => Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      DropDownMenuWidget(
+                        size: moreInfo,
+                        currntValue:
+                            context
+                                .watch<UsersTypeCubit>()
+                                .userMiddleware
+                                .getSelectedUsersState(),
+                        kinds: DropDownUserStateModel().listStates,
+                        onPressed:
+                            (value) => context
+                                .read<UsersTypeCubit>()
+                                .userMiddleware
+                                .changeSelectedUserState(
+                                  value,
+                                  context.read<UsersTypeCubit>(),
+                                  context.read<UsersBloc>(),
+                                ),
                       ),
-            ),
-            UsersListMembersWidget(size: moreInfo),
-          ],
-        ),
-        AddMemberButtonWidget(
-          onPress:
-              () => context.read<ChangePageBloc>().add(
-                MoveToAddUserPageEvent(title: 'Users'),
+                      UsersListMembersWidget(size: moreInfo),
+                    ],
+                  ),
+                  AddMemberButtonWidget(
+                    onPress:
+                        () => context.read<ChangePageBloc>().add(
+                          MoveToAddUserPageEvent(title: 'Users'),
+                        ),
+                  ),
+                ],
               ),
-        ),
-      ],
+              (widget) => widget,
+            );
+      },
     );
   }
 }

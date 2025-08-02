@@ -9,7 +9,7 @@ import 'package:admin_dashboard/presentations/profile/presentation/profile_page.
 import 'package:admin_dashboard/presentations/properties/presentation/properties_page.dart';
 import 'package:admin_dashboard/presentations/properties/presentation/widgets/view_property/view_property_page.dart';
 import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
-import 'package:admin_dashboard/presentations/public/monitoring_history/presentation/monitoring_history_page.dart';
+import 'package:admin_dashboard/presentations/monitoring_history/presentation/monitoring_history_page.dart';
 import 'package:admin_dashboard/presentations/requests/presentaiton/request_page.dart';
 import 'package:admin_dashboard/presentations/requests/presentaiton/widgets/view_request/view_request_page.dart';
 import 'package:admin_dashboard/presentations/rewards/presentation/rewards_page.dart';
@@ -21,6 +21,7 @@ import 'package:admin_dashboard/presentations/settings/presentation/widgets/chan
 import 'package:admin_dashboard/presentations/users/presentation/users_page.dart';
 import 'package:admin_dashboard/presentations/users/presentation/widgets/add_user/add_user_page.dart';
 import 'package:admin_dashboard/presentations/users/presentation/widgets/view_users/view_user_page.dart';
+import 'package:admin_dashboard/presentations/wallet/presentation/wallet_page.dart';
 import 'package:flutter/widgets.dart';
 
 class MainPageMiddleware {
@@ -80,6 +81,8 @@ class MainPageMiddleware {
         return ViewPropertyPage(id: state.id);
       case MoveToChangePsswordPageState():
         return ChangePasswordPage();
+      case MoveToWalletPageState():
+        return WalletPage();
     }
   }
 }

@@ -23,6 +23,7 @@ class LinerChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print('---------$list');
     return BlocBuilder<SuccessStatisticsBloc, SuccessStatisticsState>(
       builder: (context, state) {
         return context
@@ -49,6 +50,7 @@ class LinerChartWidget extends StatelessWidget {
                   curve: Curves.bounceIn,
                   LineChartData(
                     maxY: maxValue,
+                    minY: minValue,
                     lineBarsData: [
                       LineChartBarData(
                         spots:
@@ -58,7 +60,7 @@ class LinerChartWidget extends StatelessWidget {
                                       FlSpot(item.id.toDouble(), item.value),
                                 )
                                 .toList(),
-                        isCurved: true,
+                        //  isCurved: true,
                         color: Colors.white30,
                         barWidth: 3,
                         isStrokeJoinRound: true,

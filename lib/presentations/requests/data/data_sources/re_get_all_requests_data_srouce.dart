@@ -1,19 +1,17 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/requests/domain/entities/request_entity.dart';
 import 'package:admin_dashboard/presentations/requests/domain/entities/total_request_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 
 abstract class ReGetAllRequestsDataSrouce {
   Future<TotalRequestEntity> reGetAllRequests(String link);
 }
 
 class ReGetAllRequestsDataSrouceWithDio extends ReGetAllRequestsDataSrouce {
-  ReGetAllRequestsDataSrouceWithDio? _reGetAllRequestsDataSrouceWithDio;
-  ReGetAllRequestsDataSrouceWithDio get() =>
-      _reGetAllRequestsDataSrouceWithDio ??
-      (_reGetAllRequestsDataSrouceWithDio =
-          ReGetAllRequestsDataSrouceWithDio());
-
   @override
   Future<TotalRequestEntity> reGetAllRequests(String link) async {
     String message = '';
@@ -41,9 +39,20 @@ class ReGetAllRequestsDataSrouceWithDio extends ReGetAllRequestsDataSrouce {
       }
       return TotalRequestEntity(nextPage: '', requests: requests);
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ReGetAllRequests');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ReGetAllRequests');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ReGetAllRequests',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

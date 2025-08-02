@@ -4,6 +4,7 @@ import 'package:admin_dashboard/presentations/properties/data/data_sources/prope
 import 'package:admin_dashboard/presentations/properties/data/data_sources/re_get_properties_data_rouce.dart';
 import 'package:admin_dashboard/presentations/properties/data/data_sources/re_get_sold_properties_data_source.dart';
 import 'package:admin_dashboard/presentations/properties/data/data_sources/set_property_sold_data_srouce.dart';
+import 'package:admin_dashboard/presentations/properties/data/data_sources/show_on_stage_data_source.dart';
 import 'package:admin_dashboard/presentations/properties/data/data_sources/view_property_data_source.dart';
 import 'package:admin_dashboard/presentations/properties/domain/entities/property_desicion_entity.dart';
 import 'package:admin_dashboard/presentations/properties/domain/entities/property_list_entity.dart';
@@ -20,9 +21,7 @@ class PropertyRepositoryImpSource implements PropertyRepository {
     String token,
   ) async {
     try {
-      return right(
-        await GetPropertiesDataSrouceWithDio().get().getProperties(token),
-      );
+      return right(await GetPropertiesDataSrouceWithDio().getProperties(token));
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
     }
@@ -34,7 +33,7 @@ class PropertyRepositoryImpSource implements PropertyRepository {
   ) async {
     try {
       return right(
-        await ViewPropertyDataSourceWithDio().get().viewProperty(
+        await ViewPropertyDataSourceWithDio().viewProperty(
           viewPropertyRequestEntity,
         ),
       );
@@ -49,7 +48,7 @@ class PropertyRepositoryImpSource implements PropertyRepository {
   ) async {
     try {
       return right(
-        await ReGetPropertiesDataRouceWithDio().get().reGetProperties(link),
+        await ReGetPropertiesDataRouceWithDio().reGetProperties(link),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -62,7 +61,7 @@ class PropertyRepositoryImpSource implements PropertyRepository {
   ) async {
     try {
       return right(
-        await PropertyNewStudyDataSourceWithDio().get().newPropertyStudy(
+        await PropertyNewStudyDataSourceWithDio().newPropertyStudy(
           propertyDesicionEntity,
         ),
       );
@@ -77,7 +76,7 @@ class PropertyRepositoryImpSource implements PropertyRepository {
   ) async {
     try {
       return right(
-        await SetPropertySoldDataSrouceWithDio().get().setPropertySold(
+        await SetPropertySoldDataSrouceWithDio().setPropertySold(
           propertyDesicionEntity,
         ),
       );
@@ -92,9 +91,7 @@ class PropertyRepositoryImpSource implements PropertyRepository {
   ) async {
     try {
       return right(
-        await GetSoldPropertiesDataSourceWithDio().get().getSoldProperties(
-          token,
-        ),
+        await GetSoldPropertiesDataSourceWithDio().getSoldProperties(token),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -107,8 +104,21 @@ class PropertyRepositoryImpSource implements PropertyRepository {
   ) async {
     try {
       return right(
-        await ReGetSoldPropertiesDataSourceWithDio().get().reGetSoldProperties(
-          link,
+        await ReGetSoldPropertiesDataSourceWithDio().reGetSoldProperties(link),
+      );
+    } on ServerAdminError catch (error) {
+      return left(ServerAdminException(message: error.message));
+    }
+  }
+
+  @override
+  Future<Either<ServerAdminException, String>> showOnStage(
+    PropertyDesicionEntity propertyDesicionEntity,
+  ) async {
+    try {
+      return right(
+        await ShowOnStageDataSourceWithDio().showOnStage(
+          propertyDesicionEntity,
         ),
       );
     } on ServerAdminError catch (error) {

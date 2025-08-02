@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/home/domain/entities/list_success_statistics_entity.dart';
 import 'package:admin_dashboard/presentations/home/domain/entities/request_success_statistics_entity.dart';
 import 'package:admin_dashboard/presentations/home/domain/entities/success_statistics_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class GetSuccessStatisticsDataSource {
@@ -14,12 +17,6 @@ abstract class GetSuccessStatisticsDataSource {
 
 class GetSuccessStatisticsDataSourceWithDio
     extends GetSuccessStatisticsDataSource {
-  GetSuccessStatisticsDataSourceWithDio? _getSuccessStatisticsDataSourceWithDio;
-  GetSuccessStatisticsDataSourceWithDio get() =>
-      _getSuccessStatisticsDataSourceWithDio ??
-      (_getSuccessStatisticsDataSourceWithDio =
-          GetSuccessStatisticsDataSourceWithDio());
-
   @override
   Future<ListSuccessStatisticsEntity> getSuccessStatistics(
     RequestSuccessStatisticsEntity requestSuccessStatisticsEntity,
@@ -53,10 +50,20 @@ class GetSuccessStatisticsDataSourceWithDio
       }
       return ListSuccessStatisticsEntity(statics: list);
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetSuccessStatistics');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print(error);
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetSuccessStatistics');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetSuccessStatistics',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

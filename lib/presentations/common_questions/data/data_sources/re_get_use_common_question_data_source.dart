@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/total_user_common_question_entity.dart';
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/user_common_question_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 
 abstract class ReGetUseCommonQuestionDataSource {
   Future<TotalUserCommonQuestionEntity> reGetUserCommonQuestions(String link);
@@ -9,13 +13,6 @@ abstract class ReGetUseCommonQuestionDataSource {
 
 class ReGetUseCommonQuestionDataSourceWithDio
     extends ReGetUseCommonQuestionDataSource {
-  ReGetUseCommonQuestionDataSourceWithDio?
-  _reGetUseCommonQuestionDataSourceWithDio;
-  ReGetUseCommonQuestionDataSourceWithDio get() =>
-      _reGetUseCommonQuestionDataSourceWithDio ??
-      (_reGetUseCommonQuestionDataSourceWithDio =
-          ReGetUseCommonQuestionDataSourceWithDio());
-
   @override
   Future<TotalUserCommonQuestionEntity> reGetUserCommonQuestions(
     String link,
@@ -44,9 +41,20 @@ class ReGetUseCommonQuestionDataSourceWithDio
       }
       return TotalUserCommonQuestionEntity(questions: list, nextPage: '');
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ReGetUseCommonQuestion');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ReGetUseCommonQuestion');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ReGetUseCommonQuestion',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

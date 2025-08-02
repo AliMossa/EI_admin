@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/employees/domain/entities/update_employee_total_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class UpdateEmployeeDataSource {
@@ -9,10 +12,6 @@ abstract class UpdateEmployeeDataSource {
 }
 
 class UpdateEmployeeDataSourceWithDio extends UpdateEmployeeDataSource {
-  UpdateEmployeeDataSourceWithDio? _updateEmployeeDataSourceWithDio;
-  UpdateEmployeeDataSourceWithDio get() =>
-      _updateEmployeeDataSourceWithDio ??
-      (_updateEmployeeDataSourceWithDio = UpdateEmployeeDataSourceWithDio());
   @override
   Future<String> updateEmployee(
     UpdateEmployeeTotalEntity updateEmployeeEntity,
@@ -70,9 +69,20 @@ class UpdateEmployeeDataSourceWithDio extends UpdateEmployeeDataSource {
       }
       return message;
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'UpdateEmployee');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'UpdateEmployee');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'UpdateEmployee',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

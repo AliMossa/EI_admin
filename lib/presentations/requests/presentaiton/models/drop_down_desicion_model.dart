@@ -8,6 +8,7 @@ class DropDownDesicionModel {
   final List<DesicionModel> _propertyDesicionList = [
     DesicionModel(id: 0, name: 'sold'),
     DesicionModel(id: 1, name: 'new-study'),
+    DesicionModel(id: 2, name: 'view on stage'),
   ];
 
   final List<DesicionModel> _propertyTypesList = [

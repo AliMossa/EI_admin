@@ -19,7 +19,7 @@ class RequestsRepositoryImpSource implements RequestsRespository {
   ) async {
     try {
       return right(
-        await GetAllRequestsDataSrouceWithDio().get().getAllRequests(token),
+        await GetAllRequestsDataSrouceWithDio().getAllRequests(token),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -32,7 +32,7 @@ class RequestsRepositoryImpSource implements RequestsRespository {
   ) async {
     try {
       return right(
-        await GetRequestInfoDataSrourceWithDio().get().getRequestInfo(
+        await GetRequestInfoDataSrourceWithDio().getRequestInfo(
           sendRequestEntity,
         ),
       );
@@ -47,7 +47,7 @@ class RequestsRepositoryImpSource implements RequestsRespository {
   ) async {
     try {
       return right(
-        await AcceptRequestDataSourceWithDio().get().acceptRequest(
+        await AcceptRequestDataSourceWithDio().acceptRequest(
           requestManagmentEntity,
         ),
       );
@@ -62,7 +62,7 @@ class RequestsRepositoryImpSource implements RequestsRespository {
   ) async {
     try {
       return right(
-        await RejectRequestDataSourceWithDio().get().rejectRequest(
+        await RejectRequestDataSourceWithDio().rejectRequest(
           requestManagmentEntity,
         ),
       );
@@ -77,7 +77,7 @@ class RequestsRepositoryImpSource implements RequestsRespository {
   ) async {
     try {
       return right(
-        await ReGetAllRequestsDataSrouceWithDio().get().reGetAllRequests(link),
+        await ReGetAllRequestsDataSrouceWithDio().reGetAllRequests(link),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));

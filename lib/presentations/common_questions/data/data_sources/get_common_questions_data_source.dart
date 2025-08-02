@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/common_questions_entity.dart';
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/total_common_questions_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 abstract class GetCommonQuestionsDataSource {
@@ -10,15 +14,9 @@ abstract class GetCommonQuestionsDataSource {
 }
 
 class GetCommonQuestionsDataSourceWithDio extends GetCommonQuestionsDataSource {
-  GetCommonQuestionsDataSourceWithDio? _commonQuestionsDataSourceWithDio;
-  GetCommonQuestionsDataSourceWithDio get() =>
-      _commonQuestionsDataSourceWithDio ??
-      (_commonQuestionsDataSourceWithDio =
-          GetCommonQuestionsDataSourceWithDio());
-
   @override
   Future<TotalCommonQuestionsEntity> getCommonQuestions() async {
-    List<CommonQuestionsEntity> list = [];
+    final dateFormat = DateFormat().add_yMEd().add_jms();
     String message = '';
     try {
       final response = await Apis().get(
@@ -32,27 +30,42 @@ class GetCommonQuestionsDataSourceWithDio extends GetCommonQuestionsDataSource {
         message = response['message'] ?? response['errors'];
         throw Exception();
       }
-      for (Map<String, dynamic> item in response['data']) {
-        list.add(
-          CommonQuestionsEntity(
-            id: item['id'],
-            question: item['question'],
-            answer: item['Answer'],
-            createDate: DateFormat().add_yMEd().add_jms().format(
-              DateTime.parse(item['created_at']),
-            ),
-            updateDate: DateFormat().add_yMEd().add_jms().format(
-              DateTime.parse(item['updated_at']),
-            ),
-          ),
-        );
-      }
-      return TotalCommonQuestionsEntity(list: list, nextPage: '');
+      final List<CommonQuestionsEntity> questions =
+          (response['data'] as List)
+              .map(
+                (item) => CommonQuestionsEntity(
+                  id: item['id'],
+                  question: item['question'],
+                  answer: item['Answer'],
+                  createDate: dateFormat.format(
+                    DateTime.parse(item['created_at']),
+                  ),
+                  updateDate: dateFormat.format(
+                    DateTime.parse(item['updated_at']),
+                  ),
+                ),
+              )
+              .toList();
+
+      return TotalCommonQuestionsEntity(
+        list: questions,
+        nextPage: '', // Optional: Add pagination logic here
+      );
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetCommonQuestions');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print(error);
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetCommonQuestions');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetCommonQuestions',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

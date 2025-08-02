@@ -27,4 +27,7 @@ abstract class PropertyRepository {
   Future<Either<ServerAdminException, String>> newPropertyStudy(
     PropertyDesicionEntity propertyDesicionEntity,
   );
+  Future<Either<ServerAdminException, String>> showOnStage(
+    PropertyDesicionEntity propertyDesicionEntity,
+  );
 }

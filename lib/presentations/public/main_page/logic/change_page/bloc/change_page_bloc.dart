@@ -29,6 +29,7 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     on<MoveToViewUpdateRewardPageEvent>(moveToUpdateReward);
     on<MoveToViewPropertyPageEvent>(moveToViewProperty);
     on<MoveToChangePsswordPageEvent>(moveToChangePassword);
+    on<MoveToWalletPageEvent>(moveToWallet);
   }
 
   void moveToHomePage(
@@ -142,4 +143,9 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     MoveToChangePsswordPageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToChangePsswordPageState(title: event.title));
+
+  void moveToWallet(
+    MoveToWalletPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToWalletPageState(title: event.title));
 }

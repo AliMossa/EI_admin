@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/users/domain/entities/get_user_info_request_entity.dart';
 import 'package:admin_dashboard/presentations/users/domain/entities/user_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 abstract class GetUserInfoDataSource {
@@ -12,23 +16,25 @@ abstract class GetUserInfoDataSource {
 }
 
 class GetUserInfoDataSourceWithDio extends GetUserInfoDataSource {
-  GetUserInfoDataSourceWithDio? _getUserInfoDataSourceWithDio;
-  GetUserInfoDataSourceWithDio get() =>
-      _getUserInfoDataSourceWithDio ??
-      (_getUserInfoDataSourceWithDio = GetUserInfoDataSourceWithDio());
-
   @override
   Future<UserEntity> getUserInfo(
     GetUserInfoRequestEntity getUserInfoRequestEntity,
   ) async {
+    String message = '';
     try {
       final response = await Apis().get(
         '${NetworkApisRouts().viewEmployeeApi()}${getUserInfoRequestEntity.id}',
         {},
         getUserInfoRequestEntity.token,
       );
+      if (response['errors'] == null) {
+        message = response['message'];
+      } else {
+        message = response['message'] ?? response['errors'];
+        throw Exception();
+      }
       Map<String, dynamic> item = response['data'];
-      print(item);
+
       return UserEntity(
         id: item['id'],
         fullName: item['name'],
@@ -38,10 +44,20 @@ class GetUserInfoDataSourceWithDio extends GetUserInfoDataSource {
         isActive: item['active'] == 1 ? true : false,
       );
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetUserInfo');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print(error);
-      throw ServerAdminError(message: 'message');
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetUserInfo');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetUserInfo',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

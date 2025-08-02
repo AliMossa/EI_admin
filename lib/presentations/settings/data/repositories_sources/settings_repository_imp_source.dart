@@ -12,7 +12,7 @@ class SettingsRepositoryImpSource implements SettingsRepository {
   ) async {
     try {
       return right(
-        await ChangePasswordDataSourceWithDio().get().changePassword(
+        await ChangePasswordDataSourceWithDio().changePassword(
           changePasswordEntity,
         ),
       );

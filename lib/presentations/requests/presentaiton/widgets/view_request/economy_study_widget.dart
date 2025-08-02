@@ -8,11 +8,11 @@ class EconomyStudyWidget extends StatelessWidget {
   Size size;
   int numberOfChances;
   int profitPercent;
-  double expectedPrice;
-  double totalExpectedTaxes;
-  double buyingPrice;
-  double? rentingPrice;
-  double chancePrice;
+  String expectedPrice;
+  String totalExpectedTaxes;
+  String buyingPrice;
+  String? rentingPrice;
+  String chancePrice;
   String investmentTime;
   String incommingTime;
   String investmentMode;

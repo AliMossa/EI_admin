@@ -13,7 +13,6 @@ class AdminCommonQuestionListWidget extends StatelessWidget {
   Size size;
   TotalCommonQuestionsEntity items;
   List<CommonQuestionsEntity> temp;
-
   GlobalKey<AnimatedListState> globalKey;
   AdminCommonQuestionListWidget({
     required this.globalKey,
@@ -27,63 +26,54 @@ class AdminCommonQuestionListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CommonQuestionsBloc, CommonQuestionsState>(
       builder:
-          (context, state) => context
-              .read<CommonQuestionsBloc>()
-              .commonQuestionMiddleware
-              .checkAdminQuestionTemp(state, size)
-              .fold(
-                (_) => NotificationListener(
-                  onNotification: (ScrollNotification notification) {
-                    if (notification.metrics.pixels ==
-                        notification.metrics.maxScrollExtent) {}
-                    return false;
-                  },
-                  child: AnimatedList(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    initialItemCount: items.list.length,
-                    key: globalKey,
-                    itemBuilder:
-                        (context, index, animation) => FadeTransition(
-                          opacity: animation.drive(
-                            Tween<double>(begin: 0, end: 1),
-                          ),
-                          child: ItemListWidget(
-                            name: items.list[index].question,
-                            size: size,
-                            status: [],
-                            date: '10-12-2025',
-                            onPressed: () {
-                              context
+          (context, state) => NotificationListener(
+            onNotification: (ScrollNotification notification) {
+              if (notification.metrics.pixels ==
+                  notification.metrics.maxScrollExtent) {}
+              return false;
+            },
+            child: AnimatedList(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              initialItemCount: items.list.length,
+              key: globalKey,
+              itemBuilder:
+                  (context, index, animation) => FadeTransition(
+                    opacity: animation.drive(Tween<double>(begin: 0, end: 1)),
+                    child: ItemListWidget(
+                      name: items.list[index].question,
+                      size: size,
+                      status: [],
+                      date: '10-12-2025',
+                      onPressed: () {
+                        context
+                            .read<CommonQuestionsBloc>()
+                            .commonQuestionMiddleware
+                            .setUpdateCommonQuestion(
+                              context.read<ChangePageBloc>(),
+                              items.list[index].id,
+                            );
+                      },
+                      trailing: Expanded(
+                        child: IconButton(
+                          onPressed:
+                              () => context
                                   .read<CommonQuestionsBloc>()
                                   .commonQuestionMiddleware
-                                  .setUpdateCommonQuestion(
+                                  .removeCommonQuestionNotice(
+                                    context,
+                                    context.read<CommonQuestionsBloc>(),
+                                    state,
+
                                     context.read<ChangePageBloc>(),
                                     items.list[index].id,
-                                  );
-                            },
-                            trailing: Expanded(
-                              child: IconButton(
-                                onPressed:
-                                    () => context
-                                        .read<CommonQuestionsBloc>()
-                                        .commonQuestionMiddleware
-                                        .removeCommonQuestionNotice(
-                                          context,
-                                          context.read<CommonQuestionsBloc>(),
-                                          state,
-
-                                          context.read<ChangePageBloc>(),
-                                          items.list[index].id,
-                                        ),
-                                icon: Icon(Icons.delete, color: Colors.red),
-                              ),
-                            ),
-                          ),
+                                  ),
+                          icon: Icon(Icons.delete, color: Colors.red),
                         ),
+                      ),
+                    ),
                   ),
-                ),
-                (widget) => widget,
-              ),
+            ),
+          ),
     );
   }
 }

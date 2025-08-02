@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/total_user_common_question_entity.dart';
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/user_common_question_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 
 abstract class GetUserCommonQuestionDataSource {
   Future<TotalUserCommonQuestionEntity> getUserQuestions(String token);
@@ -10,12 +14,6 @@ abstract class GetUserCommonQuestionDataSource {
 
 class GetUserCommonQuestionDataSourceWithDio
     extends GetUserCommonQuestionDataSource {
-  GetUserCommonQuestionDataSourceWithDio? _commonQuestionDataSourceWithDio;
-  GetUserCommonQuestionDataSourceWithDio get() =>
-      _commonQuestionDataSourceWithDio ??
-      (_commonQuestionDataSourceWithDio =
-          GetUserCommonQuestionDataSourceWithDio());
-
   @override
   Future<TotalUserCommonQuestionEntity> getUserQuestions(String token) async {
     String message = '';
@@ -40,10 +38,20 @@ class GetUserCommonQuestionDataSourceWithDio
       }
       return TotalUserCommonQuestionEntity(questions: list, nextPage: '');
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetUserCommonQuestion');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print(error);
-      throw ServerAdminError(message: '');
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetUserCommonQuestion');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetUserCommonQuestion',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

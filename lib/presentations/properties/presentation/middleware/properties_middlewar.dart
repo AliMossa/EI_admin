@@ -91,37 +91,37 @@ class PropertiesMiddlewar {
       _viewPropertyEntity.requestDescriptionInfoEntity.areaSize =
           viewPropertyEntity.requestDescriptionInfoEntity.areaSize;
       _viewPropertyEntity.requestDescriptionInfoEntity.balconySize =
-          viewPropertyEntity.requestDescriptionInfoEntity.balconySize;
+          viewPropertyEntity.requestDescriptionInfoEntity.balconySize ?? '-1';
       _viewPropertyEntity.requestDescriptionInfoEntity.bathroomNumbers =
-          viewPropertyEntity.requestDescriptionInfoEntity.bathroomNumbers;
+          viewPropertyEntity.requestDescriptionInfoEntity.bathroomNumbers ?? -1;
       _viewPropertyEntity.requestDescriptionInfoEntity.contract =
           viewPropertyEntity.requestDescriptionInfoEntity.contract;
       _viewPropertyEntity.requestDescriptionInfoEntity.decoration =
-          viewPropertyEntity.requestDescriptionInfoEntity.decoration;
+          viewPropertyEntity.requestDescriptionInfoEntity.decoration ?? '-1';
       _viewPropertyEntity.requestDescriptionInfoEntity.exactPosition =
           viewPropertyEntity.requestDescriptionInfoEntity.exactPosition;
       _viewPropertyEntity.requestDescriptionInfoEntity.flooringType =
-          viewPropertyEntity.requestDescriptionInfoEntity.flooringType;
+          viewPropertyEntity.requestDescriptionInfoEntity.flooringType ?? '-1';
       _viewPropertyEntity.requestDescriptionInfoEntity.kitchenType =
-          viewPropertyEntity.requestDescriptionInfoEntity.kitchenType;
+          viewPropertyEntity.requestDescriptionInfoEntity.kitchenType ?? '-1';
       _viewPropertyEntity.requestDescriptionInfoEntity.legalCheck =
           viewPropertyEntity.requestDescriptionInfoEntity.legalCheck;
       _viewPropertyEntity.requestDescriptionInfoEntity.areaSize =
           viewPropertyEntity.requestDescriptionInfoEntity.areaSize;
       _viewPropertyEntity.requestDescriptionInfoEntity.overlook =
-          viewPropertyEntity.requestDescriptionInfoEntity.overlook;
+          viewPropertyEntity.requestDescriptionInfoEntity.overlook ?? -1;
       _viewPropertyEntity.requestDescriptionInfoEntity.paintingType =
-          viewPropertyEntity.requestDescriptionInfoEntity.paintingType;
+          viewPropertyEntity.requestDescriptionInfoEntity.paintingType ?? '-1';
       _viewPropertyEntity.requestDescriptionInfoEntity.payWay =
           viewPropertyEntity.requestDescriptionInfoEntity.payWay;
       _viewPropertyEntity.requestDescriptionInfoEntity.price =
           viewPropertyEntity.requestDescriptionInfoEntity.price;
       _viewPropertyEntity.requestDescriptionInfoEntity.propertyAge =
-          viewPropertyEntity.requestDescriptionInfoEntity.propertyAge * 999999;
+          viewPropertyEntity.requestDescriptionInfoEntity.propertyAge ?? -1;
       _viewPropertyEntity.requestDescriptionInfoEntity.propertyType =
           viewPropertyEntity.requestDescriptionInfoEntity.propertyType;
       _viewPropertyEntity.requestDescriptionInfoEntity.roomNumbers =
-          viewPropertyEntity.requestDescriptionInfoEntity.roomNumbers;
+          viewPropertyEntity.requestDescriptionInfoEntity.roomNumbers ?? -1;
       _viewPropertyEntity.requestDescriptionInfoEntity.userId =
           viewPropertyEntity.requestDescriptionInfoEntity.userId;
       _viewPropertyEntity.requestDescriptionInfoEntity.state =
@@ -278,20 +278,25 @@ class PropertiesMiddlewar {
       case 1:
         bloc.add(NewPropertyStudyEvent(id: id));
         break;
+
+      case 2:
+        bloc.add(ShowOnStageEvent(id: id));
+        break;
     }
   }
 
   void showState(BuildContext context, ViewPropertyState state) {
-    print(state);
-
     if (state is SuccessNewPropertyStudyState ||
-        state is SuccessSetPropertySoldState) {
+        state is SuccessSetPropertySoldState ||
+        state is SuccessShowOnStageState) {
       context.read<ChangePageBloc>().add(
         MoveToPropertiesPageEvent(title: 'Properties'),
       );
     } else if (state is FailedNewPropertyStudyState) {
       SnackBarWidget().show(context, state.message, Colors.red);
     } else if (state is FailedSetPropertySoldState) {
+      SnackBarWidget().show(context, state.message, Colors.red);
+    } else if (state is FailedShowOnStageState) {
       SnackBarWidget().show(context, state.message, Colors.red);
     }
   }
@@ -310,10 +315,34 @@ class PropertiesMiddlewar {
       return right(SvgPicture.asset(Assets.images.empty));
     } else if (state is FailedGetPropertiesState ||
         state is FailedGetSoldPropertiesState) {
-      return right(SvgPicture.asset(Assets.images.error));
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else if (state is GetCorrectPropertiesState) {
       getCorrectList(bloc);
       return right(SizedBox());
+    } else {
+      return left(const SizedBox());
+    }
+  }
+
+  Either<Widget, Widget> showCorrectViewProperty(
+    ViewPropertyBloc bloc,
+    ViewPropertyState state,
+    Size size,
+  ) {
+    if (state is LoadingViewPropertyInfoState) {
+      return right(ListSearchShimmer(size: size));
+    } else if (state is FailedViewPropertyInfoState) {
+      return right(
+        SizedBox(
+          width: size.width,
+          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+        ),
+      );
     } else {
       return left(const SizedBox());
     }

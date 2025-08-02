@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/users/domain/entities/activate_user_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class ActivateUserDataSource {
@@ -9,11 +12,6 @@ abstract class ActivateUserDataSource {
 }
 
 class ActivateUserDataSourceWithDio extends ActivateUserDataSource {
-  ActivateUserDataSourceWithDio? _activateUserDataSourceWithDio;
-  ActivateUserDataSourceWithDio get() =>
-      _activateUserDataSourceWithDio ??
-      (_activateUserDataSourceWithDio = ActivateUserDataSourceWithDio());
-
   @override
   Future<String> activateUser(ActivateUserEntity activateUserEntity) async {
     String message = '';
@@ -31,9 +29,20 @@ class ActivateUserDataSourceWithDio extends ActivateUserDataSource {
       }
       return message;
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ActivateUser');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ActivateUser');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ActivateUser',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

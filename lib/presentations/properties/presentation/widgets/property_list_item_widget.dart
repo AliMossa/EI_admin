@@ -39,31 +39,27 @@ class PropertyListItemWidget extends StatelessWidget {
       },
       child: BlocBuilder<PropertiesBloc, PropertiesState>(
         builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              DesicionDropDownWidget(
-                kinds: DropDownDesicionModel().getPropertyTypesList(),
-                currntValue: propertyType,
-                size: size,
-                onPressed:
-                    (value) => context
-                        .read<PropertiesTypesCubit>()
-                        .changePropertiesType(value),
-              ),
-              SizedBox(
-                height: size.height * .76,
-                width: size.width * .8,
-                child: context
-                    .read<PropertiesBloc>()
-                    .propertiesMiddlewar
-                    .showCorrectImage(
-                      context.read<PropertiesBloc>(),
-                      state,
-                      size,
-                    )
-                    .fold(
-                      (_) => AnimatedList(
+          return context
+              .read<PropertiesBloc>()
+              .propertiesMiddlewar
+              .showCorrectImage(context.read<PropertiesBloc>(), state, size)
+              .fold(
+                (_) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    DesicionDropDownWidget(
+                      kinds: DropDownDesicionModel().getPropertyTypesList(),
+                      currntValue: propertyType,
+                      size: size,
+                      onPressed:
+                          (value) => context
+                              .read<PropertiesTypesCubit>()
+                              .changePropertiesType(value),
+                    ),
+                    SizedBox(
+                      height: size.height * .76,
+                      width: size.width * .8,
+                      child: AnimatedList(
                         key: animatedKey,
                         initialItemCount: propertyListEntity.list.length,
                         itemBuilder:
@@ -86,11 +82,11 @@ class PropertyListItemWidget extends StatelessWidget {
                               ),
                             ),
                       ),
-                      (widget) => widget,
                     ),
-              ),
-            ],
-          );
+                  ],
+                ),
+                (widget) => widget,
+              );
         },
       ),
     );

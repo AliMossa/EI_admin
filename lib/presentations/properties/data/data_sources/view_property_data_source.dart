@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/properties/domain/entities/view_property_entity.dart';
 import 'package:admin_dashboard/presentations/properties/domain/entities/view_property_request_entity.dart';
 import 'package:admin_dashboard/presentations/requests/domain/entities/documents_images_entity.dart';
@@ -7,6 +9,8 @@ import 'package:admin_dashboard/presentations/requests/domain/entities/request_i
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 abstract class ViewPropertyDataSource {
@@ -16,11 +20,6 @@ abstract class ViewPropertyDataSource {
 }
 
 class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
-  ViewPropertyDataSourceWithDio? _viewPropertyDataSourceWithDio;
-  ViewPropertyDataSourceWithDio get() =>
-      _viewPropertyDataSourceWithDio ??
-      (_viewPropertyDataSourceWithDio = ViewPropertyDataSourceWithDio());
-
   @override
   Future<ViewPropertyEntity> viewProperty(
     ViewPropertyRequestEntity viewPropertyRequestEntity,
@@ -72,7 +71,7 @@ class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
       final aggrementItem = economicResponse['data'];
 
       return ViewPropertyEntity(
-        aggreement: aggrementItem['agreement'],
+        aggreement: aggrementItem['agreement']['Text_of_the_agreement'],
         requestDescriptionInfoEntity: RequestDescriptionInfoEntity(
           userId: descriptionItem['user_id'],
           roomNumbers: descriptionItem['number_of_rooms'],
@@ -82,7 +81,9 @@ class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
           legalCheck: descriptionItem['legal_check'],
           exactPosition: descriptionItem['exact_position'],
           paintingType: descriptionItem['painting_type'],
-          areaSize: descriptionItem['area'],
+          areaSize: NumberFormat.decimalPattern().format(
+            double.parse(descriptionItem['area']),
+          ),
           decoration: descriptionItem['decoration'],
           kitchenType: descriptionItem['kitchen_type'],
           flooringType: descriptionItem['flooring_type'],
@@ -105,12 +106,21 @@ class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
         requestEconomicInfoEntity: RequestEconomicInfoEntity(
           numberOfChances: economicItem['number_of_chances'],
           profitPercent: economicItem['profit_percent'],
-          expectedPrice: economicItem['expected_price'] * 1.0,
-          buyingPrice: economicItem['buying_price'] * 1.0,
-          totalExpectedTaxes: economicItem['total_expected_taxes'] * 1.0,
-          rentingPrice: economicItem['renting_price'] * 1.0,
-          chancePrice: economicItem['chance_price'] * 1.0,
-
+          expectedPrice: NumberFormat.decimalPattern().format(
+            economicItem['expected_price'],
+          ),
+          buyingPrice: NumberFormat.decimalPattern().format(
+            economicItem['buying_price'],
+          ),
+          totalExpectedTaxes: NumberFormat.decimalPattern().format(
+            economicItem['total_expected_taxes'],
+          ),
+          rentingPrice: NumberFormat.decimalPattern().format(
+            economicItem['renting_price'],
+          ),
+          chancePrice: NumberFormat.decimalPattern().format(
+            economicItem['chance_price'],
+          ),
           investmentTime: economicItem['investment_time'],
           incommingTime: economicItem['incoming_time'],
           investmentMode: economicItem['investment_mode'],
@@ -122,10 +132,20 @@ class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
         ),
       );
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ViewProperty');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print(error);
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ViewProperty');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ViewProperty',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

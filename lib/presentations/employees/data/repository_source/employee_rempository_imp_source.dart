@@ -24,7 +24,7 @@ class EmployeeRempositoryImpSource implements EmployeeRepository {
   ) async {
     try {
       return right(
-        await GetEmployeesDataSourceWithDio().get().getEmployees(
+        await GetEmployeesDataSourceWithDio().getEmployees(
           getEmployeesRequestEntity,
         ),
       );
@@ -39,7 +39,7 @@ class EmployeeRempositoryImpSource implements EmployeeRepository {
   ) async {
     try {
       return right(
-        await ViewEmployeeDataSourceWithDio().get().viewEmployee(
+        await ViewEmployeeDataSourceWithDio().viewEmployee(
           viewEntityRequestEntity,
         ),
       );
@@ -54,9 +54,7 @@ class EmployeeRempositoryImpSource implements EmployeeRepository {
   ) async {
     try {
       return right(
-        await AddEmployeeDataSourceWithDio().get().addEmployee(
-          addEmployeeEntity,
-        ),
+        await AddEmployeeDataSourceWithDio().addEmployee(addEmployeeEntity),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -69,7 +67,7 @@ class EmployeeRempositoryImpSource implements EmployeeRepository {
   ) async {
     try {
       return right(
-        await ActiveEmployeeDataSourceWithDio().get().activeEmployee(
+        await ActiveEmployeeDataSourceWithDio().activeEmployee(
           activeUserEntity,
         ),
       );
@@ -84,7 +82,7 @@ class EmployeeRempositoryImpSource implements EmployeeRepository {
   ) async {
     try {
       return right(
-        await UnActiveEmployeeDataSourceWithDio().get().unActiveEmployee(
+        await UnActiveEmployeeDataSourceWithDio().unActiveEmployee(
           activeUserEntity,
         ),
       );
@@ -99,9 +97,7 @@ class EmployeeRempositoryImpSource implements EmployeeRepository {
   ) async {
     try {
       return right(
-        await UpdateEmployeeDataSourceWithDio().get().updateEmployee(
-          updateEmployee,
-        ),
+        await UpdateEmployeeDataSourceWithDio().updateEmployee(updateEmployee),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -114,7 +110,7 @@ class EmployeeRempositoryImpSource implements EmployeeRepository {
   ) async {
     try {
       return right(
-        await ReGetEmployeesDataSourceWithDio().get().reGetEmployees(link),
+        await ReGetEmployeesDataSourceWithDio().reGetEmployees(link),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));

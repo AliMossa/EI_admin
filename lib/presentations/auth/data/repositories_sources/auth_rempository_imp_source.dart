@@ -17,7 +17,7 @@ class AuthRempositoryImpSource implements AuthRepository {
     AuthEntity auth,
   ) async {
     try {
-      return right(await LoginDataSourceWithDio().get().login(auth));
+      return right(await LoginDataSourceWithDio().login(auth));
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
     }
@@ -27,9 +27,9 @@ class AuthRempositoryImpSource implements AuthRepository {
   Future<Either<AdminExceptions, String>> sendVerifyCode(String email) async {
     try {
       return right(
-        await SendVerificationCodeDataSourceWithDio()
-            .get()
-            .sendVerificationCode(email),
+        await SendVerificationCodeDataSourceWithDio().sendVerificationCode(
+          email,
+        ),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -42,7 +42,7 @@ class AuthRempositoryImpSource implements AuthRepository {
   ) async {
     try {
       return right(
-        await VerifyCodeDataSourceWithDio().get().verifyCode(verifyCodeEntity),
+        await VerifyCodeDataSourceWithDio().verifyCode(verifyCodeEntity),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -55,7 +55,7 @@ class AuthRempositoryImpSource implements AuthRepository {
   ) async {
     try {
       return right(
-        await ResetPasswordDataSourceWithDio().get().resetPassoword(
+        await ResetPasswordDataSourceWithDio().resetPassoword(
           resetPasswordEntity,
         ),
       );
@@ -67,7 +67,7 @@ class AuthRempositoryImpSource implements AuthRepository {
   @override
   Future<Either<AdminExceptions, String>> logout(String token) async {
     try {
-      return right(await LogoutDataSourceWithDio().get().logout(token));
+      return right(await LogoutDataSourceWithDio().logout(token));
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
     }

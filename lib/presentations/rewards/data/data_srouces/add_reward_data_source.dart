@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/rewards/domain/entities/add_reward_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class AddRewardDataSource {
@@ -9,11 +12,6 @@ abstract class AddRewardDataSource {
 }
 
 class AddRewardDataSourceWithDio extends AddRewardDataSource {
-  AddRewardDataSourceWithDio? _addRewardDataSourceWithDio;
-  AddRewardDataSourceWithDio get() =>
-      _addRewardDataSourceWithDio ??
-      (_addRewardDataSourceWithDio = AddRewardDataSourceWithDio());
-
   @override
   Future<String> addReward(AddRewardEntity addRewardEntity) async {
     String message = '';
@@ -36,12 +34,20 @@ class AddRewardDataSourceWithDio extends AddRewardDataSource {
       }
       return message;
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'AddReward');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print(message);
-      print(error);
-
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'AddReward');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'AddReward',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

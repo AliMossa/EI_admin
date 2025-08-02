@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/common_questions_entity.dart';
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/total_common_questions_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 abstract class ReGetCommonQuestionDataSource {
@@ -10,12 +14,6 @@ abstract class ReGetCommonQuestionDataSource {
 
 class ReGetCommonQuestionDataSourceWithDio
     extends ReGetCommonQuestionDataSource {
-  ReGetCommonQuestionDataSourceWithDio? _reGetCommonQuestionDataSourceWithDio;
-  ReGetCommonQuestionDataSourceWithDio get() =>
-      _reGetCommonQuestionDataSourceWithDio ??
-      (_reGetCommonQuestionDataSourceWithDio =
-          ReGetCommonQuestionDataSourceWithDio());
-
   @override
   Future<TotalCommonQuestionsEntity> reGetCommonQuestions(String link) async {
     String message = '';
@@ -45,9 +43,20 @@ class ReGetCommonQuestionDataSourceWithDio
       }
       return TotalCommonQuestionsEntity(list: list, nextPage: '');
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ReGetCommonQuestion');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ReGetCommonQuestion');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ReGetCommonQuestion',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

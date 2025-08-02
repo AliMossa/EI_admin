@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/requests/domain/entities/request_managment_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class AcceptRequestDataSource {
@@ -9,10 +12,6 @@ abstract class AcceptRequestDataSource {
 }
 
 class AcceptRequestDataSourceWithDio extends AcceptRequestDataSource {
-  AcceptRequestDataSourceWithDio? _acceptRequestDataSourceWithDio;
-  AcceptRequestDataSourceWithDio get() =>
-      _acceptRequestDataSourceWithDio ??
-      (_acceptRequestDataSourceWithDio = AcceptRequestDataSourceWithDio());
   @override
   Future<String> acceptRequest(
     RequestManagmentEntity requestManagmentEntity,
@@ -33,9 +32,20 @@ class AcceptRequestDataSourceWithDio extends AcceptRequestDataSource {
       }
       return message;
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'AcceptRequest');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'AcceptRequest');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'AcceptRequest',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

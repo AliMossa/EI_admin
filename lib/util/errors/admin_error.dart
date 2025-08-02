@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class AdminError extends Equatable {
+class AdminError extends Error {
   String message;
   AdminError({required this.message});
 

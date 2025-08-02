@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/profile/domain/entities/update_enitity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class UpdateProfileInfoDataSource {
@@ -9,12 +12,6 @@ abstract class UpdateProfileInfoDataSource {
 }
 
 class UpdateProfileInfoDataSourceWithDio extends UpdateProfileInfoDataSource {
-  UpdateProfileInfoDataSourceWithDio? _updateProfileInfoDataSourceWithDio;
-  UpdateProfileInfoDataSourceWithDio get() =>
-      _updateProfileInfoDataSourceWithDio ??
-      (_updateProfileInfoDataSourceWithDio =
-          UpdateProfileInfoDataSourceWithDio());
-
   @override
   Future<String> updateProfileInfo(
     UpdateEnitity updateEnitity,
@@ -42,10 +39,20 @@ class UpdateProfileInfoDataSourceWithDio extends UpdateProfileInfoDataSource {
 
       return message;
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'UpdateProfileInfo');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print("error in data source$error");
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'UpdateProfileInfo');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'UpdateProfileInfo',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

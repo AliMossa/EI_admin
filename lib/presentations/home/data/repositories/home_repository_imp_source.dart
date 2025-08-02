@@ -22,9 +22,9 @@ class HomeRepositoryImpSource implements HomeRepository {
   ) async {
     try {
       return right(
-        await GetSuccessStatisticsDataSourceWithDio()
-            .get()
-            .getSuccessStatistics(requestSuccessStatisticsEntity),
+        await GetSuccessStatisticsDataSourceWithDio().getSuccessStatistics(
+          requestSuccessStatisticsEntity,
+        ),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -38,9 +38,9 @@ class HomeRepositoryImpSource implements HomeRepository {
   ) async {
     try {
       return right(
-        await GetStatisticsOfUsersDataSourceWithDio()
-            .get()
-            .getStatisticsOfUsers(requestStatisticsOfUsersEntity),
+        await GetStatisticsOfUsersDataSourceWithDio().getStatisticsOfUsers(
+          requestStatisticsOfUsersEntity,
+        ),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -51,9 +51,7 @@ class HomeRepositoryImpSource implements HomeRepository {
   Future<Either<ServerAdminException, MoniesRatesEntity>>
   getMoniesRates() async {
     try {
-      return right(
-        await GetMoniesRatesDataSourceWithDio().get().getMoniesRates(),
-      );
+      return right(await GetMoniesRatesDataSourceWithDio().getMoniesRates());
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
     }
@@ -66,9 +64,9 @@ class HomeRepositoryImpSource implements HomeRepository {
   ) async {
     try {
       return right(
-        await GetRequestsStatisticsDataSourceWithDio()
-            .get()
-            .getRequestsStatistics(requestRequestsStatisticsEntity),
+        await GetRequestsStatisticsDataSourceWithDio().getRequestsStatistics(
+          requestRequestsStatisticsEntity,
+        ),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));

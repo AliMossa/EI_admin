@@ -129,3 +129,8 @@ class MoveToViewPropertyPageEvent extends ChangePageEvent {
 class MoveToChangePsswordPageEvent extends ChangePageEvent {
   MoveToChangePsswordPageEvent({required super.title});
 }
+
+// ignore: must_be_immutable
+class MoveToWalletPageEvent extends ChangePageEvent {
+  MoveToWalletPageEvent({required super.title});
+}

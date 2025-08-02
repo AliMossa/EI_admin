@@ -24,7 +24,6 @@ class RewardItemWidget extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: mainGradient2,
             borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: linkColor),
           ),
           child: Center(
             child: Text(

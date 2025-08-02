@@ -25,7 +25,7 @@ class ViewUpdateEmployeeTotalItems extends StatelessWidget {
 
       builder:
           (context, state) => context
-              .read<ViewUpdateEmployeeBloc>()
+              .watch<ViewUpdateEmployeeBloc>()
               .employeesMiddleware
               .getCorrectWidgetForUpdateEmployee(state, size)
               .fold(
@@ -190,7 +190,6 @@ class ViewUpdateEmployeeTotalItems extends StatelessWidget {
                               size: size,
                             ),
                             const SizedBox(height: 10),
-
                             MonitoringHistory(
                               id:
                                   context

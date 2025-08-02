@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/profile/domain/entities/logs_request_entity.dart';
 import 'package:admin_dashboard/presentations/profile/domain/entities/profile_logs_entity.dart';
 import 'package:admin_dashboard/presentations/profile/domain/entities/total_profile_logs_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 
 abstract class GetProfileLogsDataSource {
   Future<TotalProfileLogsEntity> getProfileLogs(
@@ -12,11 +16,6 @@ abstract class GetProfileLogsDataSource {
 }
 
 class GetProfileLogsDataSourceWithDio extends GetProfileLogsDataSource {
-  GetProfileLogsDataSourceWithDio? _getProfileLogsDataSourceWithDio;
-  GetProfileLogsDataSourceWithDio get() =>
-      _getProfileLogsDataSourceWithDio ??
-      (_getProfileLogsDataSourceWithDio = GetProfileLogsDataSourceWithDio());
-
   @override
   Future<TotalProfileLogsEntity> getProfileLogs(
     LogsRequestEntity logsRequestEntity,
@@ -49,10 +48,20 @@ class GetProfileLogsDataSourceWithDio extends GetProfileLogsDataSource {
       result.nextPage = response['data']['pagination']['next_page_url'] ?? '';
       return result;
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetProfileLogs');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print("******${error}");
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetProfileLogs');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetProfileLogs',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

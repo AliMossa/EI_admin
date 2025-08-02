@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/users/domain/entities/add_user_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class AddUserDataSource {
@@ -9,11 +12,6 @@ abstract class AddUserDataSource {
 }
 
 class AddUserDataSourceWithDio extends AddUserDataSource {
-  AddUserDataSourceWithDio? _addUserDataSourceWithDio;
-  AddUserDataSourceWithDio get() =>
-      _addUserDataSourceWithDio ??
-      (_addUserDataSourceWithDio = AddUserDataSourceWithDio());
-
   @override
   Future<String> addUser(AddUserEntity addUserEntity) async {
     String message = '';
@@ -36,13 +34,23 @@ class AddUserDataSourceWithDio extends AddUserDataSource {
         message = response['message'] ?? response['errors'];
         throw Exception();
       }
-      print(message);
+
       return message;
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetCommonQuestions');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print(error);
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetCommonQuestions');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetCommonQuestions',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

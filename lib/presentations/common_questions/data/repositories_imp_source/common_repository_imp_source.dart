@@ -23,7 +23,7 @@ class CommonRepositoryImpSource implements CommonQuestionsRepository {
   ) async {
     try {
       return right(
-        await AddCommonQuestionDataSourceWithDio().get().addCommonQuestion(
+        await AddCommonQuestionDataSourceWithDio().addCommonQuestion(
           addCommonQuestionEntity,
         ),
       );
@@ -37,7 +37,7 @@ class CommonRepositoryImpSource implements CommonQuestionsRepository {
   getCommonQuestions() async {
     try {
       return right(
-        await GetCommonQuestionsDataSourceWithDio().get().getCommonQuestions(),
+        await GetCommonQuestionsDataSourceWithDio().getCommonQuestions(),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -50,9 +50,9 @@ class CommonRepositoryImpSource implements CommonQuestionsRepository {
   ) async {
     try {
       return right(
-        await RemoveCommonQuestionDataSourceWithDio()
-            .get()
-            .removeCommonQuestion(removeCommonQuestions),
+        await RemoveCommonQuestionDataSourceWithDio().removeCommonQuestion(
+          removeCommonQuestions,
+        ),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -64,9 +64,7 @@ class CommonRepositoryImpSource implements CommonQuestionsRepository {
   getUserCommonQuestions(String token) async {
     try {
       return right(
-        await GetUserCommonQuestionDataSourceWithDio().get().getUserQuestions(
-          token,
-        ),
+        await GetUserCommonQuestionDataSourceWithDio().getUserQuestions(token),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -79,9 +77,9 @@ class CommonRepositoryImpSource implements CommonQuestionsRepository {
   ) async {
     try {
       return right(
-        await RemoveUserCommonQuestionDataSourceWithDio()
-            .get()
-            .removeUserQuestion(removeCommonQuestions),
+        await RemoveUserCommonQuestionDataSourceWithDio().removeUserQuestion(
+          removeCommonQuestions,
+        ),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -95,7 +93,6 @@ class CommonRepositoryImpSource implements CommonQuestionsRepository {
     try {
       return right(
         await UpdateUserCommonQuestionDataSrouceWithDio()
-            .get()
             .updateUserCommonQuestion(updateUserCommonQuestionEntity),
       );
     } on ServerAdminError catch (error) {
@@ -108,9 +105,7 @@ class CommonRepositoryImpSource implements CommonQuestionsRepository {
   reGetCommonQuestions(String link) async {
     try {
       return right(
-        await ReGetCommonQuestionDataSourceWithDio().get().reGetCommonQuestions(
-          link,
-        ),
+        await ReGetCommonQuestionDataSourceWithDio().reGetCommonQuestions(link),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));
@@ -123,7 +118,6 @@ class CommonRepositoryImpSource implements CommonQuestionsRepository {
     try {
       return right(
         await ReGetUseCommonQuestionDataSourceWithDio()
-            .get()
             .reGetUserCommonQuestions(link),
       );
     } on ServerAdminError catch (error) {

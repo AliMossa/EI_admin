@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/auth/domain/entities/reset_password_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class ResetPasswordDataSource {
@@ -9,11 +12,6 @@ abstract class ResetPasswordDataSource {
 }
 
 class ResetPasswordDataSourceWithDio extends ResetPasswordDataSource {
-  ResetPasswordDataSourceWithDio? _resetPasswordDataSourceWithDio;
-  ResetPasswordDataSourceWithDio get() =>
-      _resetPasswordDataSourceWithDio ??
-      (_resetPasswordDataSourceWithDio = ResetPasswordDataSourceWithDio());
-
   @override
   Future<String> resetPassoword(ResetPasswordEntity resetPasswordEntity) async {
     String message = '';
@@ -37,10 +35,20 @@ class ResetPasswordDataSourceWithDio extends ResetPasswordDataSource {
 
       return message;
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ResetPassword');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      print(error);
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ResetPassword');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ResetPassword',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

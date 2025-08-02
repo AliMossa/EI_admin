@@ -36,7 +36,7 @@ class ViewRequestItemsInfo extends StatelessWidget {
                 areaSize:
                     requestInfoEntity.requestDescriptionInfoEntity.areaSize,
                 balconySize:
-                    requestInfoEntity.requestDescriptionInfoEntity.balconySize,
+                    requestInfoEntity.requestDescriptionInfoEntity.balconySize!,
                 bathroomNumbers:
                     requestInfoEntity
                         .requestDescriptionInfoEntity
@@ -51,13 +51,17 @@ class ViewRequestItemsInfo extends StatelessWidget {
                     requestInfoEntity.requestDescriptionInfoEntity.overlook
                         .toString(),
                 decoration:
-                    requestInfoEntity.requestDescriptionInfoEntity.decoration,
+                    requestInfoEntity.requestDescriptionInfoEntity.decoration!,
                 flooringType:
-                    requestInfoEntity.requestDescriptionInfoEntity.flooringType,
+                    requestInfoEntity
+                        .requestDescriptionInfoEntity
+                        .flooringType!,
                 kitchenType:
-                    requestInfoEntity.requestDescriptionInfoEntity.kitchenType,
+                    requestInfoEntity.requestDescriptionInfoEntity.kitchenType!,
                 paintingType:
-                    requestInfoEntity.requestDescriptionInfoEntity.paintingType,
+                    requestInfoEntity
+                        .requestDescriptionInfoEntity
+                        .paintingType!,
                 contract:
                     requestInfoEntity.requestDescriptionInfoEntity.contract,
                 price: requestInfoEntity.requestDescriptionInfoEntity.price,

@@ -42,52 +42,59 @@ class CommonQuestionSharedItemsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CommonQuestionsBloc, CommonQuestionsState>(
       builder:
-          (context, state) => Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  ViewQuestionsTypeMenuWidget(
-                    size: size,
-                    currntValue:
-                        context
-                            .watch<TypesCubit>()
-                            .commonQuestionMiddleware
-                            .getQuestionsTypeValue(),
-                    kinds: types,
-                    onPressed:
-                        (value) => context
-                            .read<TypesCubit>()
-                            .commonQuestionMiddleware
-                            .changeQuestionsType(
-                              value,
-                              context.read<TypesCubit>(),
-                            ),
-                  ),
-                  CommonQuestionsListWidget(
-                    userQuestionGlobalKey: userGlobalKey,
-                    commonQuestionGlobalKey: globalKey,
-                    size: size,
-                    adminTemp: adminTemp,
-                    userTemp: userTemp,
-                    items: items,
-                    userItems: userItems,
-                    selectedType: selectedType,
-                  ),
-                ],
-              ),
-              selectedType == 0
-                  ? AddMemberButtonWidget(
-                    onPress:
-                        () => context.read<ChangePageBloc>().add(
-                          MoveToAddAdminCommonQuestionPageEvent(
-                            title: 'Common Questions',
-                          ),
+          (context, state) => context
+              .read<CommonQuestionsBloc>()
+              .commonQuestionMiddleware
+              .checkUserQuestionTemp(state, size)
+              .fold(
+                (_) => Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        ViewQuestionsTypeMenuWidget(
+                          size: size,
+                          currntValue:
+                              context
+                                  .watch<TypesCubit>()
+                                  .commonQuestionMiddleware
+                                  .getQuestionsTypeValue(),
+                          kinds: types,
+                          onPressed:
+                              (value) => context
+                                  .read<TypesCubit>()
+                                  .commonQuestionMiddleware
+                                  .changeQuestionsType(
+                                    value,
+                                    context.read<TypesCubit>(),
+                                  ),
                         ),
-                  )
-                  : SizedBox(),
-            ],
-          ),
+                        CommonQuestionsListWidget(
+                          userQuestionGlobalKey: userGlobalKey,
+                          commonQuestionGlobalKey: globalKey,
+                          size: size,
+                          adminTemp: adminTemp,
+                          userTemp: userTemp,
+                          items: items,
+                          userItems: userItems,
+                          selectedType: selectedType,
+                        ),
+                      ],
+                    ),
+                    selectedType == 0
+                        ? AddMemberButtonWidget(
+                          onPress:
+                              () => context.read<ChangePageBloc>().add(
+                                MoveToAddAdminCommonQuestionPageEvent(
+                                  title: 'Common Questions',
+                                ),
+                              ),
+                        )
+                        : SizedBox(),
+                  ],
+                ),
+                (widget) => widget,
+              ),
     );
   }
 }

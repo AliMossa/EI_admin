@@ -1,8 +1,10 @@
-import 'package:admin_dashboard/presentations/properties/domain/entities/property_entity.dart';
+import 'dart:developer';
 import 'package:admin_dashboard/presentations/properties/domain/entities/property_list_entity.dart';
 import 'package:admin_dashboard/presentations/properties/domain/entities/property_request_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 
 abstract class ReGetSoldPropertiesDataSource {
   Future<PropertyListEntity> reGetSoldProperties(String link);
@@ -10,11 +12,6 @@ abstract class ReGetSoldPropertiesDataSource {
 
 class ReGetSoldPropertiesDataSourceWithDio
     extends ReGetSoldPropertiesDataSource {
-  ReGetSoldPropertiesDataSourceWithDio? _reGetSoldPropertiesDataSourceWithDio;
-  ReGetSoldPropertiesDataSourceWithDio get() =>
-      _reGetSoldPropertiesDataSourceWithDio ??
-      (_reGetSoldPropertiesDataSourceWithDio =
-          ReGetSoldPropertiesDataSourceWithDio());
   @override
   Future<PropertyListEntity> reGetSoldProperties(String link) async {
     String message = '';
@@ -39,9 +36,20 @@ class ReGetSoldPropertiesDataSourceWithDio
       }
       return PropertyListEntity(list: list, nextPage: '');
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ReGetSoldProperties');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ReGetSoldProperties');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ReGetSoldProperties',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

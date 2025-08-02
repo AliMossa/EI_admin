@@ -4,11 +4,11 @@ import 'package:equatable/equatable.dart';
 class RequestEconomicInfoEntity extends Equatable {
   int numberOfChances;
   int profitPercent;
-  double expectedPrice;
-  double totalExpectedTaxes;
-  double buyingPrice;
-  double? rentingPrice;
-  double chancePrice;
+  String expectedPrice;
+  String totalExpectedTaxes;
+  String buyingPrice;
+  String? rentingPrice;
+  String chancePrice;
   String investmentTime;
   String incommingTime;
   String investmentMode;
@@ -31,11 +31,11 @@ class RequestEconomicInfoEntity extends Equatable {
   factory RequestEconomicInfoEntity.init() => RequestEconomicInfoEntity(
     numberOfChances: -1,
     profitPercent: -1,
-    expectedPrice: -1,
-    buyingPrice: -1,
-    totalExpectedTaxes: -1,
-    rentingPrice: -1,
-    chancePrice: -1,
+    expectedPrice: '',
+    buyingPrice: '',
+    totalExpectedTaxes: '',
+    rentingPrice: '',
+    chancePrice: '',
     investmentTime: '',
     incommingTime: '',
     investmentMode: '',

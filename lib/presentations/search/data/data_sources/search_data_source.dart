@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/search/domain/entities/search_request_entity.dart';
 import 'package:admin_dashboard/presentations/search/domain/entities/search_result_entity.dart';
 import 'package:admin_dashboard/presentations/search/domain/entities/search_total_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
@@ -12,11 +15,6 @@ abstract class SearchDataSource {
 }
 
 class SearchDataSourceWithDio extends SearchDataSource {
-  SearchDataSourceWithDio? _searchDataSourceWithDio;
-  SearchDataSourceWithDio get() =>
-      _searchDataSourceWithDio ??
-      (_searchDataSourceWithDio = SearchDataSourceWithDio());
-
   @override
   Future<SearchTotalEntity> search(
     SearchRequestEntity searchRequestEntity,
@@ -58,9 +56,20 @@ class SearchDataSourceWithDio extends SearchDataSource {
       }
       return SearchTotalEntity(link: '', list: list);
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'Search');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'Search');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'Search',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/employees/domain/entities/active_user_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
 
 abstract class ActiveEmployeeDataSource {
@@ -9,11 +12,6 @@ abstract class ActiveEmployeeDataSource {
 }
 
 class ActiveEmployeeDataSourceWithDio extends ActiveEmployeeDataSource {
-  ActiveEmployeeDataSourceWithDio? _activeEmployeeDataSourceWithDio;
-  ActiveEmployeeDataSourceWithDio get() =>
-      _activeEmployeeDataSourceWithDio ??
-      (_activeEmployeeDataSourceWithDio = ActiveEmployeeDataSourceWithDio());
-
   @override
   Future<String> activeEmployee(ActiveUserEntity activeUserEntity) async {
     String message = '';
@@ -32,9 +30,20 @@ class ActiveEmployeeDataSourceWithDio extends ActiveEmployeeDataSource {
       }
       return message;
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'ActiveEmployee');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'ActiveEmployee');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'ActiveEmployee',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }

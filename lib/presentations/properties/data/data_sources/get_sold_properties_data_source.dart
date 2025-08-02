@@ -1,21 +1,19 @@
+import 'dart:developer';
+
 import 'package:admin_dashboard/presentations/properties/domain/entities/property_entity.dart';
 import 'package:admin_dashboard/presentations/properties/domain/entities/property_list_entity.dart';
 import 'package:admin_dashboard/presentations/properties/domain/entities/property_request_entity.dart';
 import 'package:admin_dashboard/util/apis/apis.dart';
 import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
 
 abstract class GetSoldPropertiesDataSource {
   Future<PropertyListEntity> getSoldProperties(String token);
 }
 
 class GetSoldPropertiesDataSourceWithDio extends GetSoldPropertiesDataSource {
-  GetSoldPropertiesDataSourceWithDio? _getSoldPropertiesDataSourceWithDio;
-  GetSoldPropertiesDataSourceWithDio get() =>
-      _getSoldPropertiesDataSourceWithDio ??
-      (_getSoldPropertiesDataSourceWithDio =
-          GetSoldPropertiesDataSourceWithDio());
-
   @override
   Future<PropertyListEntity> getSoldProperties(String token) async {
     String message = '';
@@ -47,9 +45,20 @@ class GetSoldPropertiesDataSourceWithDio extends GetSoldPropertiesDataSource {
 
       return PropertyListEntity(list: list, nextPage: '');
     } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetSoldProperties');
       throw ServerAdminError(message: error.message);
-    } catch (error) {
-      throw ServerAdminError(message: message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetSoldProperties');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetSoldProperties',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
     }
   }
 }
