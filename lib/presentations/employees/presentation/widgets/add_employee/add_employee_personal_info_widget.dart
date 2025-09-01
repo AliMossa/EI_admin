@@ -4,7 +4,7 @@ import 'package:admin_dashboard/presentations/public/public_widgets/add_date_wid
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/add_employee_cities_types_widget.dart';
 import 'package:admin_dashboard/presentations/employees/presentation/widgets/add_employee/employee_info_textfield_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/password_widget/password_widget.dart';
-import 'package:admin_dashboard/presentations/public/validations/validations.dart';
+import 'package:admin_dashboard/util/validations/validations.dart';
 import 'package:admin_dashboard/presentations/public/view_personal_image/view_pesonal_image.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/widgets.dart';

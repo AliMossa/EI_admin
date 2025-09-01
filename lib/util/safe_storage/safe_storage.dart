@@ -22,8 +22,7 @@ class SafeStorage {
 
   static Future<void> clearAllData() async {
     final box = await Hive.openBox(_tableName);
-
-    box.clear();
+    await box.clear();
   }
 }
 

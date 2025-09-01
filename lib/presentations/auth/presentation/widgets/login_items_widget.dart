@@ -18,41 +18,39 @@ class LoginItemsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
-        return state is LoadingCheckLoggingState
-            ? LoadingWidget()
-            : Form(
-              key: context.read<LoginBloc>().authMiddleware.getLoginGlobalKey(),
+        return Form(
+          key: context.read<LoginBloc>().authMiddleware.getLoginGlobalKey(),
 
-              child: ListView(
-                children: [
-                  LoginTitleWidget(size: size),
-                  EmailTextFieldWidget(size: size),
-                  PasswordTextFieldWidget(size: size),
-                  LinkTextWidget(
-                    title: 'forget',
-                    coloredTitle: 'password ?',
-                    size: size,
-                    onPressed:
-                        () => context.read<AuthBloc>().add(
-                          MoveToSetEmailCheckCodePageEvent(),
-                        ),
-                  ),
-                  state is LoadingSendLoginState
-                      ? LoadingWidget()
-                      : AuthButtonWidget(
-                        title: 'login',
-                        onPressed:
-                            () => context
-                                .read<LoginBloc>()
-                                .authMiddleware
-                                .loginButtonFunction(
-                                  context,
-                                  context.read<LoginBloc>(),
-                                ),
-                      ),
-                ],
+          child: ListView(
+            children: [
+              LoginTitleWidget(size: size),
+              EmailTextFieldWidget(size: size),
+              PasswordTextFieldWidget(size: size),
+              LinkTextWidget(
+                title: 'forget',
+                coloredTitle: 'password ?',
+                size: size,
+                onPressed:
+                    () => context.read<AuthBloc>().add(
+                      MoveToSetEmailCheckCodePageEvent(),
+                    ),
               ),
-            );
+              state is LoadingSendLoginState
+                  ? LoadingWidget()
+                  : AuthButtonWidget(
+                    title: 'login',
+                    onPressed:
+                        () => context
+                            .read<LoginBloc>()
+                            .authMiddleware
+                            .loginButtonFunction(
+                              context,
+                              context.read<LoginBloc>(),
+                            ),
+                  ),
+            ],
+          ),
+        );
       },
     );
   }

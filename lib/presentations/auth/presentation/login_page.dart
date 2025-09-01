@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
               authRepository: AuthRempositoryImpSource(),
             ),
             authMiddleware: _authMiddleware,
-          )..add(CheckLoggingEvent()),
+          )..add(Check()),
       child: ItemWidget(),
     );
   }

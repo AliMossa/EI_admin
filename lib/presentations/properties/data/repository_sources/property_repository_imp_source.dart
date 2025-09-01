@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/presentations/properties/data/data_sources/get_properties_data_srouce.dart';
 import 'package:admin_dashboard/presentations/properties/data/data_sources/get_sold_properties_data_source.dart';
+import 'package:admin_dashboard/presentations/properties/data/data_sources/get_viewed_properties_data_source.dart';
 import 'package:admin_dashboard/presentations/properties/data/data_sources/property_new_study_data_source.dart';
 import 'package:admin_dashboard/presentations/properties/data/data_sources/re_get_properties_data_rouce.dart';
 import 'package:admin_dashboard/presentations/properties/data/data_sources/re_get_sold_properties_data_source.dart';
@@ -120,6 +121,19 @@ class PropertyRepositoryImpSource implements PropertyRepository {
         await ShowOnStageDataSourceWithDio().showOnStage(
           propertyDesicionEntity,
         ),
+      );
+    } on ServerAdminError catch (error) {
+      return left(ServerAdminException(message: error.message));
+    }
+  }
+
+  @override
+  Future<Either<AdminExceptions, PropertyListEntity>> getViewedProperties(
+    String token,
+  ) async {
+    try {
+      return right(
+        await GetViewedPropertiesDataSourceWithDio().getViewedProperties(token),
       );
     } on ServerAdminError catch (error) {
       return left(ServerAdminException(message: error.message));

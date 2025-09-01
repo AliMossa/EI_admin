@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class SearchItems extends StatelessWidget {
-  SearchItems({super.key});
+  const SearchItems({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -13,11 +13,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ViewPropertyListItem extends StatelessWidget {
   Size size;
   int id;
+  int type;
   ViewPropertyEntity viewPropertyEntity;
   ViewPropertyListItem({
     required this.id,
     required this.size,
     required this.viewPropertyEntity,
+    required this.type,
     super.key,
   });
 
@@ -161,8 +163,7 @@ class ViewPropertyListItem extends StatelessWidget {
 
                 const SizedBox(height: 10),
 
-                viewPropertyEntity.requestDescriptionInfoEntity.status!
-                        .contains('تم البيع')
+                type > 0
                     ? const SizedBox()
                     : ViewPropertyDesicionWidget(
                       id: id,

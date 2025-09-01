@@ -41,16 +41,6 @@ class FailedRemoveAdminCommonQuestionState extends CommonQuestionsState {
   FailedRemoveAdminCommonQuestionState({required this.message});
 }
 
-class LoadingRemoveUserCommonQuestionState extends CommonQuestionsState {}
-
-class SuccessRemoveUserCommonQuestionState extends CommonQuestionsState {}
-
-// ignore: must_be_immutable
-class FailedRemoveUserCommonQuestionState extends CommonQuestionsState {
-  String message;
-  FailedRemoveUserCommonQuestionState({required this.message});
-}
-
 class LoadingReGetAdminCommonQuestionsState extends CommonQuestionsState {}
 
 class SuccessReGetAdminCommonQuestionsState extends CommonQuestionsState {}

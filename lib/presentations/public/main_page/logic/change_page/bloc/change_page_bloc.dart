@@ -1,4 +1,5 @@
 import 'package:admin_dashboard/presentations/public/main_page/middleware/main_page_middleware.dart';
+import 'package:admin_dashboard/presentations/transfer_money/domain/entities/tansfer_money_entity.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 part 'change_page_event.dart';
@@ -30,6 +31,9 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     on<MoveToViewPropertyPageEvent>(moveToViewProperty);
     on<MoveToChangePsswordPageEvent>(moveToChangePassword);
     on<MoveToWalletPageEvent>(moveToWallet);
+    on<MoveToTransferRequestsPageEvent>(moveToTransferRequests);
+    on<MoveToViewTransferRequestsPageEvent>(moveToViewTransferRequests);
+    on<MoveToAddDepositPageEvent>(moveToAddDeposit);
   }
 
   void moveToHomePage(
@@ -111,10 +115,12 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     MoveToSearchPageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToSearchPageState(title: event.title));
+
   void moveToViewCommonQuestoin(
     MoveToViewCommonQuestionPageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToViewCommonQuestionPageState(title: event.title));
+
   void moveToAddAdminCommonQuestoin(
     MoveToAddAdminCommonQuestionPageEvent event,
     Emitter<ChangePageState> emit,
@@ -129,6 +135,7 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     MoveToAddRewardPageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToAddRewardPageState(title: event.title));
+
   void moveToUpdateReward(
     MoveToViewUpdateRewardPageEvent event,
     Emitter<ChangePageState> emit,
@@ -148,4 +155,24 @@ class ChangePageBloc extends Bloc<ChangePageEvent, ChangePageState> {
     MoveToWalletPageEvent event,
     Emitter<ChangePageState> emit,
   ) => emit(MoveToWalletPageState(title: event.title));
+
+  void moveToTransferRequests(
+    MoveToTransferRequestsPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToTransferRequestsPageState(title: event.title));
+
+  void moveToViewTransferRequests(
+    MoveToViewTransferRequestsPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(
+    MoveToViewTransferRequestsPageState(
+      title: event.title,
+      transferMoneyEntity: event.transferMoneyEntity,
+    ),
+  );
+
+  void moveToAddDeposit(
+    MoveToAddDepositPageEvent event,
+    Emitter<ChangePageState> emit,
+  ) => emit(MoveToAddDepositPageState(title: event.title));
 }

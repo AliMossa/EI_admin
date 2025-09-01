@@ -29,7 +29,6 @@ class GetPropertiesDataSrouceWithDio extends GetPropertiesDataSrouce {
         message = response['message'] ?? response['errors'];
         throw Exception();
       }
-      print(response);
       for (Map<String, dynamic> item in response['data']['properties']) {
         list.add(
           PropertyRequestEntity(

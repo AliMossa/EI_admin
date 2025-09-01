@@ -8,12 +8,14 @@ class ViewUserVariableWidget extends StatelessWidget {
   String value;
   Size size;
   double widthSizeFactor;
+  double height;
 
   ViewUserVariableWidget({
     required this.value,
     required this.size,
     required this.title,
     required this.widthSizeFactor,
+    this.height = 40,
     super.key,
   });
 
@@ -27,7 +29,7 @@ class ViewUserVariableWidget extends StatelessWidget {
           child: FittedBox(
             child: Container(
               width: size.width * widthSizeFactor,
-              height: 40,
+              height: height,
               padding: EdgeInsets.only(left: 5, right: 5, top: 10),
               margin: EdgeInsets.only(left: 20, top: 10),
               decoration: BoxDecoration(

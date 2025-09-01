@@ -31,6 +31,17 @@ class Validations {
     return null;
   }
 
+  static String? getAmountValidation(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter amount';
+    }
+    final mobileRegex = RegExp(r'\d+');
+    if (!mobileRegex.hasMatch(value)) {
+      return 'Enter a valid Amount';
+    }
+    return null;
+  }
+
   static String? getPasswordValidation(String? value) {
     if (value == null || value.isEmpty) {
       return 'please insert password';
@@ -38,5 +49,15 @@ class Validations {
       return 'please insert more than 5 characters';
     }
     return null;
+  }
+
+  static String? getnotesValidation(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'This field cannot be empty';
+    } else if (value.length <= 5) {
+      return 'should be more than 5 characters';
+    } else {
+      return null;
+    }
   }
 }

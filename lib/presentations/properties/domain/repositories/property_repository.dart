@@ -12,6 +12,9 @@ abstract class PropertyRepository {
   Future<Either<AdminExceptions, PropertyListEntity>> getSoldProperties(
     String token,
   );
+  Future<Either<AdminExceptions, PropertyListEntity>> getViewedProperties(
+    String token,
+  );
   Future<Either<AdminExceptions, PropertyListEntity>> reGetProperties(
     String link,
   );

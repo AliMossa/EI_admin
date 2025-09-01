@@ -30,7 +30,6 @@ class GetAllRequestsDataSrouceWithDio extends GetAllRequestsDataSrouce {
         throw Exception();
       }
       for (Map<String, dynamic> item in response['data']) {
-        print(item);
         requests.add(
           RequestEntity(
             id: item['id'],

@@ -20,12 +20,6 @@ class RemoveAdminCommonQuestionEvent extends CommonQuestionsEvent {
 }
 
 // ignore: must_be_immutable
-class RemoveUserCommonQuestionEvent extends CommonQuestionsEvent {
-  int id;
-  RemoveUserCommonQuestionEvent({required this.id});
-}
-
-// ignore: must_be_immutable
 class ReGetUserCommonQuestionsEvent extends CommonQuestionsEvent {
   String link;
   ReGetUserCommonQuestionsEvent({required this.link});

@@ -67,6 +67,7 @@ class ViewUpdateRewardBloc
       response.fold(
         (failed) => emit(FailedRemoveRewardState(message: failed.message)),
         (success) {
+          rewardsMiddleware.clearTotalRewardEntity();
           emit(SuccessRemoveRewardState());
         },
       );

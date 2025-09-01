@@ -2,7 +2,7 @@ import 'package:admin_dashboard/presentations/requests/presentaiton/logic/reques
 import 'package:admin_dashboard/presentations/requests/presentaiton/logic/cubit/desicion_cubit.dart';
 import 'package:admin_dashboard/presentations/requests/presentaiton/models/drop_down_desicion_model.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/desicion_drop_down_widget.dart';
-import 'package:admin_dashboard/presentations/requests/presentaiton/widgets/view_request/desicion_text_form_field_widget.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/desicion_text_form_field_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/set_desicion_button_widget.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:admin_dashboard/util/font/font_styles.dart';
@@ -64,6 +64,7 @@ class DesicionWidget extends StatelessWidget {
                       .getDesicionValue() ==
                   1)
                 DesicionTextFormFieldWidget(
+                  onSubmiteed: (_) {},
                   label: 're-study note',
                   onChange:
                       (value) => context

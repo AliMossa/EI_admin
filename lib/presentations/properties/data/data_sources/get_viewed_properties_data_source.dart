@@ -1,0 +1,68 @@
+import 'dart:developer';
+
+import 'package:admin_dashboard/presentations/properties/domain/entities/property_list_entity.dart';
+import 'package:admin_dashboard/presentations/properties/domain/entities/property_request_entity.dart';
+import 'package:admin_dashboard/util/apis/apis.dart';
+import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
+import 'package:admin_dashboard/util/errors/admin_error.dart';
+import 'package:admin_dashboard/util/notices/show_notices.dart';
+import 'package:dio/dio.dart';
+
+abstract class GetViewedPropertiesDataSource {
+  Future<PropertyListEntity> getViewedProperties(String token);
+}
+
+class GetViewedPropertiesDataSourceWithDio
+    extends GetViewedPropertiesDataSource {
+  @override
+  Future<PropertyListEntity> getViewedProperties(String token) async {
+    String message = '';
+    List<PropertyRequestEntity> list = [];
+
+    try {
+      final response = await Apis().get(
+        NetworkApisRouts().getViewdPropertiesApi(),
+        {},
+        token,
+      );
+      if (response['errors'] == null) {
+        message = response['message'];
+      } else {
+        message = response['message'] ?? response['errors'];
+        throw Exception();
+      }
+      print(response);
+      for (Map<String, dynamic> item in response['data']['properties']) {
+        print(item);
+        list.add(
+          PropertyRequestEntity(
+            id: item['property_id'],
+            location: item['property_location'],
+            propertyType: '',
+            progressPercent: item['progress_percent'].toString(),
+            totalInvested: item['total_invested'].toString(),
+            isCompleted:
+                item['is_completed'] == 0 ? 'is not completed' : 'is completed',
+          ),
+        );
+      }
+
+      return PropertyListEntity(list: list, nextPage: '');
+    } on ClientAdminError catch (error) {
+      log('ClientAdminError: ${error.message}', name: 'GetSoldProperties');
+      throw ServerAdminError(message: error.message);
+    } on DioException catch (dioError) {
+      log('DioException: ${dioError.message}', name: 'GetSoldProperties');
+      throw ServerAdminError(message: ShowNotices.internetError);
+    } catch (error, stackTrace) {
+      log(
+        'Unhandled Exception: $error',
+        stackTrace: stackTrace,
+        name: 'GetSoldProperties',
+      );
+      throw ServerAdminError(
+        message: message.isEmpty ? ShowNotices.abnormalError : message,
+      );
+    }
+  }
+}

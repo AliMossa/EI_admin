@@ -20,7 +20,7 @@ class ShowOnStageDataSourceWithDio extends ShowOnStageDataSource {
 
     try {
       final response = await Apis().post(
-        '${NetworkApisRouts().setPropertySoldApi()}${propertyDesicionEntity.id}',
+        '${NetworkApisRouts().showPropertyOnStageApi()}${propertyDesicionEntity.id}',
         FormData.fromMap({}),
         propertyDesicionEntity.token,
       );
@@ -30,7 +30,6 @@ class ShowOnStageDataSourceWithDio extends ShowOnStageDataSource {
         message = response['message'] ?? response['errors'];
         throw Exception();
       }
-      print(message);
 
       return message;
     } on ClientAdminError catch (error) {

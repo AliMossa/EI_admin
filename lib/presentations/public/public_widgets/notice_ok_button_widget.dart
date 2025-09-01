@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class NoticeOkButtonWidget extends StatelessWidget {
   String title;
-  final function;
+  Function() function;
   NoticeOkButtonWidget({
     required this.title,
     required this.function,
@@ -16,7 +16,7 @@ class NoticeOkButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: function,
       style: ElevatedButton.styleFrom(backgroundColor: textFieldBorder),
-      child: Text(title, style: const TextStyle(color: textFieldColor)),
+      child: Text(title, style: TextStyle(color: selecteSideBarItem1)),
     );
   }
 }

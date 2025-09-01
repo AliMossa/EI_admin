@@ -14,7 +14,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({required this.authMiddleware, required this.loginUseCase})
     : super(LoginInitial()) {
     on<SendLoginEvent>(login);
-    on<CheckLoggingEvent>(checkToken);
+    on<Check>(check);
   }
   void login(SendLoginEvent event, Emitter<LoginState> emit) async {
     emit(LoadingSendLoginState());
@@ -34,14 +34,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  void checkToken(CheckLoggingEvent event, Emitter<LoginState> emit) async {
-    emit(LoadingCheckLoggingState());
-    try {
-      await authMiddleware.isLogged()
-          ? emit(SuccessCheckLoggingState())
-          : emit(FailedCheckLoggingState());
-    } catch (error) {
-      emit(FailedSendLoginState(message: error.toString()));
+  void check(Check event, Emitter<LoginState> emit) async {
+    if (await authMiddleware.isLogged()) {
+      emit(Logged());
     }
   }
 }

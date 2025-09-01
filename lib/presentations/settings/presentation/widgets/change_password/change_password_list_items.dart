@@ -1,6 +1,6 @@
 import 'package:admin_dashboard/presentations/public/public_widgets/password_widget/change_password_text_filed.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/password_widget/password_widget.dart';
-import 'package:admin_dashboard/presentations/public/validations/validations.dart';
+import 'package:admin_dashboard/util/validations/validations.dart';
 import 'package:admin_dashboard/presentations/settings/presentation/logic/bloc/password_bloc.dart';
 import 'package:admin_dashboard/presentations/settings/presentation/widgets/change_password/change_password_button_widget.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';

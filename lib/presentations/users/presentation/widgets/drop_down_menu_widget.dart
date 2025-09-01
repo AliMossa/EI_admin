@@ -10,7 +10,7 @@ class DropDownMenuWidget extends StatelessWidget {
   int currntValue;
   final onPressed;
   Widget underline;
-  List<UserStateModel> kinds;
+  List<ChoiseStateModel> kinds;
   Size size;
   DropDownMenuWidget({
     this.underline = const SizedBox(),

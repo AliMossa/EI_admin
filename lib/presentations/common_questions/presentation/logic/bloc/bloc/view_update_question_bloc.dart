@@ -1,6 +1,7 @@
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/remove_common_question_entity.dart';
 import 'package:admin_dashboard/presentations/common_questions/domain/entities/update_user_question_entity.dart';
 import 'package:admin_dashboard/presentations/common_questions/domain/use_cases/remove_common_question_use_case.dart';
+import 'package:admin_dashboard/presentations/common_questions/domain/use_cases/remove_user_common_question_use_case.dart';
 import 'package:admin_dashboard/presentations/common_questions/domain/use_cases/update_user_question_use_case.dart';
 import 'package:admin_dashboard/presentations/common_questions/presentation/middleware/common_question_middleware.dart';
 import 'package:admin_dashboard/util/errors/admin_exceptions.dart';
@@ -15,6 +16,7 @@ class ViewUpdateQuestionBloc
     extends Bloc<ViewUpdateQuestionEvent, ViewUpdateQuestionState> {
   RemoveCommonQuestionUseCase removeCommonQuestionUseCase;
   UpdateUserQuestionUseCase updateUserQuestionUseCase;
+  RemoveUserCommonQuestionUseCase removeUserCommonQuestionUseCase;
 
   CommonQuestionMiddleware commonQuestionMiddleware;
 
@@ -22,9 +24,11 @@ class ViewUpdateQuestionBloc
     required this.updateUserQuestionUseCase,
     required this.removeCommonQuestionUseCase,
     required this.commonQuestionMiddleware,
+    required this.removeUserCommonQuestionUseCase,
   }) : super(ViewUpdateQuestionInitial()) {
     on<RemoveAdminCommonQuestionFromInsidEvent>(removeAdminCommonQuestions);
     on<UpdateAdminCommonQuestionEvent>(updateUserCommonQuestions);
+    on<RemoveUserCommonQuestionEvent>(removeUserCommonQuestions);
   }
 
   void removeAdminCommonQuestions(
@@ -78,6 +82,31 @@ class ViewUpdateQuestionBloc
       emit(FailedUpdateAdminCommonQuestionState(message: error.message));
     } catch (error) {
       emit(FailedUpdateAdminCommonQuestionState(message: 'error'));
+    }
+  }
+
+  void removeUserCommonQuestions(
+    RemoveUserCommonQuestionEvent event,
+    Emitter<ViewUpdateQuestionState> emit,
+  ) async {
+    emit(LoadingRemoveUserCommonQuestionState());
+    try {
+      final token = await SafeStorage.read('token');
+      final response = await removeUserCommonQuestionUseCase(
+        RemoveCommonQuestionEntity(id: event.id, token: token!),
+      );
+
+      response.fold(
+        (faield) =>
+            emit(FailedRemoveUserCommonQuestionState(message: faield.message)),
+        (success) {
+          emit(SuccessRemoveUserCommonQuestionState());
+        },
+      );
+    } on ServerAdminException catch (error) {
+      emit(FailedRemoveUserCommonQuestionState(message: error.message));
+    } catch (error) {
+      emit(FailedRemoveUserCommonQuestionState(message: 'error'));
     }
   }
 }

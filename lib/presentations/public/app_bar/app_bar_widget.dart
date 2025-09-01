@@ -28,7 +28,7 @@ class AppBarWidget extends StatelessWidget {
               SearchBarWidget(size: size),
             ],
           ),
-          SizedBox(width: size.width * .83, child: DeviderWidget()),
+          DeviderWidget(),
         ],
       ),
     );

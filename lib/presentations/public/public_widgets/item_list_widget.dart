@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/presentations/public/public_widgets/sold_tag_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/view_member_info_button_widget.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/viewed_tag_widget.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:admin_dashboard/util/flexible/flexible_method.dart';
 import 'package:admin_dashboard/util/font/font_styles.dart';
@@ -11,17 +12,17 @@ class ItemListWidget extends StatelessWidget {
   String name;
   List<Widget> status;
   Widget trailing;
-  String date;
   Function() onPressed;
   bool? isSold;
+  bool? isViewd;
   ItemListWidget({
     this.trailing = const SizedBox(),
     required this.onPressed,
     required this.size,
     required this.name,
     required this.status,
-    this.date = '',
     this.isSold = false,
+    this.isViewd = false,
     super.key,
   });
 
@@ -42,6 +43,9 @@ class ItemListWidget extends StatelessWidget {
                 right: -65,
                 child: SoldTagWidget(size: size),
               )
+              : const SizedBox(),
+          isViewd!
+              ? Positioned(top: -20, right: -65, child: ViewedTagWidget())
               : const SizedBox(),
           ListTile(
             title: Text(name, style: getProfileTitleLogginDateStyle(size)),

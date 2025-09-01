@@ -33,7 +33,6 @@ class MonitoringHistoryMiddleware {
     MonitoringHistoryState state,
     Size size,
   ) {
-    print('state is $state');
     if (state is LoadingGetMonitoringHistoryState) {
       return right(SearchShimmer(size: size));
     } else if (state is SuccessGetMonitoringHistoryState && temp.isEmpty) {

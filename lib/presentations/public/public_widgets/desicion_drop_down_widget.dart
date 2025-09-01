@@ -1,9 +1,7 @@
-import 'package:admin_dashboard/presentations/requests/presentaiton/logic/cubit/desicion_cubit.dart';
-import 'package:admin_dashboard/presentations/requests/presentaiton/models/desicion_model.dart';
+import 'package:admin_dashboard/presentations/users/presentation/models/user_state_model.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:admin_dashboard/util/font/font_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class DesicionDropDownWidget extends StatelessWidget {
@@ -11,7 +9,7 @@ class DesicionDropDownWidget extends StatelessWidget {
   final onPressed;
   Size size;
   Widget underline;
-  List<DesicionModel> kinds;
+  List<ChoiseStateModel> kinds;
   DesicionDropDownWidget({
     this.underline = const SizedBox(),
     required this.kinds,
@@ -36,7 +34,7 @@ class DesicionDropDownWidget extends StatelessWidget {
                   (item) => DropdownMenuItem(
                     value: item.id,
                     child: Text(
-                      item.name,
+                      item.state,
                       style: getProfileTitleLogginDateStyle(size),
                     ),
                   ),

@@ -156,9 +156,7 @@ class AuthMiddleware {
       context.go('/home');
     } else if (state is FailedSendLoginState) {
       SnackBarWidget().show(context, state.message, Colors.red);
-    }
-    if (state is SuccessCheckLoggingState) {
-      SnackBarWidget().show(context, 'welcom again :)', Colors.green);
+    } else if (state is Logged) {
       context.go('/home');
     }
   }

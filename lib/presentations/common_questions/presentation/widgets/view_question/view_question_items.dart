@@ -15,7 +15,6 @@ class ViewQuestionItems extends StatelessWidget {
     final moreInfo = MediaQuery.sizeOf(context);
     return BlocListener<ViewUpdateQuestionBloc, ViewUpdateQuestionState>(
       listener: (context, state) {
-        print(state);
         if (state is SuccessUpdateAdminCommonQuestionState) {
           context.read<ChangePageBloc>().add(
             MoveToQuestionsPageEvent(title: 'Questions'),

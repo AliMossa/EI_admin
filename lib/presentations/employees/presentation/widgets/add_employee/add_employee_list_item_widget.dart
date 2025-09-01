@@ -64,7 +64,7 @@ class AddEmployeeListItemWidget extends StatelessWidget {
                 context
                     .read<AddEmployeeBloc>()
                     .employeesMiddleware
-                    .getCorrectWidgetForAddEmployee(state, size)
+                    .getAddEmployeewidget(state, size)
                     .fold(
                       (_) => AddNewMember(
                         onPress:

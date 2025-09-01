@@ -36,7 +36,7 @@ class CommonQuestionsBloc
     on<GetAdminCommonQuestionsEvent>(getAdminCommonQuestions);
     on<GetUserCommonQuestionsEvent>(getUserCommonQuestions);
     on<RemoveAdminCommonQuestionEvent>(removeAdminCommonQuestions);
-    on<RemoveUserCommonQuestionEvent>(removeUserCommonQuestions);
+
     on<ReGetUserCommonQuestionsEvent>(reGetUserCommonQuestions);
     on<ReGetAdminCommonQuestionsEvent>(reGetAdminCommonQuestions);
   }
@@ -105,39 +105,18 @@ class CommonQuestionsBloc
       final response = await removeCommonQuestionUseCase(
         RemoveCommonQuestionEntity(id: event.id, token: token!),
       );
-      commonQuestionMiddleware.removeCommonQuestionItem(event.id);
       response.fold(
         (faield) =>
             emit(FailedRemoveAdminCommonQuestionState(message: faield.message)),
-        (success) => emit(SuccessRemoveAdminCommonQuestionState()),
+        (success) {
+          commonQuestionMiddleware.removeCommonQuestionItem(event.id);
+          emit(SuccessRemoveAdminCommonQuestionState());
+        },
       );
     } on ServerAdminException catch (error) {
       emit(FailedRemoveAdminCommonQuestionState(message: error.message));
     } catch (error) {
       emit(FailedRemoveAdminCommonQuestionState(message: 'error'));
-    }
-  }
-
-  void removeUserCommonQuestions(
-    RemoveUserCommonQuestionEvent event,
-    Emitter<CommonQuestionsState> emit,
-  ) async {
-    emit(LoadingRemoveUserCommonQuestionState());
-    try {
-      final token = await SafeStorage.read('token');
-      final response = await removeUserCommonQuestionUseCase(
-        RemoveCommonQuestionEntity(id: event.id, token: token!),
-      );
-
-      response.fold(
-        (faield) =>
-            emit(FailedRemoveUserCommonQuestionState(message: faield.message)),
-        (success) => emit(SuccessRemoveUserCommonQuestionState()),
-      );
-    } on ServerAdminException catch (error) {
-      emit(FailedRemoveUserCommonQuestionState(message: error.message));
-    } catch (error) {
-      emit(FailedRemoveUserCommonQuestionState(message: 'error'));
     }
   }
 

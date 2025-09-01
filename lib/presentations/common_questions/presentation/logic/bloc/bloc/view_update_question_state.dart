@@ -31,3 +31,13 @@ class FailedRemoveAdminCommonQuestionFromInsideState
   String message;
   FailedRemoveAdminCommonQuestionFromInsideState({required this.message});
 }
+
+class LoadingRemoveUserCommonQuestionState extends ViewUpdateQuestionState {}
+
+class SuccessRemoveUserCommonQuestionState extends ViewUpdateQuestionState {}
+
+// ignore: must_be_immutable
+class FailedRemoveUserCommonQuestionState extends ViewUpdateQuestionState {
+  String message;
+  FailedRemoveUserCommonQuestionState({required this.message});
+}

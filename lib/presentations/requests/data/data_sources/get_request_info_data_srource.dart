@@ -10,6 +10,7 @@ import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
 import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 
 abstract class GetRequestInfoDataSrource {
   Future<RequestInfoEntity> getRequestInfo(SendRequestEntity sendRequestEntity);
@@ -51,7 +52,9 @@ class GetRequestInfoDataSrourceWithDio extends GetRequestInfoDataSrource {
           kitchenType: descriptionItem['kitchen_type'],
           flooringType: descriptionItem['flooring_type'],
           balconySize: descriptionItem['balcony_size'],
-          price: descriptionItem['price'],
+          price: NumberFormat.decimalPattern().format(
+            double.parse(descriptionItem['price']),
+          ),
           payWay: descriptionItem['pay_way'],
           state: descriptionItem['state'],
           expertCheck: descriptionItem['expert_check'],
@@ -61,11 +64,21 @@ class GetRequestInfoDataSrourceWithDio extends GetRequestInfoDataSrource {
         requestEconomicInfoEntity: RequestEconomicInfoEntity(
           numberOfChances: economicItem['number_of_chances'],
           profitPercent: economicItem['profit_percent'],
-          expectedPrice: economicItem['expected_price'] * 1.0,
-          buyingPrice: economicItem['buying_price'] * 1.0,
-          totalExpectedTaxes: economicItem['total_expected_taxes'] * 1.0,
-          rentingPrice: economicItem['renting_price'] * 1.0,
-          chancePrice: economicItem['chance_price'] * 1.0,
+          expectedPrice: NumberFormat.decimalPattern().format(
+            economicItem['expected_price'] * 1.0,
+          ),
+          buyingPrice: NumberFormat.decimalPattern().format(
+            economicItem['buying_price'] * 1.0,
+          ),
+          totalExpectedTaxes: NumberFormat.decimalPattern().format(
+            economicItem['total_expected_taxes'] * 1.0,
+          ),
+          rentingPrice: NumberFormat.decimalPattern().format(
+            economicItem['renting_price'] * 1.0,
+          ),
+          chancePrice: NumberFormat.decimalPattern().format(
+            economicItem['chance_price'] * 1.0,
+          ),
           investmentTime: economicItem['investment_time'],
           incommingTime: economicItem['incoming_time'],
           investmentMode: economicItem['investment_mode'],

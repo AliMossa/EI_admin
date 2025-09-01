@@ -31,6 +31,7 @@ class PropertyNewStudyDataSourceWithDio extends PropertyNewStudyDataSource {
         message = response['message'] ?? response['errors'];
         throw Exception();
       }
+
       return message;
     } on ClientAdminError catch (error) {
       log('ClientAdminError: ${error.message}', name: 'PropertyNewStudy');

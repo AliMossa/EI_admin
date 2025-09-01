@@ -23,7 +23,6 @@ class AcceptRequestDataSourceWithDio extends AcceptRequestDataSource {
         FormData.fromMap({}),
         requestManagmentEntity.token,
       );
-
       if (response['errors'] == null) {
         message = response['message'];
       } else {

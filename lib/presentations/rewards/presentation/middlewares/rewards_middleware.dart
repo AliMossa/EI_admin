@@ -61,6 +61,7 @@ class RewardsMiddleware {
     }
   }
 
+  void clearTotalRewardEntity() => _totalRewardEntity.rewards.clear();
   void removeUserCommonQuestionNotice(
     BuildContext context,
     ViewUpdateRewardBloc bloc,
@@ -133,7 +134,6 @@ class RewardsMiddleware {
 
   void showAddRewardFailedMessage(BuildContext context, AddRewardState state) {
     if (state is FailedAddNewRewardState) {
-      print(state.message);
       SnackBarWidget().show(context, state.message, Colors.red);
     } else if (state is SuccessAddNewRewardState) {
       context.read<ChangePageBloc>().add(
@@ -153,8 +153,6 @@ class RewardsMiddleware {
   }
 
   String? getNumberValidation(String? value) {
-    print('is working 2');
-
     if (value == null || value.isEmpty) {
       return 'Please enter correct value';
     }
@@ -166,7 +164,6 @@ class RewardsMiddleware {
   }
 
   Either<Widget, Widget> getCorrectWidget(RewardsState state, Size size) {
-    print(state);
     if (state is LoadingGetRewardsState) {
       return right(GridShimmer(size: size));
     } else if (state is SuccessGetRewardsState && tempRewards.isEmpty) {

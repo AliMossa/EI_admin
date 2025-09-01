@@ -1,5 +1,5 @@
-class UserStateModel {
+class ChoiseStateModel {
   int id;
   String state;
-  UserStateModel({required this.id, required this.state});
+  ChoiseStateModel({required this.id, required this.state});
 }

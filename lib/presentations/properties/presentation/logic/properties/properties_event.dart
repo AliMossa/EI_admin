@@ -19,6 +19,8 @@ class ReGetPropertiesEvent extends PropertiesEvent {
 
 class GetSoldPropertiesEvent extends PropertiesEvent {}
 
+class GetViewedPropertiesEvent extends PropertiesEvent {}
+
 // ignore: must_be_immutable
 class ReGetSoldPropertiesEvent extends PropertiesEvent {
   String link;

@@ -140,3 +140,23 @@ class MoveToChangePsswordPageState extends ChangePageState {
 class MoveToWalletPageState extends ChangePageState {
   MoveToWalletPageState({required super.title});
 }
+
+// ignore: must_be_immutable
+class MoveToTransferRequestsPageState extends ChangePageState {
+  MoveToTransferRequestsPageState({required super.title});
+}
+
+// ignore: must_be_immutable
+class MoveToViewTransferRequestsPageState extends ChangePageState {
+  TransferMoneyEntity transferMoneyEntity;
+
+  MoveToViewTransferRequestsPageState({
+    required this.transferMoneyEntity,
+    required super.title,
+  });
+}
+
+// ignore: must_be_immutable
+class MoveToAddDepositPageState extends ChangePageState {
+  MoveToAddDepositPageState({required super.title});
+}

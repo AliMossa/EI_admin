@@ -28,15 +28,15 @@ class PeopertyListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RequestsBloc, RequestsState>(
       builder: (context, state) {
-        return context
-            .read<RequestsBloc>()
-            .requestMiddleware
-            .getCorrectWidget(state, size)
-            .fold(
-              (_) => SizedBox(
-                height: size.height * .83,
-                width: size.width * .8,
-                child: NotificationListener(
+        return SizedBox(
+          height: size.height * .83,
+          width: size.width * .8,
+          child: context
+              .read<RequestsBloc>()
+              .requestMiddleware
+              .getCorrectWidget(state, size)
+              .fold(
+                (_) => NotificationListener(
                   onNotification: (ScrollNotification notification) {
                     if (notification.metrics.pixels ==
                         notification.metrics.maxScrollExtent) {}
@@ -70,7 +70,6 @@ class PeopertyListItem extends StatelessWidget {
                               ),
                             ],
 
-                            date: '10-12-2025',
                             onPressed:
                                 () => context.read<ChangePageBloc>().add(
                                   MoveToViewRequestsPageEvent(
@@ -82,9 +81,9 @@ class PeopertyListItem extends StatelessWidget {
                         ),
                   ),
                 ),
+                (widget) => widget,
               ),
-              (widget) => widget,
-            );
+        );
       },
     );
   }

@@ -25,15 +25,15 @@ class RemoveCommonQuestionDataSourceWithDio
       final response = await Apis().delet(
         '${NetworkApisRouts().removeCommonQuestionApi()}${removeCommonQuestion.id}',
         {},
-        removeCommonQuestion.token,
+        '',
       );
 
-      // if (response['errors'] == null) {
-      //   message = response['message'];
-      // } else {
-      //   message = response['message'] ?? response['errors'];
-      //   throw Exception();
-      // }
+      if (response['errors'] == null) {
+        message = response['message'];
+      } else {
+        message = response['message'] ?? response['errors'];
+        throw Exception();
+      }
       return message;
     } on ClientAdminError catch (error) {
       log('ClientAdminError: ${error.message}', name: 'RemoveCommonQuestion');

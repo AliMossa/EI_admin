@@ -2,7 +2,7 @@ import 'package:admin_dashboard/presentations/public/shimmers/list_search_shimme
 import 'package:admin_dashboard/presentations/users/presentation/logic/bloc/view_user/view_user_bloc.dart';
 import 'package:admin_dashboard/presentations/users/presentation/widgets/view_users/active_switch_button_widget.dart';
 import 'package:admin_dashboard/presentations/users/presentation/widgets/view_users/view_user_logging_page.dart';
-import 'package:admin_dashboard/presentations/users/presentation/widgets/view_users/view_user_variable_widget.dart';
+import 'package:admin_dashboard/presentations/public/public_widgets/view_user_variable_widget.dart';
 import 'package:admin_dashboard/util/colors/colors.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

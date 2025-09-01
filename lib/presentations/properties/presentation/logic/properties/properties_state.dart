@@ -50,3 +50,13 @@ class FailedReGetSoldPropertiesState extends PropertiesState {
   String message;
   FailedReGetSoldPropertiesState({required this.message});
 }
+
+class LoadingGetViewedPropertiesState extends PropertiesState {}
+
+class SuccessGetViewedPropertiesState extends PropertiesState {}
+
+// ignore: must_be_immutable
+class FailedGetViewedPropertiesState extends PropertiesState {
+  String message;
+  FailedGetViewedPropertiesState({required this.message});
+}

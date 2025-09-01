@@ -14,7 +14,7 @@ class AddAdminListItemsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final moreInfo = MediaQuery.sizeOf(context);
-    return BlocBuilder<AddAdminQuestionBloc, AddAdminQuestionState>(
+    return BlocConsumer<AddAdminQuestionBloc, AddAdminQuestionState>(
       builder: (context, state) {
         return Container(
           width: moreInfo.width * .5,
@@ -64,6 +64,11 @@ class AddAdminListItemsWidget extends StatelessWidget {
           ),
         );
       },
+      listener:
+          (BuildContext context, AddAdminQuestionState state) => context
+              .read<AddAdminQuestionBloc>()
+              .commonQuestionMiddleware
+              .showAddCommonQuestionState(context, state),
     );
   }
 }

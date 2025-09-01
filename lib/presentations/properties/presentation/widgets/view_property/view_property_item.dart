@@ -28,6 +28,11 @@ class ViewPropertyItem extends StatelessWidget {
                   state is MoveToViewPropertyPageState
                       ? ViewPropertyListItem(
                         id: id,
+                        type:
+                            context
+                                .watch<ViewPropertyBloc>()
+                                .propertiesMiddlewar
+                                .getPropertiesTypes(),
                         size: moreInfo,
                         viewPropertyEntity:
                             context

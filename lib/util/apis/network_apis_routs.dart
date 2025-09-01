@@ -1,5 +1,5 @@
 class NetworkApisRouts {
-  final String _server = 'http://127.0.0.1:8000/api/';
+  final String _server = 'http://127.0.0.1:8000/api/v1/';
   final String _imageServer = 'http://127.0.0.1:8000/';
   final String _loginApi = 'login';
   final String _logoutApi = 'logout';
@@ -34,6 +34,7 @@ class NetworkApisRouts {
   final String _rejectPropertyRequest = 'reject_request_from_expert/';
   final String _getOwnedProperties = 'owned_properties';
   final String _getSoldProperties = 'sold_properties';
+  final String _getViewedProperties = 'get_investment_property_info';
   final String _getPropertyInfo = 'get_properties_by_id/';
   final String _getPropertyImages = 'get_image_for_property_by_id/';
   final String _setPropertySold = 'markAsSold/';
@@ -44,6 +45,10 @@ class NetworkApisRouts {
   final String _getRequestsStatistics = 'get_Request_Statistics';
   final String _getEconomicEvaluation = 'economic_evaluation/';
   final String _getWalletMoney = 'wallets/ShowPlatformWallet';
+  final String _showPropertyOnStage = 'create_property_for_investment/';
+  final String _getTransferMoneyRequests = 'withdrawals';
+  final String _searchAboutUser = 'search_about_user';
+  final String _addDeposit = 'addInvestmentBalance_for_user';
   final String _getMoneiesRates = 'https://open.er-api.com/v6/latest/USD';
 
   String getBaseUrl() => _imageServer;
@@ -81,6 +86,7 @@ class NetworkApisRouts {
   String rejextPropertyRequestApi() => _server + _rejectPropertyRequest;
   String getOwnedPropertiesApi() => _server + _getOwnedProperties;
   String getSoldPropertiesApi() => _server + _getSoldProperties;
+  String getViewdPropertiesApi() => _server + _getViewedProperties;
   String getPropertyInfoApi() => _server + _getPropertyInfo;
   String getPropertyImagesApi() => _server + _getPropertyImages;
   String setPropertySoldApi() => _server + _setPropertySold;
@@ -90,6 +96,9 @@ class NetworkApisRouts {
   String getRequestsStatisticsApi() => _server + _getRequestsStatistics;
   String getEconomicEvaluationApi() => _server + _getEconomicEvaluation;
   String getWalletMoneyApi() => _server + _getWalletMoney;
-
+  String showPropertyOnStageApi() => _server + _showPropertyOnStage;
+  String getTransferMoneyRequests() => _server + _getTransferMoneyRequests;
+  String getSearchAboutUser() => _server + _searchAboutUser;
+  String addDeposit() => _server + _addDeposit;
   String getMoniesRatesApi() => _getMoneiesRates;
 }

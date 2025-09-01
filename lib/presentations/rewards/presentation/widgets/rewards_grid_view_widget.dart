@@ -28,17 +28,17 @@ class RewardsGridViewWidget extends StatelessWidget {
     final moreInfo = MediaQuery.sizeOf(context);
     return BlocBuilder<RewardsBloc, RewardsState>(
       builder: (context, state) {
-        return context
-            .watch<RewardsBloc>()
-            .rewardsMiddleware
-            .getCorrectWidget(state, moreInfo)
-            .fold(
-              (_) => Stack(
-                children: [
-                  SizedBox(
-                    height: moreInfo.height * .85,
-                    width: moreInfo.width * .8,
-                    child: NotificationListener(
+        return Stack(
+          children: [
+            SizedBox(
+              height: moreInfo.height * .85,
+              width: moreInfo.width * .8,
+              child: context
+                  .watch<RewardsBloc>()
+                  .rewardsMiddleware
+                  .getCorrectWidget(state, moreInfo)
+                  .fold(
+                    (_) => NotificationListener(
                       onNotification: (ScrollNotification notification) {
                         if (notification.metrics.pixels ==
                             notification.metrics.maxScrollExtent) {}
@@ -69,18 +69,18 @@ class RewardsGridViewWidget extends StatelessWidget {
                             ),
                       ),
                     ),
+                    (widget) => widget,
                   ),
+            ),
 
-                  AddMemberButtonWidget(
-                    onPress:
-                        () => context.read<ChangePageBloc>().add(
-                          MoveToAddRewardPageEvent(title: 'Add Reward'),
-                        ),
+            AddMemberButtonWidget(
+              onPress:
+                  () => context.read<ChangePageBloc>().add(
+                    MoveToAddRewardPageEvent(title: 'Add Reward'),
                   ),
-                ],
-              ),
-              (widget) => widget,
-            );
+            ),
+          ],
+        );
       },
     );
   }

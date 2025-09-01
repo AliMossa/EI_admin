@@ -164,6 +164,16 @@ TextStyle getemployeesStatusStyle(Size size) {
   );
 }
 
+TextStyle getTransferMoneyStatusStyle(Size size, Color color) {
+  return TextStyle(
+    color: color,
+    inherit: true,
+    fontWeight: FontWeight.bold,
+    fontSize: FlexibleMethod.getCorrectListTileStatuesTextWidth(size).width,
+    overflow: TextOverflow.ellipsis,
+  );
+}
+
 final requestsStatusStyle = TextStyle(
   color: black75,
   fontWeight: FontWeight.bold,
@@ -198,6 +208,24 @@ TextStyle getSoldPropertyStyle(Size size) {
     color: black30,
     fontWeight: FontWeight.bold,
     fontSize: verysmallSize,
+    overflow: TextOverflow.ellipsis,
+  );
+}
+
+TextStyle getViewedPropertyStyle1(Size size) {
+  return TextStyle(
+    color: selecteSideBarItem2,
+    fontWeight: FontWeight.bold,
+    fontSize: smallSize,
+    overflow: TextOverflow.ellipsis,
+  );
+}
+
+TextStyle getViewedPropertyStyle2(Size size) {
+  return TextStyle(
+    color: statusIconColor,
+    fontWeight: FontWeight.bold,
+    fontSize: smallSize,
     overflow: TextOverflow.ellipsis,
   );
 }

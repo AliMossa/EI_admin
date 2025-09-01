@@ -18,3 +18,9 @@ class RemoveAdminCommonQuestionFromInsidEvent extends ViewUpdateQuestionEvent {
   int id;
   RemoveAdminCommonQuestionFromInsidEvent({required this.id});
 }
+
+// ignore: must_be_immutable
+class RemoveUserCommonQuestionEvent extends ViewUpdateQuestionEvent {
+  int id;
+  RemoveUserCommonQuestionEvent({required this.id});
+}

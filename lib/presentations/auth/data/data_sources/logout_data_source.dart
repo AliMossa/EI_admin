@@ -26,6 +26,8 @@ class LogoutDataSourceWithDio extends LogoutDataSource {
         message = response['message'] ?? response['errors'];
         throw Exception();
       }
+      print(message);
+
       return message;
     } on ClientAdminError catch (error) {
       log('ClientAdminError: ${error.message}', name: 'Logout');

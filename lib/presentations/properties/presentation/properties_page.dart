@@ -1,6 +1,7 @@
 import 'package:admin_dashboard/presentations/properties/data/repository_sources/property_repository_imp_source.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/get_properties_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/get_sold_properties_use_case.dart';
+import 'package:admin_dashboard/presentations/properties/domain/use_cases/get_viewed_properties_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/re_get_properties_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/re_get_sold_properties_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/presentation/logic/desicion/cubit/properties_types_cubit.dart';
@@ -32,6 +33,9 @@ class PropertiesPage extends StatelessWidget {
                   propertyRepository: PropertyRepositoryImpSource(),
                 ),
                 getPropertiesUseCase: GetPropertiesUseCase(
+                  propertyRepository: PropertyRepositoryImpSource(),
+                ),
+                getViewedPropertiesUseCase: GetViewedPropertiesUseCase(
                   propertyRepository: PropertyRepositoryImpSource(),
                 ),
               )..add(GetCorrectPropertiesEvent()),

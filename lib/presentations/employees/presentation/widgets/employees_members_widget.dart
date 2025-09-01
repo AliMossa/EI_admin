@@ -25,29 +25,29 @@ class _EmployeesMembersWidgetState extends State<EmployeesMembersWidget> {
     final moreInfo = MediaQuery.sizeOf(context);
     return BlocBuilder<EmployeesBloc, EmployeesState>(
       builder: (context, state) {
-        return context
-            .read<EmployeesBloc>()
-            .employeesMiddleware
-            .getCorrectWidget(state, moreInfo)
-            .fold(
-              (_) => Stack(
-                alignment: Alignment.topLeft,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      ViewKindsMenusWidget(
-                        size: moreInfo,
-                        activeList: EmployeeModel().getEmployeesStatus(),
-                        teamKindList: EmployeeModel().getEmployeesTeams(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 30),
-                        child: SizedBox(
-                          height: moreInfo.height * .76,
-                          width: moreInfo.width * .8,
+        return Stack(
+          alignment: Alignment.topLeft,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ViewKindsMenusWidget(
+                  size: moreInfo,
+                  activeList: EmployeeModel().getEmployeesStatus(),
+                  teamKindList: EmployeeModel().getEmployeesTeams(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 30),
+                  child: SizedBox(
+                    height: moreInfo.height * .76,
+                    width: moreInfo.width * .8,
 
-                          child: NotificationListener(
+                    child: context
+                        .read<EmployeesBloc>()
+                        .employeesMiddleware
+                        .getCorrectWidget(state, moreInfo)
+                        .fold(
+                          (_) => NotificationListener(
                             onNotification: (ScrollNotification notification) {
                               if (notification.metrics.pixels ==
                                   notification.metrics.maxScrollExtent) {}
@@ -82,7 +82,6 @@ class _EmployeesMembersWidgetState extends State<EmployeesMembersWidget> {
                                           status: 'logged in ',
                                         ),
                                       ],
-                                      date: '10-12-2025',
                                       onPressed:
                                           () => context
                                               .read<ChangePageBloc>()
@@ -96,20 +95,20 @@ class _EmployeesMembersWidgetState extends State<EmployeesMembersWidget> {
                                   ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  AddMemberButtonWidget(
-                    onPress:
-                        () => context.read<ChangePageBloc>().add(
-                          MoveToAddEmployeesPageEvent(title: 'Employee'),
+                          (widget) => widget,
                         ),
                   ),
-                ],
-              ),
-              (widget) => widget,
-            );
+                ),
+              ],
+            ),
+            AddMemberButtonWidget(
+              onPress:
+                  () => context.read<ChangePageBloc>().add(
+                    MoveToAddEmployeesPageEvent(title: 'Employee'),
+                  ),
+            ),
+          ],
+        );
       },
     );
   }

@@ -9,11 +9,13 @@ class DesicionTextFormFieldWidget extends StatelessWidget {
   Size size;
   Function onChange;
   Function(String?) validate;
+  Function(String?) onSubmiteed;
   DesicionTextFormFieldWidget({
     required this.label,
     required this.size,
     required this.onChange,
     required this.validate,
+    required this.onSubmiteed,
     super.key,
   });
 
@@ -27,25 +29,20 @@ class DesicionTextFormFieldWidget extends StatelessWidget {
         border: Border.all(color: linkColor),
         color: textFieldInside,
       ),
-      child: ListView(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        children: [
-          TextFormField(
-            minLines: 1,
-            maxLines: 10,
-            validator: (value) => validate(value),
-            onChanged: (value) => onChange(value),
-            style: getProfileTitleLogginDateStyle(size),
-            autofocus: true,
-            cursorHeight: smallSize,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              label: Text(label),
-            ),
-          ),
-        ],
+      child: TextFormField(
+        minLines: 1,
+        maxLines: 10,
+        onFieldSubmitted: (value) => onSubmiteed(value),
+        validator: (value) => validate(value),
+        onChanged: (value) => onChange(value),
+        style: getProfileTitleLogginDateStyle(size),
+        autofocus: true,
+        cursorHeight: smallSize,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          label: Text(label),
+        ),
       ),
     );
   }

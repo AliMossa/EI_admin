@@ -2,6 +2,7 @@ import 'package:admin_dashboard/presentations/properties/domain/entities/propert
 import 'package:admin_dashboard/presentations/properties/domain/entities/property_request_entity.dart';
 import 'package:admin_dashboard/presentations/properties/presentation/logic/desicion/cubit/properties_types_cubit.dart';
 import 'package:admin_dashboard/presentations/properties/presentation/logic/properties/properties_bloc.dart';
+import 'package:admin_dashboard/presentations/properties/presentation/widgets/property_item_status_widget.dart';
 import 'package:admin_dashboard/presentations/public/main_page/logic/change_page/bloc/change_page_bloc.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/desicion_drop_down_widget.dart';
 import 'package:admin_dashboard/presentations/public/public_widgets/item_list_widget.dart';
@@ -39,54 +40,94 @@ class PropertyListItemWidget extends StatelessWidget {
       },
       child: BlocBuilder<PropertiesBloc, PropertiesState>(
         builder: (context, state) {
-          return context
-              .read<PropertiesBloc>()
-              .propertiesMiddlewar
-              .showCorrectImage(context.read<PropertiesBloc>(), state, size)
-              .fold(
-                (_) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    DesicionDropDownWidget(
-                      kinds: DropDownDesicionModel().getPropertyTypesList(),
-                      currntValue: propertyType,
-                      size: size,
-                      onPressed:
-                          (value) => context
-                              .read<PropertiesTypesCubit>()
-                              .changePropertiesType(value),
-                    ),
-                    SizedBox(
-                      height: size.height * .76,
-                      width: size.width * .8,
-                      child: AnimatedList(
-                        key: animatedKey,
-                        initialItemCount: propertyListEntity.list.length,
-                        itemBuilder:
-                            (context, index, animation) => FadeTransition(
-                              opacity: animation.drive(Tween(begin: 0, end: 1)),
-                              child: ItemListWidget(
-                                name: propertyListEntity.list[index].location,
-                                size: size,
-                                isSold: propertyType > 0 ? true : false,
-                                status: [],
-                                date:
-                                    propertyListEntity.list[index].propertyType,
-                                onPressed:
-                                    () => context.read<ChangePageBloc>().add(
-                                      MoveToViewPropertyPageEvent(
-                                        id: propertyListEntity.list[index].id,
-                                        title: 'Property',
-                                      ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              DesicionDropDownWidget(
+                kinds: DropDownDesicionModel().getPropertyTypesList(),
+                currntValue: propertyType,
+                size: size,
+                onPressed:
+                    (value) => context
+                        .read<PropertiesTypesCubit>()
+                        .changePropertiesType(value),
+              ),
+              SizedBox(
+                height: size.height * .76,
+                width: size.width * .8,
+                child: context
+                    .read<PropertiesBloc>()
+                    .propertiesMiddlewar
+                    .showCorrectImage(
+                      context.read<PropertiesBloc>(),
+                      state,
+                      size,
+                    )
+                    .fold(
+                      (_) => NotificationListener(
+                        onNotification: (ScrollNotification notification) {
+                          if (notification.metrics.pixels ==
+                              notification.metrics.maxScrollExtent) {}
+                          return false;
+                        },
+
+                        child: AnimatedList(
+                          key: animatedKey,
+                          initialItemCount: propertyListEntity.list.length,
+                          itemBuilder:
+                              (context, index, animation) => FadeTransition(
+                                opacity: animation.drive(
+                                  Tween(begin: 0, end: 1),
+                                ),
+                                child: ItemListWidget(
+                                  name: propertyListEntity.list[index].location,
+                                  size: size,
+                                  isSold: propertyType == 1 ? true : false,
+                                  isViewd: propertyType == 2 ? true : false,
+
+                                  status: [
+                                    Text(
+                                      propertyListEntity
+                                          .list[index]
+                                          .propertyType,
                                     ),
+                                    if (propertyListEntity
+                                        .list[index]
+                                        .isCompleted!
+                                        .isNotEmpty)
+                                      PropertyItemStatusWidget(
+                                        size: size,
+                                        isCompleted:
+                                            propertyListEntity
+                                                .list[index]
+                                                .isCompleted!,
+                                        completePercent:
+                                            propertyListEntity
+                                                .list[index]
+                                                .progressPercent!,
+                                        totalInvestment:
+                                            propertyListEntity
+                                                .list[index]
+                                                .totalInvested!,
+                                      ),
+                                  ],
+
+                                  onPressed:
+                                      () => context.read<ChangePageBloc>().add(
+                                        MoveToViewPropertyPageEvent(
+                                          id: propertyListEntity.list[index].id,
+                                          title: 'Property',
+                                        ),
+                                      ),
+                                ),
                               ),
-                            ),
+                        ),
                       ),
+                      (widget) => widget,
                     ),
-                  ],
-                ),
-                (widget) => widget,
-              );
+              ),
+            ],
+          );
         },
       ),
     );

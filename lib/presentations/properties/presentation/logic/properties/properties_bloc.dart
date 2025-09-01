@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/get_properties_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/get_sold_properties_use_case.dart';
+import 'package:admin_dashboard/presentations/properties/domain/use_cases/get_viewed_properties_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/re_get_properties_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/domain/use_cases/re_get_sold_properties_use_case.dart';
 import 'package:admin_dashboard/presentations/properties/presentation/middleware/properties_middlewar.dart';
@@ -16,6 +17,7 @@ class PropertiesBloc extends Bloc<PropertiesEvent, PropertiesState> {
   GetPropertiesUseCase getPropertiesUseCase;
   GetSoldPropertiesUseCase getSoldPropertiesUseCase;
   ReGetSoldPropertiesUseCase reGetSoldPropertiesUseCase;
+  GetViewedPropertiesUseCase getViewedPropertiesUseCase;
   ReGetPropertiesUseCase reGetPropertiesUseCase;
   PropertiesBloc({
     required this.propertiesMiddlewar,
@@ -23,11 +25,13 @@ class PropertiesBloc extends Bloc<PropertiesEvent, PropertiesState> {
     required this.reGetPropertiesUseCase,
     required this.getSoldPropertiesUseCase,
     required this.reGetSoldPropertiesUseCase,
+    required this.getViewedPropertiesUseCase,
   }) : super(PropertiesInitial()) {
     on<GetCorrectPropertiesEvent>(getCorrectProperties);
     on<GetPropertiesEvent>(getProperties);
     on<ReGetPropertiesEvent>(reGetProperties);
     on<GetSoldPropertiesEvent>(getSoldProperties);
+    on<GetViewedPropertiesEvent>(getViewedProperties);
     on<ReGetSoldPropertiesEvent>(reGetSoldProperties);
   }
   void getCorrectProperties(
@@ -69,7 +73,7 @@ class PropertiesBloc extends Bloc<PropertiesEvent, PropertiesState> {
       response.fold(
         (failed) => emit(FailedGetSoldPropertiesState(message: failed.message)),
         (success) async {
-          propertiesMiddlewar.tempSoldProperties = success.list;
+          propertiesMiddlewar.tempProperties = success.list;
           emit(SuccessGetSoldPropertiesState());
           propertiesMiddlewar.setPropertyListEntity(success, true);
         },
@@ -78,6 +82,30 @@ class PropertiesBloc extends Bloc<PropertiesEvent, PropertiesState> {
       emit(FailedGetSoldPropertiesState(message: error.message));
     } catch (error) {
       emit(FailedGetSoldPropertiesState(message: 'error'));
+    }
+  }
+
+  void getViewedProperties(
+    GetViewedPropertiesEvent event,
+    Emitter<PropertiesState> emit,
+  ) async {
+    emit(LoadingGetViewedPropertiesState());
+    try {
+      final token = await SafeStorage.read('token');
+      final response = await getViewedPropertiesUseCase(token!);
+      response.fold(
+        (failed) =>
+            emit(FailedGetViewedPropertiesState(message: failed.message)),
+        (success) async {
+          propertiesMiddlewar.tempProperties = success.list;
+          emit(SuccessGetViewedPropertiesState());
+          propertiesMiddlewar.setPropertyListEntity(success, true);
+        },
+      );
+    } on ServerAdminException catch (error) {
+      emit(FailedGetViewedPropertiesState(message: error.message));
+    } catch (error) {
+      emit(FailedGetViewedPropertiesState(message: 'error'));
     }
   }
 

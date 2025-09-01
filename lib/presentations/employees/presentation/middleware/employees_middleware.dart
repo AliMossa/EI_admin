@@ -27,6 +27,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
@@ -736,7 +737,7 @@ class EmployeesMiddleware extends MemberImageMiddleware {
       );
     } else if (state is SuccessActiveEmployeesState ||
         state is SuccessUnActiveEmployeesState) {
-      Navigator.of(context).pop();
+      context.pop();
     }
   }
 
@@ -758,26 +759,13 @@ class EmployeesMiddleware extends MemberImageMiddleware {
     if (state is LoadingGetEmployeesState) {
       return right(ListSearchShimmer(size: size));
     } else if (state is SuccessGetEmployeesState && tempList.isEmpty) {
-      return right(SvgPicture.asset(Assets.images.empty, fit: BoxFit.contain));
-    } else if (state is FailedGetEmployeesState) {
       return right(
         SizedBox(
           width: size.width,
-          child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
+          child: SvgPicture.asset(Assets.images.empty, fit: BoxFit.contain),
         ),
       );
-    } else {
-      return left(const SizedBox());
-    }
-  }
-
-  Either<Widget, Widget> getCorrectWidgetForAddEmployee(
-    AddEmployeeState state,
-    Size size,
-  ) {
-    if (state is LoadingAddNewEmployeeState) {
-      return right(LoadingWidget());
-    } else if (state is FailedAddNewEmployeeState) {
+    } else if (state is FailedGetEmployeesState) {
       return right(
         SizedBox(
           width: size.width,
@@ -793,17 +781,29 @@ class EmployeesMiddleware extends MemberImageMiddleware {
     ViewUpdateEmployeeState state,
     Size size,
   ) {
-    if (state is LoadingUpdateEmployeeIdImage ||
-        state is LoadingViewEmployeesState ||
-        state is ViewUpdateEmployeeInitial) {
+    if (state is ViewUpdateEmployeeInitial ||
+        state is LoadingViewEmployeesState) {
       return right(LoadingWidget());
-    } else if (state is FailedUpdateEmployeesState) {
+    } else if (state is FailedViewEmployeesState) {
       return right(
         SizedBox(
           width: size.width,
           child: SvgPicture.asset(Assets.images.error, fit: BoxFit.contain),
         ),
       );
+    } else if (state is SuccessViewEmployeesState) {
+      return left(const SizedBox());
+    } else {
+      return left(const SizedBox());
+    }
+  }
+
+  Either<Widget, Widget> getAddEmployeewidget(
+    AddEmployeeState addState,
+    Size size,
+  ) {
+    if (addState is LoadingAddNewEmployeeState) {
+      return right(LoadingWidget());
     } else {
       return left(const SizedBox());
     }

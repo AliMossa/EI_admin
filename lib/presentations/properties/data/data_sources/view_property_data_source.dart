@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:admin_dashboard/presentations/properties/domain/entities/view_property_entity.dart';
 import 'package:admin_dashboard/presentations/properties/domain/entities/view_property_request_entity.dart';
 import 'package:admin_dashboard/presentations/requests/domain/entities/documents_images_entity.dart';
@@ -71,7 +70,8 @@ class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
       final aggrementItem = economicResponse['data'];
 
       return ViewPropertyEntity(
-        aggreement: aggrementItem['agreement']['Text_of_the_agreement'],
+        aggreement:
+            aggrementItem['agreement']?['Text_of_the_agreement'] ?? null,
         requestDescriptionInfoEntity: RequestDescriptionInfoEntity(
           userId: descriptionItem['user_id'],
           roomNumbers: descriptionItem['number_of_rooms'],
@@ -128,7 +128,7 @@ class ViewPropertyDataSourceWithDio extends ViewPropertyDataSource {
           agreedNegotiation: economicItem['agreed_negotiation'],
         ),
         documentsImagesEntity: DocumentsImagesEntity(
-          images: [documentsItem['front_image'], documentsItem['front_image']],
+          images: [documentsItem['front_image'], documentsItem['back_image']],
         ),
       );
     } on ClientAdminError catch (error) {

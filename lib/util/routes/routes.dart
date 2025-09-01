@@ -13,28 +13,6 @@ class Routes {
         builder:
             (context, state) => MultiBlocProvider(
               providers: [
-                // BlocProvider(
-                //   create:
-                //       (context) => LoginBloc(
-                //         resetPasswordUseCase: ResetPasswordUseCase(
-                //           authRepository: AuthRempositoryImpSource(),
-                //         ),
-                //         verifyCodeUseCase: VerifyCodeUseCase(
-                //           authRepository: AuthRempositoryImpSource(),
-                //         ),
-                //         sendVerifiicationCodeUseCase:
-                //             SendVerifiicationCodeUseCase(
-                //               authRepository: AuthRempositoryImpSource(),
-                //             ),
-                //         authMiddleware: AuthMiddleware().getAuthMiddleware(),
-                //         loginUseCase: LoginUseCase(
-                //           authRepository: AuthRempositoryImpSource(),
-                //         ),
-                //       )..add(CheckLoggingEvent()),
-                // ),
-                // BlocProvider<LoginPagesCubit>(
-                //   create: (context) => LoginPagesCubit()..moveToLogin(),
-                // ),
                 BlocProvider(
                   create:
                       (context) =>

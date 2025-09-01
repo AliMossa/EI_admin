@@ -7,6 +7,7 @@ import 'package:admin_dashboard/util/apis/network_apis_routs.dart';
 import 'package:admin_dashboard/util/errors/admin_error.dart';
 import 'package:admin_dashboard/util/notices/show_notices.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 
 abstract class GetWalletMoneyDataSource {
   Future<WalletEntity> getWalletMoney(WalletEntityRequest walletEntityRequest);
@@ -34,7 +35,9 @@ class GetWalletMoneyDataSourceWithDio extends GetWalletMoneyDataSource {
       return WalletEntity(
         id: item['id'],
         useId: item['user_id'],
-        balance: item['balance'],
+        balance: NumberFormat.decimalPattern().format(
+          double.parse(item['balance']),
+        ),
         currency: item['currency'],
         walletType: item['wallet_type'],
         isActive: item['is_active'],

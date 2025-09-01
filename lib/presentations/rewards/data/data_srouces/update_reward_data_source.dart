@@ -15,15 +15,16 @@ class UpdateRewardDataSourceWithDio extends UpdateRewardDataSource {
   @override
   Future<String> updateReward(UpdateRewardEntity updateRewardEntity) async {
     String message = '';
+
     try {
       final response = await Apis().post(
         '${NetworkApisRouts().updateRewardApi()}${updateRewardEntity.id}',
         FormData.fromMap({
           if (updateRewardEntity.data.level != null)
             'level': updateRewardEntity.data.level,
-          if (updateRewardEntity.data.level != null)
+          if (updateRewardEntity.data.amountThreshold != null)
             'amount_threshold': updateRewardEntity.data.amountThreshold,
-          if (updateRewardEntity.data.level != null)
+          if (updateRewardEntity.data.percentage != null)
             'percentage': updateRewardEntity.data.percentage,
           if (updateRewardEntity.data.times != null)
             'number_of_times': updateRewardEntity.data.times,

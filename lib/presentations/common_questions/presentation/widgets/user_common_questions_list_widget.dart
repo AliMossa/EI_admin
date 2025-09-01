@@ -23,52 +23,49 @@ class UserCommonQuestionsListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CommonQuestionsBloc, CommonQuestionsState>(
-      builder: (context, state) {
-        return NotificationListener(
-          onNotification: (ScrollNotification notification) {
-            if (notification.metrics.pixels ==
-                notification.metrics.maxScrollExtent) {}
-            return false;
-          },
-          child: AnimatedList(
-            key: globalKey,
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            initialItemCount: items.questions.length,
-            itemBuilder:
-                (context, index, animation) => FadeTransition(
-                  opacity: animation.drive(Tween(begin: 0, end: 1)),
-                  child: ItemListWidget(
-                    name: items.questions[index].question,
-                    size: size,
-                    status: [],
-                    date: items.questions[index].createDate,
-                    onPressed: () {
-                      context
-                          .read<CommonQuestionsBloc>()
-                          .commonQuestionMiddleware
-                          .setUpdateUserCommonQuestion(
-                            context.read<ChangePageBloc>(),
-                            items.questions[index].id,
-                          );
-                    },
-                    trailing: IconButton(
-                      onPressed:
-                          () => context
-                              .read<CommonQuestionsBloc>()
-                              .commonQuestionMiddleware
-                              .removeUserCommonQuestionNotice(
-                                context,
-                                context.read<CommonQuestionsBloc>(),
-                                state,
-                                items.questions[index].id,
-                              ),
-                      icon: Icon(Icons.delete, color: Colors.red),
-                    ),
+      builder:
+          (context, state) => context
+              .read<CommonQuestionsBloc>()
+              .commonQuestionMiddleware
+              .checkUserQuestionTemp(state, size)
+              .fold(
+                (_) => NotificationListener(
+                  onNotification: (ScrollNotification notification) {
+                    if (notification.metrics.pixels ==
+                        notification.metrics.maxScrollExtent) {}
+                    return false;
+                  },
+                  child: AnimatedList(
+                    key: globalKey,
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    initialItemCount: items.questions.length,
+                    itemBuilder:
+                        (context, index, animation) => FadeTransition(
+                          opacity: animation.drive(Tween(begin: 0, end: 1)),
+                          child: ItemListWidget(
+                            name: items.questions[index].question,
+                            size: size,
+                            status: [Text(items.questions[index].createDate)],
+
+                            onPressed: () {
+                              context
+                                  .read<CommonQuestionsBloc>()
+                                  .commonQuestionMiddleware
+                                  .setUpdateUserCommonQuestion(
+                                    context.read<ChangePageBloc>(),
+                                    items.questions[index].id,
+                                  );
+                            },
+                            trailing: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.delete, color: Colors.red),
+                            ),
+                          ),
+                        ),
                   ),
                 ),
-          ),
-        );
-      },
+                (widget) => widget,
+              ),
     );
   }
 }

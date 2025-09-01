@@ -29,11 +29,13 @@ class PropertiesMiddlewar {
       GlobalKey<AnimatedListState>();
   final GlobalKey<AnimatedListState> _soldPropertyGlobalKey =
       GlobalKey<AnimatedListState>();
+  final GlobalKey<AnimatedListState> _viewedPropertyGlobalKey =
+      GlobalKey<AnimatedListState>();
   PropertyListEntity _propertyListEntity = PropertyListEntity.init();
   PropertyListEntity _soldPropertyListEntity = PropertyListEntity.init();
+  PropertyListEntity _viewedPropertyListEntity = PropertyListEntity.init();
 
   List<PropertyRequestEntity> tempProperties = [];
-  List<PropertyRequestEntity> tempSoldProperties = [];
 
   GlobalKey<AnimatedListState> getPropertyGlobalKey() => _propertyGlobalKey;
   PropertyListEntity getAprropriatePropertyListEntity() =>
@@ -61,6 +63,23 @@ class PropertiesMiddlewar {
       );
     }
   }
+
+  // void setViewedPropertyListEntity(
+  //   PropertyListEntity newPropertyListEntity,
+  //   bool doClean,
+  // ) async {
+  //   _viewedPropertyListEntity.nextPage = newPropertyListEntity.nextPage;
+  //   if (doClean) {
+  //     _viewedPropertyListEntity.list.clear();
+  //   }
+  //   for (PropertyRequestEntity item in newPropertyListEntity.list) {
+  //     await Future.delayed(const Duration(milliseconds: 250));
+  //     _viewedPropertyListEntity.list.add(item);
+  //     _propertyGlobalKey.currentState!.insertItem(
+  //       _viewedPropertyListEntity.list.length - 1,
+  //     );
+  //   }
+  // }
 
   void setSoldPropertyListEntity(
     PropertyListEntity newSoldPropertyListEntity,
@@ -271,14 +290,13 @@ class PropertiesMiddlewar {
   }
 
   void sendPropertyDesicion(ViewPropertyBloc bloc, int id) {
-    switch (id) {
+    switch (_currentValue) {
       case 0:
         bloc.add(SetPropertySoldEvent(id: id));
         break;
       case 1:
         bloc.add(NewPropertyStudyEvent(id: id));
         break;
-
       case 2:
         bloc.add(ShowOnStageEvent(id: id));
         break;
@@ -307,14 +325,16 @@ class PropertiesMiddlewar {
     Size size,
   ) {
     if (state is LoadingGetPropertiesState ||
-        state is LoadingGetSoldPropertiesState) {
+        state is LoadingGetSoldPropertiesState ||
+        state is LoadingGetViewedPropertiesState) {
       return right(ListSearchShimmer(size: size));
     } else if ((state is SuccessGetPropertiesState && tempProperties.isEmpty) ||
-        (state is SuccessGetSoldPropertiesState &&
-            tempSoldProperties.isEmpty)) {
+        (state is SuccessGetSoldPropertiesState && tempProperties.isEmpty) ||
+        (state is SuccessGetViewedPropertiesState && tempProperties.isEmpty)) {
       return right(SvgPicture.asset(Assets.images.empty));
     } else if (state is FailedGetPropertiesState ||
-        state is FailedGetSoldPropertiesState) {
+        state is FailedGetSoldPropertiesState ||
+        state is FailedGetViewedPropertiesState) {
       return right(
         SizedBox(
           width: size.width,
@@ -349,8 +369,16 @@ class PropertiesMiddlewar {
   }
 
   void getCorrectList(PropertiesBloc bloc) {
-    _propertiesTypes == 0
-        ? bloc.add(GetPropertiesEvent())
-        : bloc.add(GetSoldPropertiesEvent());
+    switch (_propertiesTypes) {
+      case 0:
+        bloc.add(GetPropertiesEvent());
+        break;
+      case 1:
+        bloc.add(GetSoldPropertiesEvent());
+        break;
+      case 2:
+        bloc.add(GetViewedPropertiesEvent());
+        break;
+    }
   }
 }
