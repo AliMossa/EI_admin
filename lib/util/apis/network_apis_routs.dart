@@ -1,6 +1,6 @@
 class NetworkApisRouts {
-  final String _server = 'http://127.0.0.1:8000/api/v1/';
-  final String _imageServer = 'http://127.0.0.1:8000/';
+  final String _server = 'http://192.168.137.1:8080/api/v1/';
+  final String _imageServer = 'http://192.168.137.1:8080/';
   final String _loginApi = 'login';
   final String _logoutApi = 'logout';
   final String _sendVerificationCode = 'send_verification_code';
